@@ -20,7 +20,6 @@ const props = defineProps({
 });
 
 const iconName = computed(() => {
-	console.log(`#icon-${props.name}`);
 	return `#icon-${props.name}`;
 });
 </script>

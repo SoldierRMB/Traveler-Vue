@@ -29,7 +29,7 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
-                additionalData: `@use "@/assets/scss/index.scss" as *;`
+                additionalData: `@use "@/assets/scss/index.scss" as *; @use "@/assets/scss/dark.scss";`
             }
         }
     },
@@ -37,9 +37,6 @@ export default defineConfig({
         vue(),
         vueJsx(),
         VueDevTools(),
-        ElementPlus({
-            useSource: true
-        }),
         createSvgIconsPlugin({
             iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
             symbolId: 'icon-[dir]-[name]',
@@ -58,7 +55,11 @@ export default defineConfig({
         }),
         Components({
             resolvers: [
-                ElementPlusResolver(),
+                ElementPlusResolver({
+                    importStyle: 'sass',
+                    directives: true,
+                    version: '2.1.5'
+                }),
                 IconsResolver({
                     enabledCollections: ['ep']
                 })
@@ -71,7 +72,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
+            '@': `${path.resolve(__dirname, 'src')}/`
         }
     }
 })

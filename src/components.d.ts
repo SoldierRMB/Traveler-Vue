@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
@@ -19,12 +20,14 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMoon: typeof import('element-plus/es')['ElMoon']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     Footer: typeof import('./components/common/Footer.vue')['default']
     Header: typeof import('./components/common/Header.vue')['default']
     IEpMoon: typeof import('~icons/ep/moon')['default']
     IEpSunny: typeof import('~icons/ep/sunny')['default']
+    IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     Main: typeof import('./components/common/Main.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
