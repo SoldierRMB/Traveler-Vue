@@ -16,6 +16,12 @@ const router = createRouter({
             meta: { title: '行者旅游在线预订平台' }
         },
         {
+            path: '/home',
+            name: 'home',
+            component: () => import('@/views/Home.vue'),
+            meta: { title: '【行者】个人中心' }
+        },
+        {
             path: '/:catchAll(.*)',
             name: '404',
             component: () => import('@/views/error/404.vue'),

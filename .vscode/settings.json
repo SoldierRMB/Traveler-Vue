@@ -4,5 +4,8 @@
     },
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "cSpell.words": ["cascader"]
+    "cSpell.words": ["cascader"],
+    "[svg]": {
+        "editor.defaultFormatter": "jock.svg"
+    }
 }
