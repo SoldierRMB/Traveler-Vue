@@ -33,8 +33,12 @@
                             </template>
                         </el-avatar>
                     </template>
-                    <div class="childPopper">
+                    <div class="childPopper" v-show="isAuthenticated">
+                        <div>个人中心</div>
                         <div>退出登录</div>
+                    </div>
+                    <div class="childPopper" v-show="!isAuthenticated">
+                        <div>登录</div>
                     </div>
                 </el-popover>
             </div>
@@ -77,6 +81,9 @@
 <script setup lang="ts">
 import { useDark, useToggle } from '@vueuse/core';
 import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/location';
+import { useAuthStore } from '@/stores/auth';
+
+const isAuthenticated = useAuthStore().isAuthenticated;
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
