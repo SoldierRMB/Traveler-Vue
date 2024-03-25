@@ -1,17 +1,20 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
 
-import SvgIcon from '@/assets/icons/index'
-import 'virtual:svg-icons-register'
+import SvgIcon from '@/assets/icons/index';
+import 'virtual:svg-icons-register';
 
-const app = createApp(App)
+import 'element-plus/theme-chalk/el-message.css';
+import 'element-plus/theme-chalk/el-message-box.css';
 
-app.use(createPinia())
-app.use(router)
+const app = createApp(App);
 
-app.use(SvgIcon)
+app.use(createPinia());
+app.use(router);
 
-app.mount('#app')
+app.use(SvgIcon);
+
+app.mount('#app');

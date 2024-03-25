@@ -21,6 +21,7 @@
     "axios": "^1.6.8",
     "element-plus": "^2.6.1",
     "fast-glob": "^3.3.2",
+    "jwt-decode": "^4.0.0",
     "pinia": "^2.1.7",
     "sass": "^1.72.0",
     "unplugin-auto-import": "^0.17.5",

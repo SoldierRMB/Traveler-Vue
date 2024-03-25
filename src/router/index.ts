@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +22,6 @@ const router = createRouter({
             meta: { title: '找不到了哦' }
         }
     ]
-})
+});
 
-export default router
+export default router;
