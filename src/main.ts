@@ -5,7 +5,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 import router from './router';
 
-import SvgIcon from '@/assets/icons/index';
+import SvgIcon from '@/components/icon/SvgIcon.vue';
 import 'virtual:svg-icons-register';
 
 import 'element-plus/theme-chalk/el-message.css';
@@ -19,6 +19,6 @@ pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(router);
 
-app.use(SvgIcon);
+app.component('svg-icon', SvgIcon);
 
 app.mount('#app');

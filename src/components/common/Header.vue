@@ -34,7 +34,7 @@
                         </el-avatar>
                     </template>
                     <div class="childPopper" v-show="isAuthenticated">
-                        <div>个人中心</div>
+                        <div @click="goToHome()">个人中心</div>
                         <div>退出登录</div>
                     </div>
                     <div class="childPopper" v-show="!isAuthenticated">
@@ -74,6 +74,11 @@
                     </template>
                 </el-button>
             </div>
+            <div class="github">
+                <el-icon @click="redirectToGithub">
+                    <SvgIcon name="github" size="20"/>
+                </el-icon>
+            </div>
         </div>
     </div>
 </template>
@@ -82,10 +87,16 @@
 import { useDark, useToggle } from '@vueuse/core';
 import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/location';
 import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
 
 const search = ref('');
 
-const isAuthenticated = useAuthStore().isAuthenticated;
+const store = useAuthStore();
+const isAuthenticated = store.isAuthenticated;
+
+const goToHome = () => {
+    router.push('/home');
+};
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
@@ -130,6 +141,10 @@ const handleChange = async () => {
     const node = optionsRef.value.getCheckedNodes()[0].value;
     console.log(node);
 };
+
+const redirectToGithub = () => {
+    window.open('https://github.com/SoldierRMB/Traveler', '_blank');
+}
 </script>
 
 <style scoped lang="scss">
@@ -161,7 +176,7 @@ const handleChange = async () => {
             padding-left: 2rem;
 
             .search {
-                width: 50rem;
+                width: 40rem;
             }
 
             &:deep(.el-cascader .el-input__wrapper) {
@@ -221,6 +236,14 @@ const handleChange = async () => {
 
         .searchButton {
             display: none;
+            padding-left: 2rem;
+        }
+
+        .github {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
             padding-left: 2rem;
         }
     }

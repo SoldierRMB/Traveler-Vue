@@ -1,6 +1,6 @@
 <template>
     <svg aria-hidden="true">
-        <use :xlink:href="iconName" :fill="color" />
+        <use :xlink:href="iconName" :fill="color" :height="size" :width="size" />
     </svg>
 </template>
 
@@ -14,6 +14,10 @@ const props = defineProps({
     color: {
         type: String,
         required: false
+    },
+    size: {
+        type: String,
+        required: false
     }
 });
 
@@ -21,6 +25,7 @@ const iconName = computed(() => {
     return `#icon-${props.name}`;
 });
 </script>
+
 <style scoped lang="scss">
 .svg-icon {
     fill: currentColor;

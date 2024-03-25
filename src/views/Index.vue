@@ -38,7 +38,6 @@ import Footer from '@/components/common/Footer.vue';
     display: flex;
     justify-content: center;
     width: 100%;
-    // background-color: #f3f5f5;
 }
 
 .footer {

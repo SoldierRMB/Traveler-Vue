@@ -56,6 +56,7 @@ body,
         text-align: center;
         width: 100%;
         gap: 1rem 0;
+        user-select: none;
 
         div:nth-child(n):hover {
             color: var(--el-color-primary);
