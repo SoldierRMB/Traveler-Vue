@@ -3,7 +3,7 @@
         <div class="left">
             <div class="logo">Traveler</div>
             <div class="searchBox">
-                <el-input v-model="input" placeholder="✨搜索点旅游相关的吧" class="search">
+                <el-input v-model="search" placeholder="✨搜索点旅游相关的吧" class="search">
                     <template #prepend>
                         <el-cascader
                             ref="optionsRef"
@@ -38,7 +38,7 @@
                         <div>退出登录</div>
                     </div>
                     <div class="childPopper" v-show="!isAuthenticated">
-                        <div>登录</div>
+                        <div @click="$router.push('/login')">登录</div>
                     </div>
                 </el-popover>
             </div>
@@ -83,14 +83,12 @@ import { useDark, useToggle } from '@vueuse/core';
 import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/location';
 import { useAuthStore } from '@/stores/auth';
 
+const search = ref('');
+
 const isAuthenticated = useAuthStore().isAuthenticated;
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-
-const input = ref('');
-
-const cityCode = ref();
 
 interface Province {
     code: number;
@@ -102,22 +100,22 @@ interface City {
     name: string;
 }
 
-const provinces = ref([]);
-const cities = ref();
+const cityCode = ref();
 const options = ref([{}]);
 const optionsRef = ref();
+const provinces = ref([]);
 
 const init = async () => {
-    const provincesRes = await apiGetAllProvinces();
-    provinces.value = provincesRes.data;
+    provinces.value = (await apiGetAllProvinces()).data;
 
     options.value = await Promise.all(
         provinces.value.map(async (province: Province) => {
-            const cityRes = await apiGetCitiesByProvinceCode(province.code);
-            const cities = cityRes.data.map((city: City) => ({
-                value: city.code,
-                label: city.name
-            }));
+            const cities = (await apiGetCitiesByProvinceCode(province.code)).data.map(
+                (city: City) => ({
+                    value: city.code,
+                    label: city.name
+                })
+            );
             return {
                 value: province.code,
                 label: province.name,
