@@ -16,21 +16,20 @@
 </template>
 
 <script setup lang="ts">
-import Header from '@/components/common/Header.vue'
-import Main from '@/components/common/Main.vue'
-import Footer from '@/components/common/Footer.vue'
+import Header from '@/components/common/Header.vue';
+import Main from '@/components/common/Main.vue';
+import Footer from '@/components/common/Footer.vue';
 </script>
 
 <style scoped lang="scss">
 .containerBox {
     display: flex;
-    min-height: 100%;
-    transition: opacity 0.3s ease;
+    min-height: 100vh;
 }
 
 .header {
     display: flex;
-	justify-content: center;
+    justify-content: center;
     flex-direction: column;
     border-bottom: 1px solid #d6d6d6;
 }
@@ -39,7 +38,7 @@ import Footer from '@/components/common/Footer.vue'
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: 2rem 6rem;
+    // background-color: #f3f5f5;
 }
 
 .footer {

@@ -1,5 +1,5 @@
 <template>
-    <div>403 Forbidden</div>
+    <div>旅游订票</div>
 </template>
 
 <script setup lang="ts"></script>

@@ -6,8 +6,10 @@
                 <el-input v-model="input" placeholder="✨搜索点旅游相关的吧" class="search">
                     <template #prepend>
                         <el-cascader
+                            ref="optionsRef"
                             v-model="cityCode"
-                            :options="cities"
+                            :options="options"
+                            @change="handleChange()"
                             placeholder="城市"
                         />
                     </template>
@@ -61,58 +63,68 @@
                     </div>
                 </el-popover>
             </div>
+            <div class="searchButton">
+                <el-button type="primary" circle>
+                    <template #icon>
+                        <el-icon size="2rem" color="#fff"><i-ep-search /> </el-icon>
+                    </template>
+                </el-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
+import { useDark, useToggle } from '@vueuse/core';
+import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/location';
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
-const input = ref('')
+const input = ref('');
 
-const cityCode = ref()
+const cityCode = ref();
+
+interface Province {
+    code: number;
+    name: string;
+}
 
 interface City {
-    value: number
-    label: string
-}
-interface Province {
-    value: number
-    label: string
-    children: City[]
+    code: number;
+    name: string;
 }
 
-const city1: City = {
-    value: 1101,
-    label: '北京市'
-}
+const provinces = ref([]);
+const cities = ref();
+const options = ref([{}]);
+const optionsRef = ref();
 
-const province1: Province = {
-    value: 11,
-    label: '北京',
-    children: [city1]
-}
+const init = async () => {
+    const provincesRes = await apiGetAllProvinces();
+    provinces.value = provincesRes.data;
 
-const city2: City = {
-    value: 1301,
-    label: '石家庄市'
-}
+    options.value = await Promise.all(
+        provinces.value.map(async (province: Province) => {
+            const cityRes = await apiGetCitiesByProvinceCode(province.code);
+            const cities = cityRes.data.map((city: City) => ({
+                value: city.code,
+                label: city.name
+            }));
+            return {
+                value: province.code,
+                label: province.name,
+                children: cities
+            };
+        })
+    );
+};
+init();
 
-const city3: City = {
-    value: 1302,
-    label: '保定市'
-}
-
-const province2: Province = {
-    value: 13,
-    label: '河北',
-    children: [city2, city3]
-}
-
-const cities = ref([province1, province2])
+const handleChange = async () => {
+    const node = optionsRef.value.getCheckedNodes()[0].value;
+    console.log(node);
+};
 </script>
 
 <style scoped lang="scss">
@@ -129,7 +141,9 @@ const cities = ref([province1, province2])
             display: flex;
             align-items: center;
             justify-content: center;
-            font: italic 3rem "Fira Sans", serif;
+            font:
+                italic 3rem 'Fira Sans',
+                serif;
             letter-spacing: 2px;
             color: var(--el-color-primary);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -137,6 +151,7 @@ const cities = ref([province1, province2])
 
         .searchBox {
             display: flex;
+            flex: auto;
             align-items: center;
             padding-left: 2rem;
 
@@ -198,10 +213,34 @@ const cities = ref([province1, province2])
                 padding-left: 2rem;
             }
         }
+
+        .searchButton {
+            display: none;
+            padding-left: 2rem;
+        }
     }
 }
 
 :deep(.el-switch__action) {
     box-shadow: 2px 2px 6px 0 #0000001a;
 }
+
+@media screen and (max-width: 768px) {
+    .left {
+        .search {
+            display: none;
+        }
+    }
+
+    .right {
+        .langSwitcher {
+            display: none !important;
+        }
+
+        .searchButton {
+            display: block !important;
+        }
+    }
+}
 </style>
+@/utils/api

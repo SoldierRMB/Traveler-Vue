@@ -1,5 +1,5 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
+require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
     root: true,
@@ -13,6 +13,7 @@ module.exports = {
         ecmaVersion: 'latest'
     },
     rules: {
+        'stylelint/css-semicolon-expectation': null,
         'vue/multi-word-component-names': 0
     }
-}
+};
