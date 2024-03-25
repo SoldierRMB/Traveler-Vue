@@ -6,36 +6,36 @@
 export {}
 
 declare module 'vue' {
-    export interface GlobalComponents {
-        Booking: (typeof import('./components/booking/Booking.vue'))['default'];
-        ElAvatar: (typeof import('element-plus/es'))['ElAvatar'];
-        ElBacktop: (typeof import('element-plus/es'))['ElBacktop'];
-        ElButton: (typeof import('element-plus/es'))['ElButton'];
-        ElCard: (typeof import('element-plus/es'))['ElCard'];
-        ElCascader: (typeof import('element-plus/es'))['ElCascader'];
-        ElContainer: (typeof import('element-plus/es'))['ElContainer'];
-        ElFooter: (typeof import('element-plus/es'))['ElFooter'];
-        ElForm: (typeof import('element-plus/es'))['ElForm'];
-        ElFormItem: (typeof import('element-plus/es'))['ElFormItem'];
-        ElHeader: (typeof import('element-plus/es'))['ElHeader'];
-        ElIcon: (typeof import('element-plus/es'))['ElIcon'];
-        ElInput: (typeof import('element-plus/es'))['ElInput'];
-        ElMain: (typeof import('element-plus/es'))['ElMain'];
-        ElPopover: (typeof import('element-plus/es'))['ElPopover'];
-        ElSpace: (typeof import('element-plus/es'))['ElSpace'];
-        ElSwitch: (typeof import('element-plus/es'))['ElSwitch'];
-        ElTabPane: (typeof import('element-plus/es'))['ElTabPane'];
-        ElTabs: (typeof import('element-plus/es'))['ElTabs'];
-        Footer: (typeof import('./components/common/Footer.vue'))['default'];
-        Header: (typeof import('./components/common/Header.vue'))['default'];
-        IEpMoon: (typeof import('~icons/ep/moon'))['default'];
-        IEpSearch: (typeof import('~icons/ep/search'))['default'];
-        IEpSunny: (typeof import('~icons/ep/sunny'))['default'];
-        IEpUserFilled: (typeof import('~icons/ep/user-filled'))['default'];
-        Main: (typeof import('./components/common/Main.vue'))['default'];
-        Post: (typeof import('./components/post/Post.vue'))['default'];
-        RouterLink: (typeof import('vue-router'))['RouterLink'];
-        RouterView: (typeof import('vue-router'))['RouterView'];
-        SvgIcon: (typeof import('./components/icon/SvgIcon.vue'))['default'];
-    }
+  export interface GlobalComponents {
+    Booking: typeof import('./components/booking/Booking.vue')['default']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
+    ElBacktop: typeof import('element-plus/es')['ElBacktop']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
+    ElCascader: typeof import('element-plus/es')['ElCascader']
+    ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElFooter: typeof import('element-plus/es')['ElFooter']
+    ElForm: (typeof import('element-plus/es'))['ElForm']
+    ElFormItem: (typeof import('element-plus/es'))['ElFormItem']
+    ElHeader: typeof import('element-plus/es')['ElHeader']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElMain: typeof import('element-plus/es')['ElMain']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElSpace: typeof import('element-plus/es')['ElSpace']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
+    Footer: typeof import('./components/common/Footer.vue')['default']
+    Header: typeof import('./components/common/Header.vue')['default']
+    IEpMoon: typeof import('~icons/ep/moon')['default']
+    IEpSearch: typeof import('~icons/ep/search')['default']
+    IEpSunny: typeof import('~icons/ep/sunny')['default']
+    IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
+    Main: typeof import('./components/common/Main.vue')['default']
+    Post: typeof import('./components/post/Post.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./components/icon/SvgIcon.vue')['default']
+  }
 }
