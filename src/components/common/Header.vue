@@ -167,6 +167,7 @@ const redirectToGithub = () => {
             letter-spacing: 2px;
             color: var(--el-color-primary);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            user-select: none;
         }
 
         .searchBox {

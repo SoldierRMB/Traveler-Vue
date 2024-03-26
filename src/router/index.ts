@@ -19,7 +19,21 @@ const router = createRouter({
             path: '/home',
             name: 'home',
             component: () => import('@/views/Home.vue'),
-            meta: { title: '【行者】个人中心' }
+            meta: { title: '【行者】个人中心' },
+            children: [
+                {
+                    path: '/attractions',
+                    name: 'attractions',
+                    component: () => import('@/components/admin/Attractions.vue'),
+                    meta: { title: '景点列表' }
+                },
+                {
+                    path: '/review',
+                    name: 'review',
+                    component: () => import('@/components/admin/ReviewAttractions.vue'),
+                    meta: { title: '景点审核' }
+                }
+            ]
         },
         {
             path: '/:catchAll(.*)',

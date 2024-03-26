@@ -35,14 +35,12 @@ body,
 }
 
 ::-webkit-scrollbar-track {
-    border-radius: 8px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
-    background: #bbb;
+    background: #e3e3e38e;
 }
 
 .avatar,

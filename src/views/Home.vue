@@ -3,8 +3,8 @@
         <el-container>
             <el-aside width="auto" class="aside">
                 <el-scrollbar>
-                    <el-menu default-active="/" router>
-                        <el-menu-item index="/">
+                    <el-menu default-active="/home" router>
+                        <el-menu-item index="/home">
                             <i class="el-icon">
                                 <SvgIcon name="home"></SvgIcon>
                             </i>
@@ -17,11 +17,17 @@
                                 </i>
                                 <span>景点管理</span>
                             </template>
-                            <el-menu-item index="/attraction">
+                            <el-menu-item index="/attractions">
                                 <i class="el-icon">
                                     <SvgIcon name="image"></SvgIcon>
                                 </i>
                                 <span>景点列表</span>
+                            </el-menu-item>
+                            <el-menu-item index="/review">
+                                <i class="el-icon">
+                                    <SvgIcon name="bulb"></SvgIcon>
+                                </i>
+                                <span>景点审核</span>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-sub-menu index="2">
@@ -76,7 +82,14 @@
                 </el-scrollbar>
             </el-aside>
             <el-container>
-                <el-header class="header"> </el-header>
+                <el-header class="header">
+                    <div class="left">
+                        <div>后台管理系统</div>
+                    </div>
+                    <div class="right">
+                        <el-button type="info" @click="logout">退出</el-button>
+                    </div>
+                </el-header>
                 <el-main class="main">
                     <router-view></router-view>
                 </el-main>
@@ -92,7 +105,33 @@
     <el-backtop :right="100" :bottom="100" />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
+import { ElMessage } from 'element-plus';
+
+const store = useAuthStore();
+
+interface User {
+    authorities: string[];
+    exp: number;
+    iat: number;
+    nbf: number;
+    username: string;
+}
+const user = store.user as User;
+const userRole = user.authorities[0];
+console.log(userRole);
+
+
+const logout = () => {
+    store.$reset();
+    router.push('/').then(() => {
+        window.location.reload();
+        ElMessage({ message: '退出成功', type: 'success' });
+    });
+};
+</script>
 
 <style lang="scss" scoped>
 .container {
@@ -119,20 +158,22 @@
 }
 
 .header {
-    height: auto;
-    padding: 0;
     display: flex;
-    flex-direction: column;
-    font-size: 1.4rem;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem 2rem;
 
-    div {
-        padding: 0.2rem 1rem;
+    .left {
+        font: 600 2rem '微软雅黑';
+    }
+
+    .right {
+        margin-left: auto;
     }
 }
 
 .main {
     display: flex;
-    justify-content: center;
     width: 100%;
     flex-direction: column;
 }
