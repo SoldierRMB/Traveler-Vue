@@ -87,10 +87,10 @@ const login = async () => {
             });
             const token = response.data;
             const authStore = useAuthStore();
-            authStore.setAuth(!!token);
-            authStore.setToken(token);
+            authStore.$patch({ isAuthenticated: !!token });
+            authStore.$patch({ token: token });
             const decode = jwtDecode(token);
-            authStore.setUser(decode);
+            authStore.$patch({ user: decode });
             router.push('/');
         } else {
             ElMessage.error('请输入完整信息');

@@ -3,7 +3,7 @@
         <el-container>
             <el-aside width="auto" class="aside">
                 <el-scrollbar>
-                    <el-menu default-active="/home" router>
+                    <el-menu :default-active="$route.path" router>
                         <el-menu-item index="/home">
                             <i class="el-icon">
                                 <SvgIcon name="home"></SvgIcon>
@@ -109,20 +109,13 @@
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 import { ElMessage } from 'element-plus';
+import { jwtDecode } from 'jwt-decode';
+import type { JwtPayload } from 'jwt-decode';
 
 const store = useAuthStore();
-
-interface User {
-    authorities: string[];
-    exp: number;
-    iat: number;
-    nbf: number;
-    username: string;
-}
-const user = store.user as User;
-const userRole = user.authorities[0];
+const token = store.token;
+const userRole = jwtDecode<JwtPayload>(token).aud![0];
 console.log(userRole);
-
 
 const logout = () => {
     store.$reset();

@@ -1,20 +1,16 @@
 import { defineStore } from 'pinia';
-import type { AttractionVO, UserVO } from '@/types/interfaces';
+import type { AttractionVO, UserVO, ProvinceVO, CityVO, AreaVO, StreetVO } from '@/types/interfaces';
 
 export const useUserAttractionStore = defineStore('user-attraction', {
     state() {
         return {
             attraction: {} as AttractionVO,
-            user: {} as UserVO
+            user: {} as UserVO,
+            province: {} as ProvinceVO,
+            city: {} as CityVO,
+            area: {} as AreaVO,
+            street: {} as StreetVO
         };
-    },
-    actions: {
-        setAttraction(attraction: AttractionVO) {
-            this.attraction = attraction;
-        },
-        setUser(user: UserVO) {
-            this.user = user;
-        }
     },
     persist: true
 });
