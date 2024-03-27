@@ -85,7 +85,7 @@
 
 <script setup lang="ts">
 import { useDark, useToggle } from '@vueuse/core';
-import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/location';
+import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/common';
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 
