@@ -5,13 +5,15 @@ const axiosInstance: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_TRAVELER_BASE_URL,
     timeout: 5000
 });
+const whitelist = ['/user', '/common'];
 //添加请求拦截器
 axiosInstance.interceptors.request.use(
     (config) => {
         // 在发送请求之前做些什么
         const store = useAuthStore();
         const token = store.token;
-        if (token && !config.url?.includes('/login')) {
+        const isInWhitelist = whitelist.some((path) => config.url?.startsWith(path));
+        if (!isInWhitelist && token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
@@ -29,7 +31,11 @@ axiosInstance.interceptors.response.use(
     },
     (error: any) => {
         // 处理响应错误
-        ElMessage.error(error.response?.data.message || '请求失败');
+        if (error.code == 'ERR_NETWORK') {
+            ElMessage.error('网络连接错误');
+        } else {
+            ElMessage.error(error.response?.data.message || '请求失败');
+        }
         return Promise.reject(error);
     }
 );

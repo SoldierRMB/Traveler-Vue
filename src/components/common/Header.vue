@@ -112,9 +112,9 @@ interface City {
 }
 
 const cityCode = ref();
-const options = ref([{}]);
+const options = ref();
 const optionsRef = ref();
-const provinces = ref([]);
+const provinces = ref();
 
 const init = async () => {
     provinces.value = (await apiGetAllProvinces()).data;

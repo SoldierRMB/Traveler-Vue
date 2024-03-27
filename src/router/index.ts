@@ -28,6 +28,12 @@ const router = createRouter({
                     meta: { title: '景点列表' }
                 },
                 {
+                    path: '/attractions/:id',
+                    name: 'attraction-details',
+                    component: () => import('@/components/admin/AttractionDetails.vue'),
+                    meta: { title: '景点详情' }
+                },
+                {
                     path: '/review',
                     name: 'review',
                     component: () => import('@/components/admin/ReviewAttractions.vue'),
