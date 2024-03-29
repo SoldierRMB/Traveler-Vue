@@ -1,12 +1,23 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router';
-</script>
-
 <template>
-    <RouterView />
+    <el-config-provider :locale="locale" :button="config">
+        <RouterView />
+    </el-config-provider>
 </template>
 
-<style lang="css">
+<script setup lang="ts">
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
+import en from 'element-plus/dist/locale/en.mjs';
+import { RouterView } from 'vue-router';
+import { useI18nStore } from '@/stores/i18n';
+
+const i18nStore = useI18nStore();
+const locale = computed(() => (i18nStore.language === 'zh-cn' ? zhCn : en));
+const config = reactive({
+    autoInsertSpace: true
+});
+</script>
+
+<style lang="scss">
 * {
     margin: 0;
     padding: 0;
@@ -41,25 +52,5 @@ body,
 ::-webkit-scrollbar-thumb {
     border-radius: 8px;
     background: #e3e3e38e;
-}
-
-.avatar,
-.lang {
-    display: flex;
-    justify-content: center;
-
-    .childPopper {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        width: 100%;
-        gap: 1rem 0;
-        user-select: none;
-
-        div:nth-child(n):hover {
-            color: var(--el-color-primary);
-            cursor: pointer;
-        }
-    }
 }
 </style>
