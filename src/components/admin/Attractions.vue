@@ -1,10 +1,17 @@
 <template>
     <div>
+        <div class="filter">
+            <el-input v-model="keyword" placeholder="请输入景点名称" class="search"></el-input>
+            <el-button type="primary" @click="searchAttractions" class="searchButton"
+                >搜索</el-button
+            >
+        </div>
         <el-table
             :data="userAttractions"
             stripe
             highlight-current-row
             :default-sort="{ prop: 'createTime', order: 'descending' }"
+            @row-click="goToAttraction"
         >
             <el-table-column
                 align="center"
@@ -12,44 +19,27 @@
                 label="景点名称"
                 min-width="150"
             />
-            <el-table-column
-                align="center"
-                prop="attractionVO.provinceCode"
-                label="省级编码"
-                min-width="80"
-            />
-            <el-table-column
-                align="center"
-                prop="attractionVO.cityCode"
-                label="地级编码"
-                min-width="80"
-            />
-            <el-table-column
-                align="center"
-                prop="attractionVO.areaCode"
-                label="县级编码"
-                min-width="80"
-            />
-            <el-table-column
-                align="center"
-                prop="attractionVO.streetCode"
-                label="乡级编码"
-                min-width="100"
-            />
+            <el-table-column align="center" prop="provinceVO.name" label="省份" min-width="80" />
+            <el-table-column align="center" prop="cityVO.name" label="城市" min-width="80" />
+            <el-table-column align="center" prop="areaVO.name" label="县区" min-width="80" />
+            <el-table-column align="center" prop="streetVO.name" label="街道" min-width="100" />
             <el-table-column
                 align="center"
                 prop="attractionVO.reviewed"
                 label="审核状态"
                 min-width="100"
+                :filters="[
+                    { text: '审核通过', value: '1' },
+                    { text: '审核不通过', value: '2' }
+                ]"
+                :filter-method="filterReviewed"
+                filter-placement="bottom-end"
             >
                 <template #default="scope">
-                    <el-tag type="warning" v-show="scope.row.attractionVO.reviewed == 0"
-                        >未审核</el-tag
-                    >
                     <el-tag type="success" v-show="scope.row.attractionVO.reviewed == 1"
                         >审核通过</el-tag
                     >
-                    <el-tag type="error" v-show="scope.row.attractionVO.reviewed == 3"
+                    <el-tag type="danger" v-show="scope.row.attractionVO.reviewed == 2"
                         >审核不通过</el-tag
                     >
                 </template>
@@ -64,7 +54,7 @@
                     <el-tag type="info" v-show="scope.row.attractionVO.isDeleted == 0"
                         >未删除</el-tag
                     >
-                    <el-tag type="error" v-show="scope.row.attractionVO.isDeleted == 1"
+                    <el-tag type="danger" v-show="scope.row.attractionVO.isDeleted == 1"
                         >已删除</el-tag
                     >
                 </template>
@@ -76,53 +66,47 @@
 </template>
 
 <script setup lang="ts">
-import moment from 'moment';
-import { apiGetAllUserAttractions } from '@/api/userAttraction';
+import { loadUserAttractions, goToAttractionDetails } from '@/common/common';
 
-interface UserAttractionVO {
-    userVO: UserVO;
-    attractionVO: AttractionVO;
-}
+const userAttractions = ref();
 
-interface AttractionVO {
-    id: number;
-    attractionName: string;
-    description: string;
-    location: string;
-    score?: any;
-    provinceCode: number;
-    cityCode: number;
-    areaCode: number;
-    streetCode: number;
-    reviewed: number;
-    isDeleted: number;
-    createTime: string;
-    updateTime: string;
-}
+onMounted(async () => {
+    userAttractions.value = await loadUserAttractions(true);
+});
 
-interface UserVO {
-    id: number;
-    username: string;
-    password?: any;
-    email: string;
-    userType?: any;
-    code?: any;
-}
-
-const userAttractions = ref<UserAttractionVO[]>([]);
-
-const init = async () => {
-    userAttractions.value = (await apiGetAllUserAttractions()).data.map((attraction) => {
-        return {
-            userVO: attraction.userVO,
-            attractionVO: attraction.attractionVO,
-            createTime: moment(attraction.attractionVO.createTime).format('YYYY-MM-DD'),
-            updateTime: moment(attraction.attractionVO.updateTime).format('YYYY-MM-DD')
-        };
-    });
+const goToAttraction = (row: any) => {
+    goToAttractionDetails(row);
 };
 
-init();
+const keyword = ref('');
+
+const searchAttractions = async () => {};
+
+const filterReviewed = (value: any, row: any) => {
+    return row.attractionVO.reviewed === value;
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.filter {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2rem;
+
+    .search {
+        max-width: 20rem;
+    }
+
+    .searchButton {
+        margin-left: 2rem;
+    }
+}
+
+:deep(.el-table__row) {
+    cursor: pointer;
+
+    &:hover {
+        color: var(--el-color-primary);
+    }
+}
+</style>
