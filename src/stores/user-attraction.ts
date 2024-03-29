@@ -17,13 +17,22 @@ export const useUserAttractionStore = defineStore(
         const city = ref<CityVO>({} as CityVO);
         const area = ref<AreaVO>({} as AreaVO);
         const street = ref<StreetVO>({} as StreetVO);
+        const $reset = () => {
+            attraction.value = {} as AttractionVO;
+            user.value = {} as UserVO;
+            province.value = {} as ProvinceVO;
+            city.value = {} as CityVO;
+            area.value = {} as AreaVO;
+            street.value = {} as StreetVO;
+        }
         return {
             attraction,
             user,
             province,
             city,
             area,
-            street
+            street,
+            $reset
         };
     },
     { persist: true }
