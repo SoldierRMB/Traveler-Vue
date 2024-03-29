@@ -1,53 +1,87 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import { jwtDecode } from 'jwt-decode';
+import type { JwtPayload } from 'jwt-decode';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/login',
-            name: 'login',
+            name: 'Login',
             component: () => import('@/views/Login.vue'),
             meta: { title: '【行者】登录' }
         },
         {
             path: '/',
-            name: 'index',
+            name: 'Index',
             component: () => import('@/views/Index.vue'),
             meta: { title: '行者旅游在线预订平台' }
         },
         {
             path: '/home',
-            name: 'home',
+            name: 'Home',
             component: () => import('@/views/Home.vue'),
-            meta: { title: '【行者】个人中心' },
+            meta: { title: '【行者】个人中心', requiresAuth: true },
             children: [
                 {
                     path: '/attractions',
-                    name: 'attractions',
-                    component: () => import('@/components/admin/Attractions.vue'),
-                    meta: { title: '景点列表' }
-                },
-                {
-                    path: '/attractions/:id',
-                    name: 'attraction-details',
-                    component: () => import('@/components/admin/AttractionDetails.vue'),
-                    meta: { title: '景点详情' }
+                    name: 'Attractions',
+                    component: () => import('@/components/attraction/Attractions.vue'),
+                    meta: { title: '景点列表', roles: ['ROLE_ADMIN'] }
                 },
                 {
                     path: '/review',
-                    name: 'review',
-                    component: () => import('@/components/admin/ReviewAttractions.vue'),
-                    meta: { title: '景点审核' }
+                    name: 'Review',
+                    component: () => import('@/components/attraction/ReviewAttractions.vue'),
+                    meta: { title: '景点审核', roles: ['ROLE_ADMIN'] }
+                },
+                {
+                    path: '/attractions/:id',
+                    name: 'AttractionDetails',
+                    component: () => import('@/components/attraction/AttractionDetails.vue'),
+                    meta: { title: '景点详情', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
                 }
             ]
+        },
+        {
+            path: '/403',
+            name: '403',
+            component: () => import('@/views/error/403.vue'),
+            meta: { title: '403 Forbidden' }
         },
         {
             path: '/:catchAll(.*)',
             name: '404',
             component: () => import('@/views/error/404.vue'),
-            meta: { title: '找不到了哦' }
+            meta: { title: '404 Not Found' }
         }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore();
+    const isAuthenticated = authStore.isAuthenticated;
+    const requiredRoles = (to.meta.roles as string[]) || [];
+    if (to.meta.requiresAuth && isAuthenticated == false) {
+        ElMessage.error('请先登录');
+        next('/login');
+    } else if (requiredRoles.length != 0) {
+        const token = authStore.token;
+        const userRole = jwtDecode<JwtPayload>(token).aud![0];
+        if (!requiredRoles.includes(userRole)) {
+            ElMessage.warning('您没有权限访问此页面');
+            next('/403');
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+router.afterEach((to) => {
+    document.title = to.meta.title as string;
 });
 
 export default router;

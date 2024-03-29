@@ -109,20 +109,13 @@
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 import { ElMessage } from 'element-plus';
-import { jwtDecode } from 'jwt-decode';
-import type { JwtPayload } from 'jwt-decode';
 
-const store = useAuthStore();
-const token = store.token;
-const userRole = jwtDecode<JwtPayload>(token).aud![0];
-console.log(userRole);
+const authStore = useAuthStore();
 
 const logout = () => {
-    store.$reset();
-    router.push('/').then(() => {
-        window.location.reload();
-        ElMessage({ message: '退出成功', type: 'success' });
-    });
+    authStore.$reset();
+    router.push('/').then(() => location.reload());
+    ElMessage({ message: '退出成功', type: 'success' });
 };
 </script>
 
