@@ -1,13 +1,13 @@
 import request from '@/utils/request';
 
-export const apiGetAllUserAttractions = async () => {
-    return await request.get('/admin/getAllUserAttractions');
+export const apiGetUserAttractions = async () => {
+    return await request.get('/admin/getUserAttractions');
 };
 
-export const apiGetAllUnreviewedAttractions = async () => {
-    return await request.get('/admin/getAllUnreviewedAttractions');
+export const apiGetUnreviewedUserAttractions = async () => {
+    return await request.get('/admin/getUnreviewedUserAttractions');
 };
 
-export const apiReviewViewpoints = async (data: any) => {
-    return await request.put('/admin/reviewViewpoints', data);
+export const apiReviewAttractions = async (data: number[], pass: boolean) => {
+    return await request.put('/admin/reviewAttractions', data, { params: { pass } });
 };
