@@ -140,6 +140,7 @@ const logout = () => {
 
 .el-menu {
     border-right: 0 !important;
+    user-select: none;
 }
 
 .el-sub-menu__title span {
