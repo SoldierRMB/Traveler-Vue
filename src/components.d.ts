@@ -7,8 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AttractionDetails: typeof import('./components/admin/AttractionDetails.vue')['default']
-    Attractions: typeof import('./components/admin/Attractions.vue')['default']
+    AttractionDetails: typeof import('./components/attraction/AttractionDetails.vue')['default']
+    Attractions: typeof import('./components/attraction/Attractions.vue')['default']
     Booking: typeof import('./components/booking/Booking.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -51,7 +51,7 @@ declare module 'vue' {
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     Main: typeof import('./components/common/Main.vue')['default']
     Post: typeof import('./components/post/Post.vue')['default']
-    ReviewAttractions: typeof import('./components/admin/ReviewAttractions.vue')['default']
+    ReviewAttractions: typeof import('./components/attraction/ReviewAttractions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./components/icon/SvgIcon.vue')['default']
