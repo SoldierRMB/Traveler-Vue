@@ -37,9 +37,9 @@
                                 </i>
                                 <span>动态管理</span>
                             </template>
-                            <el-menu-item index="/article-list">
+                            <el-menu-item index="/posts">
                                 <i class="el-icon">
-                                    <SvgIcon name="article-list"></SvgIcon>
+                                    <SvgIcon name="book"></SvgIcon>
                                 </i>
                                 <span>动态列表</span>
                             </el-menu-item>
