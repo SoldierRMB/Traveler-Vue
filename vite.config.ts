@@ -5,6 +5,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ElementPlus from 'unplugin-element-plus/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
@@ -52,16 +53,15 @@ export default defineConfig({
         }),
         Components({
             resolvers: [
-                ElementPlusResolver({
-                    importStyle: 'sass',
-                    directives: true,
-                    version: '2.1.5'
-                }),
+                ElementPlusResolver(),
                 IconsResolver({
                     enabledCollections: ['ep']
                 })
             ],
             dts: path.resolve(pathSrc, 'components.d.ts')
+        }),
+        ElementPlus({
+            useSource: true
         }),
         Icons({
             autoInstall: true
@@ -72,4 +72,4 @@ export default defineConfig({
             '@': `${path.resolve(__dirname, 'src')}/`
         }
     }
-})
+});
