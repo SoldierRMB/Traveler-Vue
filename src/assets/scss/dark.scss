@@ -1,11 +1,11 @@
 @forward 'element-plus/theme-chalk/src/dark/var.scss' with (
     $colors: (
         'primary': (
-            'base': #64c864
+            'base': rgb(100, 200, 100)
         )
     ),
     $text-color: (
-        'primary': #ffffff
+        'primary': rgb(255, 255, 255)
     )
 );
 
