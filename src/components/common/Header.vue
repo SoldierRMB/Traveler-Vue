@@ -25,22 +25,24 @@
         </div>
         <div class="right">
             <div class="avatarBox">
-                <el-popover trigger="hover" placement="bottom" popper-class="avatar">
-                    <template #reference>
-                        <el-avatar>
-                            <template #default>
-                                <i-ep-user-filled />
-                            </template>
-                        </el-avatar>
+                <el-dropdown @command="$router.push">
+                    <el-avatar>
+                        <template #default>
+                            <i-ep-user-filled />
+                        </template>
+                    </el-avatar>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <div class="show" v-show="isAuthenticated">
+                                <el-dropdown-item command="/home"> 个人中心 </el-dropdown-item>
+                                <el-dropdown-item @click="logout"> 退出登录 </el-dropdown-item>
+                            </div>
+                            <div class="hidden" v-show="!isAuthenticated">
+                                <el-dropdown-item command="/login"> 登录 </el-dropdown-item>
+                            </div>
+                        </el-dropdown-menu>
                     </template>
-                    <div class="childPopper" v-show="isAuthenticated">
-                        <div @click="goToHome()">个人中心</div>
-                        <div>退出登录</div>
-                    </div>
-                    <div class="childPopper" v-show="!isAuthenticated">
-                        <div @click="$router.push('/login')">登录</div>
-                    </div>
-                </el-popover>
+                </el-dropdown>
             </div>
             <div class="toggleDark">
                 <el-switch v-model="isDark" @update="toggleDark" class="switch">
@@ -53,19 +55,19 @@
                 </el-switch>
             </div>
             <div class="langSwitcher">
-                <el-popover placement="bottom" trigger="hover" popper-class="lang">
-                    <template #reference>
-                        <div class="langSvg">
-                            <el-icon>
-                                <SvgIcon name="language" color="#ababab" />
-                            </el-icon>
-                        </div>
-                    </template>
-                    <div class="childPopper">
-                        <div>简体中文</div>
-                        <div>English (US)</div>
+                <el-dropdown @command="changeLanguage">
+                    <div class="langSvg">
+                        <el-icon size="20">
+                            <SvgIcon name="language" color="#ababab" />
+                        </el-icon>
                     </div>
-                </el-popover>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item command="zh-cn"> 简体中文 </el-dropdown-item>
+                            <el-dropdown-item command="en"> English (US) </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
             </div>
             <div class="searchButton">
                 <el-button type="primary" circle>
@@ -76,7 +78,7 @@
             </div>
             <div class="github">
                 <el-icon @click="redirectToGithub">
-                    <SvgIcon name="github" size="20"/>
+                    <SvgIcon name="github" size="20" />
                 </el-icon>
             </div>
         </div>
@@ -84,45 +86,41 @@
 </template>
 
 <script setup lang="ts">
+import { useI18nStore } from '@/stores/i18n';
 import { useDark, useToggle } from '@vueuse/core';
-import { apiGetAllProvinces, apiGetCitiesByProvinceCode } from '@/api/common';
+import { apiGetProvinces, apiGetCitiesByProvinceCode } from '@/api/guest';
 import { useAuthStore } from '@/stores/auth';
-import router from '@/router';
+import type { ProvinceVO, CityVO } from '@/types/interfaces';
+
+const authStore = useAuthStore();
+const isAuthenticated = authStore.isAuthenticated;
+const logout = () => {
+    authStore.$reset();
+    location.reload();
+};
+
+const i18nStore = useI18nStore();
+const changeLanguage = (language: string) => {
+    i18nStore.language = language;
+};
 
 const search = ref('');
 
-const store = useAuthStore();
-const isAuthenticated = store.isAuthenticated;
-
-const goToHome = () => {
-    router.push('/home');
-};
-
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-
-interface Province {
-    code: number;
-    name: string;
-}
-
-interface City {
-    code: number;
-    name: string;
-}
 
 const cityCode = ref();
 const options = ref();
 const optionsRef = ref();
 const provinces = ref();
 
-const init = async () => {
-    provinces.value = (await apiGetAllProvinces()).data;
+onMounted(async () => {
+    provinces.value = (await apiGetProvinces()).data;
 
     options.value = await Promise.all(
-        provinces.value.map(async (province: Province) => {
+        provinces.value.map(async (province: ProvinceVO) => {
             const cities = (await apiGetCitiesByProvinceCode(province.code)).data.map(
-                (city: City) => ({
+                (city: CityVO) => ({
                     value: city.code,
                     label: city.name
                 })
@@ -134,8 +132,7 @@ const init = async () => {
             };
         })
     );
-};
-init();
+});
 
 const handleChange = async () => {
     const node = optionsRef.value.getCheckedNodes()[0].value;
@@ -144,7 +141,7 @@ const handleChange = async () => {
 
 const redirectToGithub = () => {
     window.open('https://github.com/SoldierRMB/Traveler', '_blank');
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -254,6 +251,16 @@ const redirectToGithub = () => {
     box-shadow: 2px 2px 6px 0 #0000001a;
 }
 
+:deep(.el-dropdown-menu__item) {
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 2rem;
+}
+
+:deep(.el-tooltip__trigger:focus-visible) {
+    outline: unset;
+}
+
 @media screen and (max-width: 768px) {
     .left {
         .search {
@@ -272,4 +279,3 @@ const redirectToGithub = () => {
     }
 }
 </style>
-@/utils/api
