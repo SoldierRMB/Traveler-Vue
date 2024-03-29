@@ -5,6 +5,8 @@ export interface UserAttractionVO {
     cityVO: CityVO;
     areaVO: AreaVO;
     streetVO: StreetVO;
+    createTime: string;
+    updateTime: string;
 }
 
 export interface AttractionVO {
