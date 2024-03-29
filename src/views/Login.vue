@@ -47,6 +47,7 @@ import { ElMessage } from 'element-plus';
 import { apiLogin } from '@/api/user';
 import { useAuthStore } from '@/stores/auth';
 import { jwtDecode } from 'jwt-decode';
+import type { UserVO } from '@/types/interfaces';
 
 const router = useRouter();
 
@@ -89,7 +90,7 @@ const login = async () => {
             const authStore = useAuthStore();
             authStore.$patch({ isAuthenticated: !!token });
             authStore.$patch({ token: token });
-            const decode = jwtDecode(token);
+            const decode:UserVO = jwtDecode(token);
             authStore.$patch({ user: decode });
             router.push('/');
         } else {
