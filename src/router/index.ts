@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
-import { jwtDecode } from 'jwt-decode';
-import type { JwtPayload } from 'jwt-decode';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
