@@ -12,6 +12,6 @@ export const apiGetAreasByCityCode = async (cityCode: number) => {
     return await request.get('/common/apiGetAreasByCityCode', { params: { cityCode } });
 };
 
-export const apiGetStreetByCityCode = async (streetCode: number) => {
-    return await request.get('/common/apiGetStreetByCityCode', { params: { streetCode } });
+export const apiGetStreetsByAreaCode = async (streetCode: number) => {
+    return await request.get('/common/apiGetStreetsByAreaCode', { params: { streetCode } });
 };
