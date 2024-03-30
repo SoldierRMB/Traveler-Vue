@@ -13,7 +13,7 @@ module.exports = {
         ecmaVersion: 'latest'
     },
     rules: {
-        'stylelint/css-semicolon-expectation': null,
+        'stylelint/css-semicolon-expectation': 0,
         'vue/multi-word-component-names': 0
     }
 };
