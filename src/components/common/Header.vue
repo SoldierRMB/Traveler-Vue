@@ -7,8 +7,7 @@
                     <template #prepend>
                         <el-cascader
                             ref="optionsRef"
-                            v-model="cityCode"
-                            :options="options"
+                            :props="props"
                             @change="handleChange()"
                             placeholder="城市"
                         />
@@ -91,6 +90,7 @@ import { useDark, useToggle } from '@vueuse/core';
 import { apiGetProvinces, apiGetCitiesByProvinceCode } from '@/api/guest';
 import { useAuthStore } from '@/stores/auth';
 import type { ProvinceVO, CityVO } from '@/types/interfaces';
+import type { CascaderProps } from 'element-plus';
 
 const authStore = useAuthStore();
 const isAuthenticated = authStore.isAuthenticated;
@@ -109,30 +109,36 @@ const search = ref('');
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
-const cityCode = ref();
-const options = ref();
 const optionsRef = ref();
-const provinces = ref();
 
-onMounted(async () => {
-    provinces.value = (await apiGetProvinces()).data;
-
-    options.value = await Promise.all(
-        provinces.value.map(async (province: ProvinceVO) => {
-            const cities = (await apiGetCitiesByProvinceCode(province.code)).data.map(
-                (city: CityVO) => ({
-                    value: city.code,
-                    label: city.name
-                })
-            );
-            return {
+const props: CascaderProps = {
+    lazy: true,
+    lazyLoad: async (node, resolve) => {
+        if (node.level === 0) {
+            // 加载省份数据
+            const provinces = await apiGetProvinces();
+            const data = provinces.data.map((province: ProvinceVO) => ({
                 value: province.code,
                 label: province.name,
-                children: cities
-            };
-        })
-    );
-});
+                leaf: false, // 设置为 false 表示此级别的选项不是叶子节点
+                children: [] // 存储城市数据的数组，初始为空
+            }));
+            resolve(data);
+        } else if (node.level === 1) {
+            // 加载城市数据
+            const cities = await apiGetCitiesByProvinceCode(node.value as number);
+            const data = cities.data.map((city: CityVO) => ({
+                value: city.code,
+                label: city.name,
+                leaf: true // 设置为 true 表示此级别的选项是叶子节点
+            }));
+            // 将加载的城市数据添加到相应的省份选项的 children 属性中
+            const province = optionsRef.value.getCheckedNodes();
+            province.children = data;
+            resolve(data);
+        }
+    }
+};
 
 const handleChange = async () => {
     const node = optionsRef.value.getCheckedNodes()[0].value;
