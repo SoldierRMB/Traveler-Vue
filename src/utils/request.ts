@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
+import router from '@/router';
 import { ElMessage } from 'element-plus';
 import { useAuthStore } from '@/stores/auth';
 const axiosInstance: AxiosInstance = axios.create({
@@ -27,6 +28,10 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
         // 对响应数据做点什么
+        if(response.data.code == 401){
+            router.push('/login')
+            ElMessage.error('登录已过期，请重新登录');
+        }
         return response.data;
     },
     (error: any) => {
