@@ -33,30 +33,36 @@
                     { text: '审核不通过', value: '2' }
                 ]"
                 :filter-method="filterReviewed"
-                filter-placement="bottom-end"
+                filter-placement="bottom"
             >
                 <template #default="scope">
-                    <el-tag type="success" v-show="scope.row.attractionVO.reviewed == 1"
-                        >审核通过</el-tag
+                    <el-tag
+                        :type="scope.row.attractionVO.reviewed == 1 ? 'success' : 'danger'"
+                        disable-transitions
                     >
-                    <el-tag type="danger" v-show="scope.row.attractionVO.reviewed == 2"
-                        >审核不通过</el-tag
-                    >
+                        {{ scope.row.attractionVO.reviewed == 1 ? '审核通过' : '审核不通过' }}
+                    </el-tag>
                 </template>
             </el-table-column>
             <el-table-column
                 align="center"
                 prop="attractionVO.isDeleted"
                 label="删除状态"
-                min-width="80"
+                min-width="100"
+                :filters="[
+                    { text: '未删除', value: '0' },
+                    { text: '已删除', value: '1' }
+                ]"
+                :filter-method="filterDeleted"
+                filter-placement="bottom"
             >
                 <template #default="scope">
-                    <el-tag type="info" v-show="scope.row.attractionVO.isDeleted == 0"
-                        >未删除</el-tag
+                    <el-tag
+                        :type="scope.row.attractionVO.isDeleted == 0 ? 'info' : 'danger'"
+                        disable-transitions
                     >
-                    <el-tag type="danger" v-show="scope.row.attractionVO.isDeleted == 1"
-                        >已删除</el-tag
-                    >
+                        {{ scope.row.attractionVO.isDeleted == 0 ? '未删除' : '已删除' }}
+                    </el-tag>
                 </template>
             </el-table-column>
             <el-table-column align="center" prop="createTime" label="创建时间" min-width="100" />
@@ -83,7 +89,11 @@ const keyword = ref('');
 const searchAttractions = async () => {};
 
 const filterReviewed = (value: any, row: any) => {
-    return row.attractionVO.reviewed === value;
+    return row.attractionVO.reviewed == value;
+};
+
+const filterDeleted = (value: any, row: any) => {
+    return row.attractionVO.isDeleted == value;
 };
 </script>
 
