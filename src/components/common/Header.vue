@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import { useI18nStore } from '@/stores/i18n';
 import { useDark, useToggle } from '@vueuse/core';
-import { apiGetProvinces, apiGetCitiesByProvinceCode } from '@/api/guest';
+import { apiGetProvinces, apiGetCitiesByProvinceCode } from '@/api/common';
 import { useAuthStore } from '@/stores/auth';
 import type { ProvinceVO, CityVO } from '@/types/interfaces';
 import type { CascaderProps } from 'element-plus';
