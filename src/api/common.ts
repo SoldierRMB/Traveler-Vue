@@ -9,9 +9,9 @@ export const apiGetCitiesByProvinceCode = async (provinceCode: number) => {
 };
 
 export const apiGetAreasByCityCode = async (cityCode: number) => {
-    return await request.get('/common/apiGetAreasByCityCode', { params: { cityCode } });
+    return await request.get('/common/getAreasByCityCode', { params: { cityCode } });
 };
 
-export const apiGetStreetsByAreaCode = async (streetCode: number) => {
-    return await request.get('/common/apiGetStreetsByAreaCode', { params: { streetCode } });
+export const apiGetStreetsByAreaCode = async (areaCode: number) => {
+    return await request.get('/common/getStreetsByAreaCode', { params: { areaCode } });
 };
