@@ -55,6 +55,7 @@ declare module 'vue' {
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     Main: typeof import('./components/common/Main.vue')['default']
     Post: typeof import('./components/post/Post.vue')['default']
+    PostAttraction: typeof import('./components/attraction/PostAttraction.vue')['default']
     PostAttractions: typeof import('./components/attraction/PostAttractions.vue')['default']
     ReviewAttractions: typeof import('./components/attraction/ReviewAttractions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

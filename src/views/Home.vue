@@ -10,27 +10,33 @@
                             </i>
                             <span>首页</span>
                         </el-menu-item>
-                        <el-sub-menu index="1">
+                        <el-sub-menu index="attraction">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="camera"></SvgIcon>
                                 </i>
                                 <span>景点管理</span>
                             </template>
-                            <el-menu-item index="/attractions">
+                            <el-menu-item index="/attractions" v-show="userRole == 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="image"></SvgIcon>
                                 </i>
                                 <span>景点列表</span>
                             </el-menu-item>
-                            <el-menu-item index="/review">
+                            <el-menu-item index="/review" v-show="userRole == 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="bulb"></SvgIcon>
                                 </i>
                                 <span>景点审核</span>
                             </el-menu-item>
+                            <el-menu-item index="/post_attractions" v-show="userRole == 'ROLE_STAFF'">
+                                <i class="el-icon">
+                                    <SvgIcon name="bulb"></SvgIcon>
+                                </i>
+                                <span>发布景点</span>
+                            </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="2">
+                        <el-sub-menu index="posts" v-show="userRole == 'ROLE_ADMIN'">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="document"></SvgIcon>
@@ -44,21 +50,27 @@
                                 <span>动态列表</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="3">
+                        <el-sub-menu index="messages">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="message"></SvgIcon>
                                 </i>
                                 <span>消息管理</span>
                             </template>
-                            <el-menu-item index="/comments">
+                            <el-menu-item index="/comments" v-show="userRole == 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="comment"></SvgIcon>
                                 </i>
                                 <span>评论管理</span>
                             </el-menu-item>
+                            <el-menu-item index="/announcements" v-show="userRole == 'ROLE_STAFF'">
+                                <i class="el-icon">
+                                    <SvgIcon name="alert"></SvgIcon>
+                                </i>
+                                <span>公告管理</span>
+                            </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="4">
+                        <el-sub-menu index="users" v-show="userRole == 'ROLE_ADMIN'">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="team"></SvgIcon>
@@ -72,7 +84,7 @@
                                 <span>角色管理</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-menu-item index="/settings">
+                        <el-menu-item index="/settings" v-show="userRole == 'ROLE_ADMIN'">
                             <i class="el-icon">
                                 <SvgIcon name="setting"></SvgIcon>
                             </i>
@@ -84,7 +96,9 @@
             <el-container>
                 <el-header class="header">
                     <div class="left">
-                        <div>后台管理系统</div>
+                        <div>
+                            {{ userRole == 'ROLE_ADMIN' ? '系统管理员' : '景点管理员' }}后台管理系统
+                        </div>
                     </div>
                     <div class="right">
                         <el-button type="info" @click="logout">退出</el-button>
@@ -97,7 +111,6 @@
                     <div>
                         Copyright&copy;2024, www.traveler.soldiersoft.com. All rights reserved.
                     </div>
-                    <div>全国旅游投诉热线12345</div>
                 </el-footer>
             </el-container>
         </el-container>
@@ -109,8 +122,15 @@
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 import { ElMessage } from 'element-plus';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
+
+const userRole = ref('');
 
 const authStore = useAuthStore();
+onMounted(() => {
+    const token = authStore.token;
+    userRole.value = jwtDecode<JwtPayload>(token).aud![0];
+});
 
 const logout = () => {
     authStore.$reset();
