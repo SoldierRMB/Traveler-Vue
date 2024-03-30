@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
-import type { UserVO } from '@/types/interfaces';
+import type { JwtPayload } from 'jwt-decode';
 
 export const useAuthStore = defineStore(
     'auth',
     () => {
         const isAuthenticated = ref(false);
         const token = ref('');
-        const user = ref({} as UserVO);
+        const user = ref({} as JwtPayload);
         const $reset = () => {
             isAuthenticated.value = false;
             token.value = '';
-            user.value = {} as UserVO;
+            user.value = {} as JwtPayload;
         };
         return { isAuthenticated, token, user, $reset };
     },
