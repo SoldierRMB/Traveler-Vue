@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AttractionDetails: typeof import('./components/attraction/AttractionDetails.vue')['default']
+    AttractionForm: typeof import('./components/attraction/AttractionForm.vue')['default']
     Attractions: typeof import('./components/attraction/Attractions.vue')['default']
     Booking: typeof import('./components/booking/Booking.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -21,6 +22,7 @@ declare module 'vue' {
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
     ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
@@ -34,8 +36,7 @@ declare module 'vue' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
-    ElPagination: (typeof import('element-plus/es'))['ElPagination']
-    ElPopover: (typeof import('element-plus/es'))['ElPopover']
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
@@ -54,13 +55,11 @@ declare module 'vue' {
     IEpSunny: typeof import('~icons/ep/sunny')['default']
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     Main: typeof import('./components/common/Main.vue')['default']
-    MyAttractions: typeof import('./components/attraction/MyAttractions.vue')['default']
     Post: typeof import('./components/post/Post.vue')['default']
     PostAttraction: typeof import('./components/attraction/PostAttraction.vue')['default']
     ReviewAttractions: typeof import('./components/attraction/ReviewAttractions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./components/icon/SvgIcon.vue')['default']
-    Test: (typeof import('./components/admin/Test.vue'))['default']
   }
 }
