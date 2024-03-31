@@ -2,13 +2,13 @@
     <div class="containerBox">
         <el-container>
             <el-header class="header">
-                <Header></Header>
+                <header></header>
             </el-header>
             <el-main class="main">
-                <Main></Main>
+                <main></main>
             </el-main>
             <el-footer class="footer">
-                <Footer></Footer>
+                <footer></footer>
             </el-footer>
         </el-container>
     </div>
@@ -16,9 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import Header from '@/components/common/Header.vue';
-import Main from '@/components/common/Main.vue';
-import Footer from '@/components/common/Footer.vue';
 </script>
 
 <style scoped lang="scss">
