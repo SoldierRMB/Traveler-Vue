@@ -1,16 +1,27 @@
 import router from '@/router';
 import moment from 'moment';
 import { apiGetUserAttractions, apiGetUnreviewedUserAttractions } from '@/api/admin';
+import {apiGetAttractionsByUsername} from '@/api/staff'
 import { useUserAttractionStore } from '@/stores/user-attraction';
 import type { UserAttractionVO } from '@/types/interfaces';
 
-export async function loadUserAttractions(reviewed: boolean): Promise<UserAttractionVO[]> {
+export async function loadUserAttractions(
+    userRole: string,
+    username?: string,
+    reviewed?: boolean
+): Promise<UserAttractionVO[]> {
     const userAttractions: UserAttractionVO[] = [];
     let data;
-    if (reviewed) {
-        data = (await apiGetUserAttractions()).data;
+    if(userRole === 'ROLE_ADMIN'){
+        if (reviewed) {
+            data = (await apiGetUserAttractions()).data;
+        } else {
+            data = (await apiGetUnreviewedUserAttractions()).data;
+        }
+    } else if(userRole === 'ROLE_STAFF' && username){
+        data = (await apiGetAttractionsByUsername(username)).data;
     } else {
-        data = (await apiGetUnreviewedUserAttractions()).data;
+        return [];
     }
     data.forEach((userAttraction: any) => {
         userAttractions.push({

@@ -73,11 +73,18 @@
 
 <script setup lang="ts">
 import { loadUserAttractions, goToAttractionDetails } from '@/common/common';
+import { useAuthStore } from '@/stores/auth';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
 
 const userAttractions = ref();
 
 onMounted(async () => {
-    userAttractions.value = await loadUserAttractions(true);
+    const authStore = useAuthStore();
+    const token = authStore.token;
+    const decoded: JwtPayload = jwtDecode(token);
+    const username = decoded.sub as string;
+    const userRole = decoded.aud?.[0] as string;
+    userAttractions.value = await loadUserAttractions(userRole, username, true);
 });
 
 const goToAttraction = (row: any) => {

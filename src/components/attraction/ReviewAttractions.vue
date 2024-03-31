@@ -75,7 +75,7 @@ const columns = [
 const userAttractions = ref();
 
 onMounted(async () => {
-    userAttractions.value = await loadUserAttractions(false);
+    userAttractions.value = await loadUserAttractions('ROLE_ADMIN', undefined, false);
 });
 
 const goToAttraction = (row: any) => {
