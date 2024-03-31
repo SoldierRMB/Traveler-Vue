@@ -28,12 +28,6 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
         // 对响应数据做点什么
-        if(response.data.code == 401){
-            router.push('/login')
-            ElMessage.error('登录已过期，请重新登录');
-        } else if(response.data.code == 403) {
-            ElMessage.error('没有权限访问该资源');
-        }
         return response.data;
     },
     (error: any) => {
