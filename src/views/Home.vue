@@ -17,7 +17,7 @@
                                 </i>
                                 <span>景点管理</span>
                             </template>
-                            <el-menu-item index="/attractions" v-show="userRole == 'ROLE_ADMIN'">
+                            <el-menu-item index="/attractions">
                                 <i class="el-icon">
                                     <SvgIcon name="image"></SvgIcon>
                                 </i>
@@ -29,7 +29,10 @@
                                 </i>
                                 <span>景点审核</span>
                             </el-menu-item>
-                            <el-menu-item index="/post_attractions" v-show="userRole == 'ROLE_STAFF'">
+                            <el-menu-item
+                                index="/post_attractions"
+                                v-show="userRole == 'ROLE_STAFF'"
+                            >
                                 <i class="el-icon">
                                     <SvgIcon name="bulb"></SvgIcon>
                                 </i>

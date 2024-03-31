@@ -27,7 +27,7 @@ const router = createRouter({
                     path: '/attractions',
                     name: 'Attractions',
                     component: () => import('@/components/attraction/Attractions.vue'),
-                    meta: { title: '景点列表', roles: ['ROLE_ADMIN'] }
+                    meta: { title: '景点列表', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
                 },
                 {
                     path: '/review',
