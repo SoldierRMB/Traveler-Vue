@@ -1,39 +1,16 @@
-# traveler-vue
+# Traveler-Vue - Updating...
 
-This template should help get you started developing with Vue 3 in Vite.
+English | [简体中文](./README.zh-CN.md)
 
-## Recommended IDE Setup
+## Introduction
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+The frontend UI of the [Traveler](https://github.com/SoldierRMB/Traveler), powered by [Vue 3](https://vuejs.org) and [Element Plus](https://element-plus.org/).
 
-## Type Support for `.vue` Imports in TS
+## Quick Start
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+1. Download [VSCode](https://code.visualstudio.com/) and install the [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension.
+2. Clone the project.
+3. Open the project in VSCode.
+4. Run `pnpm install` to install dependencies.
+5. Run `pnpm dev` to start the development server.
+6. Open [http://localhost:5173](http://localhost:5173) to view the application.
