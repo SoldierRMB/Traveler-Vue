@@ -4,7 +4,7 @@
     },
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "cSpell.words": ["cascader", "Unreviewed"],
+    "cSpell.words": ["cascader", "popconfirm", "Unreviewed"],
     "[svg]": {
         "editor.defaultFormatter": "jock.svg"
     }
