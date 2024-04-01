@@ -84,7 +84,10 @@ onMounted(async () => {
     const decoded: JwtPayload = jwtDecode(token);
     const username = decoded.sub as string;
     const userRole = decoded.aud?.[0] as string;
-    userAttractions.value = await loadUserAttractions(userRole, username, false);
+    userAttractions.value =
+        userRole === 'ROLE_ADMIN'
+            ? await loadUserAttractions(userRole, username, true)
+            : await loadUserAttractions(userRole, username, false);
 });
 
 const goToAttraction = (row: any) => {
@@ -96,11 +99,11 @@ const keyword = ref('');
 const searchAttractions = async () => {};
 
 const filterReviewed = (value: any, row: any) => {
-    return row.attractionVO.reviewed === value;
+    return row.attractionVO.reviewed == value;
 };
 
 const filterDeleted = (value: any, row: any) => {
-    return row.attractionVO.isDeleted === value;
+    return row.attractionVO.isDeleted == value;
 };
 </script>
 
