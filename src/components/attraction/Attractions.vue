@@ -37,10 +37,10 @@
             >
                 <template #default="scope">
                     <el-tag
-                        :type="scope.row.attractionVO.reviewed == 1 ? 'success' : 'danger'"
+                        :type="scope.row.attractionVO.reviewed === 1 ? 'success' : 'danger'"
                         disable-transitions
                     >
-                        {{ scope.row.attractionVO.reviewed == 1 ? '审核通过' : '审核不通过' }}
+                        {{ scope.row.attractionVO.reviewed === 1 ? '审核通过' : '审核不通过' }}
                     </el-tag>
                 </template>
             </el-table-column>
@@ -58,10 +58,10 @@
             >
                 <template #default="scope">
                     <el-tag
-                        :type="scope.row.attractionVO.isDeleted == 0 ? 'info' : 'danger'"
+                        :type="scope.row.attractionVO.isDeleted === 0 ? 'info' : 'danger'"
                         disable-transitions
                     >
-                        {{ scope.row.attractionVO.isDeleted == 0 ? '未删除' : '已删除' }}
+                        {{ scope.row.attractionVO.isDeleted === 0 ? '未删除' : '已删除' }}
                     </el-tag>
                 </template>
             </el-table-column>
@@ -96,11 +96,11 @@ const keyword = ref('');
 const searchAttractions = async () => {};
 
 const filterReviewed = (value: any, row: any) => {
-    return row.attractionVO.reviewed == value;
+    return row.attractionVO.reviewed === value;
 };
 
 const filterDeleted = (value: any, row: any) => {
-    return row.attractionVO.isDeleted == value;
+    return row.attractionVO.isDeleted === value;
 };
 </script>
 

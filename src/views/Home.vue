@@ -23,7 +23,7 @@
                                 </i>
                                 <span>景点列表</span>
                             </el-menu-item>
-                            <el-menu-item index="/review" v-show="userRole == 'ROLE_ADMIN'">
+                            <el-menu-item index="/review" v-show="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="bulb"></SvgIcon>
                                 </i>
@@ -31,7 +31,7 @@
                             </el-menu-item>
                             <el-menu-item
                                 index="/post_attractions"
-                                v-show="userRole == 'ROLE_STAFF'"
+                                v-show="userRole === 'ROLE_STAFF'"
                             >
                                 <i class="el-icon">
                                     <SvgIcon name="bulb"></SvgIcon>
@@ -39,7 +39,7 @@
                                 <span>发布景点</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="posts" v-show="userRole == 'ROLE_ADMIN'">
+                        <el-sub-menu index="posts" v-show="userRole === 'ROLE_ADMIN'">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="document"></SvgIcon>
@@ -60,20 +60,20 @@
                                 </i>
                                 <span>消息管理</span>
                             </template>
-                            <el-menu-item index="/comments" v-show="userRole == 'ROLE_ADMIN'">
+                            <el-menu-item index="/comments" v-show="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="comment"></SvgIcon>
                                 </i>
                                 <span>评论管理</span>
                             </el-menu-item>
-                            <el-menu-item index="/announcements" v-show="userRole == 'ROLE_STAFF'">
+                            <el-menu-item index="/announcements" v-show="userRole === 'ROLE_STAFF'">
                                 <i class="el-icon">
                                     <SvgIcon name="alert"></SvgIcon>
                                 </i>
                                 <span>公告管理</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="users" v-show="userRole == 'ROLE_ADMIN'">
+                        <el-sub-menu index="users" v-show="userRole === 'ROLE_ADMIN'">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="team"></SvgIcon>
@@ -87,7 +87,7 @@
                                 <span>角色管理</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-menu-item index="/settings" v-show="userRole == 'ROLE_ADMIN'">
+                        <el-menu-item index="/settings" v-show="userRole === 'ROLE_ADMIN'">
                             <i class="el-icon">
                                 <SvgIcon name="setting"></SvgIcon>
                             </i>
@@ -100,7 +100,7 @@
                 <el-header class="header">
                     <div class="left">
                         <div>
-                            {{ userRole == 'ROLE_ADMIN' ? '系统管理员' : '景点管理员' }}后台管理系统
+                            {{ userRole === 'ROLE_ADMIN' ? '系统管理员' : '景点管理员' }}后台管理系统
                         </div>
                     </div>
                     <div class="right">

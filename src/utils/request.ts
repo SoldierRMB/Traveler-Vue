@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
     },
     (error: any) => {
         // 处理响应错误
-        if (error.code == 'ERR_NETWORK') {
+        if (error.code === 'ERR_NETWORK') {
             ElMessage.error('网络连接错误');
         } else {
             ElMessage.error(error.response?.data.message || '请求失败');

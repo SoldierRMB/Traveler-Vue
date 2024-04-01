@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     const isAuthenticated = authStore.isAuthenticated;
     const requiredRoles = (to.meta.roles as string[]) || [];
-    if (to.meta.requiresAuth && isAuthenticated == false) {
+    if (to.meta.requiresAuth && isAuthenticated === false) {
         ElMessage.error('请先登录');
         next('/login');
     } else if (requiredRoles.length != 0) {

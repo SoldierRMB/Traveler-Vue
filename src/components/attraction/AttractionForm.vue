@@ -186,7 +186,7 @@ const handleClick = async (formEl: FormInstance | undefined) => {
         if (valid) {
             let apiFunction = props.isUpdate ? apiUpdateAttraction : apiPostAttraction;
             const res = await apiFunction(form.value, username as string);
-            if (res.status == 200) {
+            if (res.status === 200) {
                 ElMessage.success('操作成功');
                 router.push('/attractions');
             } else {
