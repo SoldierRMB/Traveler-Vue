@@ -11,3 +11,9 @@ export const apiGetUnreviewedUserAttractions = async () => {
 export const apiReviewAttractions = async (data: number[], pass: boolean) => {
     return await request.put('/admin/reviewAttractions', data, { params: { pass } });
 };
+
+export const apiCompleteDeleteUserAttraction = async (attractionId: number) => {
+    return await request.delete('/admin/completeDeleteUserAttraction', {
+        params: { attractionId: attractionId }
+    });
+};
