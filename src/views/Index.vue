@@ -2,13 +2,13 @@
     <div class="containerBox">
         <el-container>
             <el-header class="header">
-                <header></header>
+                <Header></Header>
             </el-header>
             <el-main class="main">
-                <main></main>
+                <Main></Main>
             </el-main>
             <el-footer class="footer">
-                <footer></footer>
+                <Footer></Footer>
             </el-footer>
         </el-container>
     </div>
