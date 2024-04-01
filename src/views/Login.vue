@@ -46,7 +46,7 @@ import type { FormInstance, FormRules } from 'element-plus';
 import { ElMessage } from 'element-plus';
 import { apiLogin } from '@/api/user';
 import { useAuthStore } from '@/stores/auth';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import type { UserVO } from '@/types/interfaces';
 
 const router = useRouter();
@@ -91,7 +91,7 @@ const login = async () => {
             authStore.$patch({ isAuthenticated: !!token });
             authStore.$patch({ token: token });
             const decode:UserVO = jwtDecode(token);
-            authStore.$patch({ user: decode });
+            authStore.$patch({ user: decode as JwtPayload });
             router.push('/');
         } else {
             ElMessage.error('请输入完整信息');
