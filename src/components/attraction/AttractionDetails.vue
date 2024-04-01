@@ -44,10 +44,29 @@
             user.email
         }}</el-descriptions-item>
     </el-descriptions>
+    <div class="buttons">
+        <el-button type="primary" @click="dialogVisible = true" plain>更新景点</el-button>
+        <el-popconfirm
+            title="确认删除吗？"
+            confirm-button-text="确认"
+            cancel-button-text="取消"
+            @confirm="deleteAttraction"
+        >
+            <template #reference>
+                <el-button type="danger" plain>删除景点</el-button>
+            </template>
+        </el-popconfirm>
+    </div>
+    <el-dialog v-model="dialogVisible" title="更新景点" width="60%">
+        <attraction-form :isUpdate="true" />
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { useUserAttractionStore } from '@/stores/user-attraction';
+import { useAuthStore } from '@/stores/auth';
+import { apiDeleteAttraction } from '@/api/staff';
+import router from '@/router';
 
 const store = useUserAttractionStore();
 
@@ -64,6 +83,26 @@ province.value = store.province;
 city.value = store.city;
 area.value = store.area;
 street.value = store.street;
+
+const dialogVisible = ref(false);
+
+const deleteAttraction = async () => {
+    const userAuthStore = useAuthStore();
+    const username = userAuthStore.user.sub as string;
+    await apiDeleteAttraction(attraction.value.id, username).then((res) => {
+        if (res.status == 200) {
+            ElMessage.success('删除成功');
+            store.$reset();
+            router.push('/attractions');
+        } else {
+            ElMessage.error('删除失败');
+        }
+    });
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.buttons {
+    padding-top: 2rem;
+}
+</style>
