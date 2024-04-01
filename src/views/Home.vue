@@ -30,7 +30,7 @@
                                 <span>景点审核</span>
                             </el-menu-item>
                             <el-menu-item
-                                index="/post_attractions"
+                                index="/publish_attractions"
                                 v-show="userRole === 'ROLE_STAFF'"
                             >
                                 <i class="el-icon">

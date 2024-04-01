@@ -36,9 +36,9 @@ const router = createRouter({
                     meta: { title: '景点审核', roles: ['ROLE_ADMIN'] }
                 },
                 {
-                    path: '/post_attractions',
-                    name: 'PostAttractions',
-                    component: () => import('@/components/attraction/PostAttraction.vue'),
+                    path: '/publish_attractions',
+                    name: 'PublishAttractions',
+                    component: () => import('@/components/attraction/PublishAttraction.vue'),
                     meta: { title: '发布景点', roles: ['ROLE_STAFF'] }
                 },
                 {
