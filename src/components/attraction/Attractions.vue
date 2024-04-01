@@ -84,7 +84,7 @@ onMounted(async () => {
     const decoded: JwtPayload = jwtDecode(token);
     const username = decoded.sub as string;
     const userRole = decoded.aud?.[0] as string;
-    userAttractions.value = await loadUserAttractions(userRole, username, true);
+    userAttractions.value = await loadUserAttractions(userRole, username, false);
 });
 
 const goToAttraction = (row: any) => {
