@@ -46,6 +46,12 @@ const router = createRouter({
                     name: 'AttractionDetails',
                     component: () => import('@/components/attraction/AttractionDetails.vue'),
                     meta: { title: '景点详情', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
+                },
+                {
+                    path : '/attractions/:id/tickets',
+                    name : 'Tickets',
+                    component : () => import('@/components/attraction/AttractionTickets.vue'),
+                    meta : { title : '景点门票', roles : ['ROLE_STAFF'] }
                 }
             ]
         },
