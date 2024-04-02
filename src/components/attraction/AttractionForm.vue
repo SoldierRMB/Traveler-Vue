@@ -109,7 +109,7 @@ import {
     apiGetAreasByCityCode,
     apiGetStreetsByAreaCode
 } from '@/api/common';
-import { apiUpdateAttraction, apiPostAttraction } from '@/api/staff';
+import { apiUpdateAttraction, apiPublishAttraction } from '@/api/staff';
 import { useAuthStore } from '@/stores/auth';
 import { useUserAttractionStore } from '@/stores/user-attraction';
 import router from '@/router';
@@ -184,7 +184,7 @@ const handleClick = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
         if (valid) {
-            let apiFunction = props.isUpdate ? apiUpdateAttraction : apiPostAttraction;
+            let apiFunction = props.isUpdate ? apiUpdateAttraction : apiPublishAttraction;
             const res = await apiFunction(form.value, username as string);
             if (res.status === 200) {
                 ElMessage.success('操作成功');

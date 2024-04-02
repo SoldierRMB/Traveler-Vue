@@ -17,7 +17,7 @@ export const apiRestoreAttraction = async (attractionId: number, username: strin
     });
 };
 
-export const apiPostAttraction = async (data: AttractionVO, username: string) => {
+export const apiPublishAttraction = async (data: AttractionVO, username: string) => {
     return await request.post('/staff/publishAttraction', data, { params: { username: username } });
 };
 
