@@ -45,12 +45,13 @@
         }}</el-descriptions-item>
     </el-descriptions>
     <div class="buttons">
-        <el-button type="primary" v-show="userRole === 'ROLE_STAFF' && isDeleted === 0">景点门票</el-button>
         <el-button
             type="primary"
-            @click="updateDialogVisible = true"
-            v-show="isDeleted === 0"
-            plain
+            @click="goToAttractionTickets"
+            v-show="userRole === 'ROLE_STAFF' && isDeleted === 0"
+            >景点门票</el-button
+        >
+        <el-button type="primary" @click="updateDialogVisible = true" v-show="isDeleted === 0" plain
             >更新景点</el-button
         >
         <el-button type="primary" @click="restoreAttraction" v-show="isDeleted === 1"
@@ -63,10 +64,7 @@
             @confirm="deleteAttraction"
         >
             <template #reference>
-                <el-button
-                    type="danger"
-                    plain
-                    v-show="userRole === 'ROLE_STAFF' && isDeleted === 0"
+                <el-button type="danger" plain v-show="userRole === 'ROLE_STAFF' && isDeleted === 0"
                     >删除景点</el-button
                 >
             </template>
@@ -121,6 +119,10 @@ const userRole = userAuthStore.user.aud![0];
 const username = userAuthStore.user.sub as string;
 const attractionId = attraction.value.id;
 const isDeleted = attraction.value.isDeleted;
+
+const goToAttractionTickets = () => {
+    router.push(`/attractions/${attractionId}/tickets`);
+};
 
 const deleteAttraction = async () => {
     await apiDeleteAttraction(attractionId, username).then((res) => {
