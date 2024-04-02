@@ -17,7 +17,7 @@
                     placeholder="请输入景点描述"
                     v-model="form.description"
                     type="textarea"
-                    :autosize="{ minRows: 4, maxRows: 6 }"
+                    :autosize="{ minRows: 4, maxRows: 4 }"
                     resize="none"
                 />
             </el-form-item>
