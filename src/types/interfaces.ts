@@ -59,3 +59,17 @@ export interface StreetVO {
     cityCode: number;
     areaCode: number;
 }
+
+export interface AttractionTicketVO {
+    id: number;
+    attractionVO: AttractionVO;
+    ticketVO: TicketVO;
+}
+
+export interface TicketVO {
+    id: number;
+    ticketName: string;
+    price: number;
+    ticketType: number;
+    description: string;
+}
