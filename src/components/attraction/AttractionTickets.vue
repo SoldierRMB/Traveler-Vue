@@ -1,0 +1,57 @@
+<template>
+    <div class="buttons">
+        <el-button type="primary" @click="publishDialogVisible = true">发布景点门票</el-button>
+    </div>
+    <el-table :data="tickets" stripe highlight-current-row @row-click="detailsDialogVisible = true">
+        <el-table-column align="center" prop="ticketName" label="门票名称" min-width="100" />
+        <el-table-column align="center" prop="price" label="价格" min-width="80" />
+        <el-table-column align="center" prop="ticketType" label="门票类型" min-width="80">
+            <template #default="scope">
+                <el-tag :type="scope.row.ticketType === 1 ? 'info' : 'primary'" disable-transitions>
+                    {{ scope.row.ticketType === 1 ? '成人票' : '学生票' }}
+                </el-tag>
+            </template>
+        </el-table-column>
+        <el-table-column align="center" prop="description" label="门票描述" min-width="150" />
+    </el-table>
+    <el-dialog v-model="publishDialogVisible" title="发布景点门票">
+        <publish-attraction-ticket-form />
+    </el-dialog>
+    <el-dialog v-model="detailsDialogVisible" title="景点门票详情">
+        <publish-attraction-ticket-form />
+    </el-dialog>
+</template>
+
+<script setup lang="ts">
+import { apiGetTicketsByAttractionId } from '@/api/staff';
+import { useAuthStore } from '@/stores/auth';
+import { useRoute } from 'vue-router';
+
+const tickets = ref([]);
+const publishDialogVisible = ref(false);
+const detailsDialogVisible = ref(false);
+
+const route = useRoute();
+const authStore = useAuthStore();
+const username = authStore.user.sub;
+
+onMounted(async () => {
+    const attractionId = parseInt(route.params.id as string);
+    const ticketsRes = await apiGetTicketsByAttractionId(attractionId, username as string);
+    tickets.value = ticketsRes.data;
+});
+</script>
+
+<style lang="scss" scoped>
+.buttons {
+    padding-bottom: 2rem;
+}
+
+:deep(.el-table__row) {
+    cursor: pointer;
+
+    &:hover {
+        color: var(--el-color-primary);
+    }
+}
+</style>
