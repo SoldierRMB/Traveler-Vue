@@ -152,8 +152,7 @@ onMounted(() => {
 });
 
 const logout = () => {
-    authStore.$reset();
-    router.push('/').then(() => location.reload());
+    router.push('/');
     ElMessage({ message: '退出成功', type: 'success' });
 };
 </script>
