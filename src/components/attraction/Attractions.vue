@@ -28,20 +28,20 @@
                 prop="attractionVO.reviewed"
                 label="审核状态"
                 min-width="100"
-                :filters="[
-                    { text: '审核通过', value: '1' },
-                    { text: '审核不通过', value: '2' }
-                ]"
+                :filters="reviewedFilter"
                 :filter-method="filterReviewed"
                 filter-placement="bottom"
             >
                 <template #default="scope">
-                    <el-tag
-                        :type="scope.row.attractionVO.reviewed === 1 ? 'success' : 'danger'"
-                        disable-transitions
+                    <el-tag type="warning" v-show="scope.row.attractionVO.reviewed === 0"
+                        >未审核</el-tag
                     >
-                        {{ scope.row.attractionVO.reviewed === 1 ? '审核通过' : '审核不通过' }}
-                    </el-tag>
+                    <el-tag type="success" v-show="scope.row.attractionVO.reviewed === 1"
+                        >审核通过</el-tag
+                    >
+                    <el-tag type="danger" v-show="scope.row.attractionVO.reviewed === 2"
+                        >审核不通过</el-tag
+                    >
                 </template>
             </el-table-column>
             <el-table-column
@@ -77,6 +77,10 @@ import { useAuthStore } from '@/stores/auth';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 
 const userAttractions = ref();
+const reviewedFilter = reactive([
+    { text: '审核通过', value: '1' },
+    { text: '审核不通过', value: '2' }
+]);
 
 onMounted(async () => {
     const authStore = useAuthStore();
@@ -88,6 +92,9 @@ onMounted(async () => {
         userRole === 'ROLE_ADMIN'
             ? await loadUserAttractions(userRole, username, true)
             : await loadUserAttractions(userRole, username, false);
+    if (userRole === 'ROLE_STAFF') {
+        reviewedFilter.unshift({ text: '未审核', value: '0' });
+    }
 });
 
 const goToAttraction = (row: any) => {
