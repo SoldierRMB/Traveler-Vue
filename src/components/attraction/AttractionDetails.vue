@@ -83,7 +83,7 @@
         <span>此操作不可逆，确定吗？</span>
         <template #footer>
             <el-button @click="deleteDialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="completeDeleteAttraction">确定</el-button>
+            <el-button type="danger" @click="completeDeleteAttraction">确定</el-button>
         </template>
     </el-dialog>
 </template>
