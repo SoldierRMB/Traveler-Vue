@@ -77,7 +77,7 @@
         >
     </div>
     <el-dialog v-model="updateDialogVisible" title="更新景点" width="60%">
-        <attraction-form :isUpdate="true" />
+        <AttractionForm :isUpdate="true" />
     </el-dialog>
     <el-dialog v-model="deleteDialogVisible" title="彻底删除景点？" width="30%">
         <span>此操作不可逆，确定吗？</span>

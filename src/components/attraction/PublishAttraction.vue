@@ -1,5 +1,5 @@
 <template>
-    <attraction-form :isUpdate="false"/>
+    <AttractionForm :isUpdate="false"/>
 </template>
 
 <script setup lang="ts">
