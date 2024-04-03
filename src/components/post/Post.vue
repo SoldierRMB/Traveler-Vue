@@ -3,7 +3,11 @@
         <el-card shadow="always" class="postCard" v-for="posts in 5" :key="posts">
             <template #header>
                 <div class="avatar">
-                    <el-avatar :icon="UserFilled" />
+                    <el-avatar>
+                        <template #default>
+                            <i-ep-user-filled />
+                        </template>
+                    </el-avatar>
                 </div>
                 <div class="info">
                     <div class="username">Admin</div>
@@ -12,14 +16,17 @@
             </template>
             <div>故宫很好玩故宫很好玩故宫很好玩故宫很好玩</div>
             <template #footer>
-                <el-button type="primary" :icon="ChatLineRound" round />
+                <el-button type="primary" round>
+                    <template #icon>
+                        <i-ep-chat-line-round/>
+                    </template>
+                </el-button>
             </template>
         </el-card>
     </el-space>
 </template>
 
 <script setup lang="ts">
-import { UserFilled, ChatLineRound } from '@element-plus/icons-vue';
 </script>
 
 <style scoped lang="scss">
