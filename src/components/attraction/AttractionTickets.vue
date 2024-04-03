@@ -8,7 +8,7 @@
         <el-table-column align="center" prop="ticketType" label="门票类型" min-width="80">
             <template #default="scope">
                 <el-tag :type="scope.row.ticketType === 1 ? 'info' : 'primary'" disable-transitions>
-                    {{ scope.row.ticketType === 1 ? '成人票' : '优惠票' }}
+                    {{ scope.row.ticketType === 1 ? '全价票' : '优惠票' }}
                 </el-tag>
             </template>
         </el-table-column>

@@ -36,9 +36,9 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-form-item label="景点描述" prop="description">
+            <el-form-item label="门票描述" prop="description">
                 <el-input
-                    placeholder="请输入景点描述"
+                    placeholder="请输入门票描述"
                     v-model="form.description"
                     type="textarea"
                     :autosize="{ minRows: 4, maxRows: 4 }"
@@ -97,13 +97,13 @@ const rules = reactive<FormRules<TicketVO>>({
     ticketName: [{ required: true, message: '请输入景点名称', trigger: 'blur' }],
     price: [{ required: true, message: '请输入价格', trigger: 'blur' }],
     ticketType: [{ required: true, message: '请选择门票类型', trigger: 'change' }],
-    description: [{ required: true, message: '请输入景点描述', trigger: 'blur' }]
+    description: [{ required: true, message: '请输入门票描述', trigger: 'blur' }]
 });
 
 const ticketTypes = reactive([
     {
         code: 1,
-        name: '成人票'
+        name: '全价票'
     },
     {
         code: 2,
