@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import type { AttractionVO, AttractionTicketVO } from '@/types/interfaces';
+import type { AttractionVO } from '@/types/interfaces';
 
 export const apiUpdateAttraction = async (data: AttractionVO, username: string) => {
     return await request.put('/staff/updateAttraction', data, { params: { username: username } });
@@ -27,8 +27,8 @@ export const apiGetAttractionsByUsername = async (username: string) => {
     });
 };
 
-export const apiPublishAttractionTicket = async (data: any, username: string) => {
-    return await request.post('/staff/publishAttractionTicket', data, {
+export const apiPublishTicket = async (data: any, username: string) => {
+    return await request.post('/staff/publishTicket', data, {
         params: { username: username }
     });
 };
@@ -36,5 +36,17 @@ export const apiPublishAttractionTicket = async (data: any, username: string) =>
 export const apiGetTicketsByAttractionId = async (attractionId: number, username: string) => {
     return await request.get('/staff/getTicketsByAttractionId', {
         params: { attractionId: attractionId, username: username }
+    });
+};
+
+export const apiUpdateTicket = async (data: any, username: string) => {
+    return await request.put('/staff/updateTicket', data, {
+        params: { username: username }
+    });
+};
+
+export const apiDeleteTicket = async (ticketId: number, username: string) => {
+    return await request.put('/staff/deleteTicket', null, {
+        params: { ticketId: ticketId, username: username }
     });
 };
