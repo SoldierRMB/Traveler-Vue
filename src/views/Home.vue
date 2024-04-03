@@ -100,10 +100,22 @@
                 <el-header class="header">
                     <div class="left">
                         <div>
-                            {{ userRole === 'ROLE_ADMIN' ? '系统管理员' : '景点管理员' }}后台管理系统
+                            {{
+                                userRole === 'ROLE_ADMIN' ? '系统管理员' : '景点管理员'
+                            }}后台管理系统
                         </div>
                     </div>
                     <div class="right">
+                        <div class="toggleDark">
+                            <el-switch v-model="isDark" @update="toggleDark" class="switch">
+                                <template #active-action>
+                                    <el-icon color="#000"><i-ep-moon /></el-icon>
+                                </template>
+                                <template #inactive-action>
+                                    <el-icon color="#000"><i-ep-sunny /></el-icon>
+                                </template>
+                            </el-switch>
+                        </div>
                         <el-button type="info" @click="logout">退出</el-button>
                     </div>
                 </el-header>
@@ -126,6 +138,10 @@ import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 import { ElMessage } from 'element-plus';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import { useDark, useToggle } from '@vueuse/core';
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
 const userRole = ref('');
 
@@ -178,7 +194,21 @@ const logout = () => {
     }
 
     .right {
+        display: flex;
         margin-left: auto;
+
+        .toggleDark {
+            padding-right: 2rem;
+            
+            .switch {
+                --el-switch-on-color: #2f2f2f;
+                --el-switch-off-color: #f1f1f1;
+            }
+
+            &:hover {
+                --el-switch-border-color: var(--el-color-primary);
+            }
+        }
     }
 }
 
