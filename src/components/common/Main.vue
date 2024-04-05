@@ -1,19 +1,16 @@
 <template>
     <el-tabs v-model="activeName" class="tabs">
         <el-tab-pane name="1" tab="1" label="旅游动态">
-            <Posts></Posts>
+            <Post></Post>
         </el-tab-pane>
         <el-tab-pane name="2" tab="2" label="旅游订票">
-            <Booking></Booking>
+            <BookingList></BookingList>
         </el-tab-pane>
     </el-tabs>
 </template>
 
 <script setup lang="ts">
-import Posts from '@/components/post/Post.vue';
-import Booking from '@/components/booking/Booking.vue';
-
-const activeName = ref('1');
+const activeName = ref('2');
 </script>
 
 <style scoped lang="scss">
