@@ -8,7 +8,7 @@ const router = createRouter({
         {
             path: '/login',
             name: 'Login',
-            component: () => import('@/views/Login.vue'),
+            component: () => import('@/views/user/Login.vue'),
             meta: { title: '【行者】登录' }
         },
         {
@@ -16,11 +16,32 @@ const router = createRouter({
             name: 'Index',
             component: () => import('@/views/Index.vue'),
             meta: { title: '行者旅游在线预订平台' }
+            /*             children: [
+                {
+                    path: '/post',
+                    name: 'Post',
+                    component: () => import('@/components/post/Post.vue'),
+                    meta: { title: '【行者】旅游攻略' }
+                },
+                {
+                    path: '/booking',
+                    name: 'Booking',
+                    component: () => import('@/components/booking/Booking.vue'),
+                    meta: { title: '【行者】旅游订票' }
+                },
+            ] */
+        },
+        {
+            path: '/success/:orderId',
+            name: 'Success',
+            component: () => import('@/components/common/Success.vue'),
+            props: (route) => ({ orderId: route.params.orderId }),
+            meta: { title: '【行者】支付成功', roles: ['ROLE_TOURIST'] }
         },
         {
             path: '/home',
             name: 'Home',
-            component: () => import('@/views/Home.vue'),
+            component: () => import('@/views/home/Index.vue'),
             meta: { title: '【行者】个人中心', requiresAuth: true },
             children: [
                 {
@@ -48,10 +69,10 @@ const router = createRouter({
                     meta: { title: '景点详情', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
                 },
                 {
-                    path : '/attractions/:id/tickets',
-                    name : 'Tickets',
-                    component : () => import('@/components/attraction/AttractionTickets.vue'),
-                    meta : { title : '景点门票', roles : ['ROLE_STAFF'] }
+                    path: '/attractions/:id/tickets',
+                    name: 'Tickets',
+                    component: () => import('@/components/attraction/AttractionTickets.vue'),
+                    meta: { title: '景点门票', roles: ['ROLE_STAFF'] }
                 }
             ]
         },

@@ -73,3 +73,13 @@ export interface TicketVO {
     ticketType: number;
     description: string;
 }
+
+export interface OrderVO {
+    id: number[];
+    userId: number;
+    ticketId:number;
+    status:number;
+    quantity:number;
+    amount:number;
+    orderTime:string;
+}
