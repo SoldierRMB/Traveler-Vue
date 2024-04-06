@@ -1,5 +1,5 @@
 <template>
-    <el-space direction="vertical">
+    <el-space direction="vertical" style="padding-top: 2rem">
         <el-card shadow="always" class="postCard" v-for="posts in 5" :key="posts">
             <template #header>
                 <div class="avatar">
@@ -18,7 +18,7 @@
             <template #footer>
                 <el-button type="primary" round>
                     <template #icon>
-                        <i-ep-chat-line-round/>
+                        <i-ep-chat-line-round />
                     </template>
                 </el-button>
             </template>
@@ -26,8 +26,7 @@
     </el-space>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .postCard {
