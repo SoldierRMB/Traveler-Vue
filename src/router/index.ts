@@ -15,8 +15,9 @@ const router = createRouter({
             path: '/',
             name: 'Index',
             component: () => import('@/views/Index.vue'),
-            meta: { title: '行者旅游在线预订平台' }
-            /*             children: [
+            meta: { title: '行者旅游在线预订平台' },
+            redirect: '/post',
+            children: [
                 {
                     path: '/post',
                     name: 'Post',
@@ -26,10 +27,10 @@ const router = createRouter({
                 {
                     path: '/booking',
                     name: 'Booking',
-                    component: () => import('@/components/booking/Booking.vue'),
+                    component: () => import('@/components/booking/BookingList.vue'),
                     meta: { title: '【行者】旅游订票' }
                 },
-            ] */
+            ]
         },
         {
             path: '/success/:orderId',
