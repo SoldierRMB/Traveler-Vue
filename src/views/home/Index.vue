@@ -39,6 +39,15 @@
                                 <span>发布景点</span>
                             </el-menu-item>
                         </el-sub-menu>
+                        <el-menu-item
+                            index="/orders"
+                            v-show="userRole === 'ROLE_ADMIN'"
+                        >
+                            <i class="el-icon">
+                                <SvgIcon name="order"></SvgIcon>
+                            </i>
+                            <span>订单管理</span>
+                        </el-menu-item>
                         <el-sub-menu index="posts" v-show="userRole === 'ROLE_ADMIN'">
                             <template #title>
                                 <i class="el-icon">
