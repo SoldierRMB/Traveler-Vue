@@ -17,6 +17,9 @@
                     </el-tag>
                     <el-tag type="info" v-show="attraction.score === null"> 暂无评分 </el-tag>
                 </div>
+                <div class="location">
+                    {{ attraction.location }}
+                </div>
             </div>
             <el-button
                 type="primary"
@@ -146,8 +149,8 @@ const completePayment = async () => {
     .infos {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        height: 5rem;
+        height: 8rem;
+        gap: 1rem;
 
         .title {
             font-weight: bold;
