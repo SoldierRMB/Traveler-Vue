@@ -1,5 +1,5 @@
 <template>
-    <el-space direction="vertical" style="padding-top: 2rem">
+    <el-space direction="vertical" alignment="flex-start">
         <el-card
             shadow="always"
             class="attractionCard"
@@ -95,17 +95,20 @@ const bookingDialogVisible = ref(false);
 const attractionName = ref('');
 const tickets = ref([] as TicketVO[]);
 
+const authStore = useAuthStore();
+const username = authStore.user.sub;
+const orderId = ref();
+
 const bookingDialog = async (attractionId: number) => {
+    if(authStore.isAuthenticated == false){
+        return router.push('/login');
+    }
     bookingDialogVisible.value = true;
     attractionName.value =
         attractions.value.find((a) => a.id === attractionId)?.attractionName || '';
     const ticketsRes = await apiGetTicketsByAttractionId(attractionId);
     tickets.value = ticketsRes.data;
 };
-
-const authStore = useAuthStore();
-const username = authStore.user.sub;
-const orderId = ref();
 
 const paymentDialogVisible = ref(false);
 
