@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadUserAttractions, goToAttractionDetails } from '@/common/common';
+import { loadUserAttractions, goToAttractionDetails } from '@/common/user-attraction-common';
 import { useAuthStore } from '@/stores/auth';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 

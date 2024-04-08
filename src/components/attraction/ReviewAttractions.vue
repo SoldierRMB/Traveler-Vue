@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { apiReviewAttractions } from '@/api/admin';
-import { loadUserAttractions, goToAttractionDetails } from '@/common/common';
+import { loadUserAttractions, goToAttractionDetails } from '@/common/user-attraction-common';
 
 const columns = [
     {
