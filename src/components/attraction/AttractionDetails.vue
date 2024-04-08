@@ -57,6 +57,7 @@
         <el-button type="primary" @click="restoreAttraction" v-show="isDeleted === 1"
             >恢复景点</el-button
         >
+        <el-button @click="goToOrders">订单列表</el-button>
         <el-popconfirm
             title="确认删除吗？"
             confirm-button-text="确认"
@@ -154,6 +155,10 @@ const restoreAttraction = async () => {
             router.push('/attractions');
         }
     });
+};
+
+const goToOrders = () => {
+    router.push({ name: 'Orders', query: { attractionId: attractionId } });
 };
 </script>
 

@@ -15,3 +15,7 @@ export const apiCompletePayment = async (orderId: number, username: string) => {
         params: { orderId: orderId, username: username }
     });
 };
+
+export const apiGetUserOrders = async (username: string) => {
+    return await request.get('/tourist/getUserOrders', { params: { username: username } });
+};

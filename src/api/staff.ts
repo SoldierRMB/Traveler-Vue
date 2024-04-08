@@ -50,3 +50,9 @@ export const apiDeleteTicket = async (ticketId: number, username: string) => {
         params: { ticketId: ticketId, username: username }
     });
 };
+
+export const apiGetOrdersByAttractionId = async (attractionId: number, username: string) => {
+    return await request.get('/staff/getOrdersByAttractionId', {
+        params: { attractionId: attractionId, username: username }
+    });
+};

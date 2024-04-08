@@ -33,11 +33,14 @@
                     <template #dropdown>
                         <el-dropdown-menu>
                             <div class="show" v-show="isAuthenticated">
-                                <el-dropdown-item command="/home"> 个人中心 </el-dropdown-item>
-                                <el-dropdown-item @click="logout"> 退出登录 </el-dropdown-item>
+                                <el-dropdown-item command="/home">个人中心</el-dropdown-item>
+                                <el-dropdown-item @click="ordersDialogVisible = true"
+                                    >我的订单</el-dropdown-item
+                                >
+                                <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
                             </div>
                             <div class="hidden" v-show="!isAuthenticated">
-                                <el-dropdown-item command="/login"> 登录 </el-dropdown-item>
+                                <el-dropdown-item command="/login">登录</el-dropdown-item>
                             </div>
                         </el-dropdown-menu>
                     </template>
@@ -82,6 +85,14 @@
             </div>
         </div>
     </div>
+    <el-dialog
+        title="我的订单"
+        width="80%"
+        v-model="ordersDialogVisible"
+        @close="ordersDialogVisible = false"
+    >
+        <OrderList :userRole="'ROLE_TOURIST'"/>
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -148,6 +159,8 @@ const handleChange = async () => {
 const redirectToGithub = () => {
     window.open('https://github.com/SoldierRMB/Traveler', '_blank');
 };
+
+const ordersDialogVisible = ref(false);
 </script>
 
 <style scoped lang="scss">
