@@ -1,5 +1,5 @@
 <template>
-    <el-space direction="vertical" style="padding-top: 2rem">
+    <el-space direction="vertical" alignment="flex-start">
         <el-card shadow="always" class="postCard" v-for="posts in 5" :key="posts">
             <template #header>
                 <div class="avatar">

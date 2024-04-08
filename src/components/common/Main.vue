@@ -1,6 +1,6 @@
 <template>
-    <div class="menu">
-        <el-menu :default-active="$route.path" mode="horizontal" router>
+    <div class="menuBox">
+        <el-menu :default-active="$route.path" mode="horizontal" class="menu" router>
             <el-menu-item index="/post">旅游动态</el-menu-item>
             <el-menu-item index="/booking">景点订票</el-menu-item>
         </el-menu>
@@ -8,31 +8,38 @@
     </div>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
-.menu {
+.menuBox {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 0 20rem;
+
+    .menu {
+        margin-bottom: 2rem;
+    }
+}
+
+:deep(.el-menu-item:hover) {
+    background-color: transparent !important;
 }
 
 @media screen and (max-width: 1200px) {
-    .menu {
+    .menuBox {
         padding: 0 10rem;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .menu {
+    .menuBox {
         padding: 0 5rem;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .menu {
+    .menuBox {
         padding: 0;
     }
 }
