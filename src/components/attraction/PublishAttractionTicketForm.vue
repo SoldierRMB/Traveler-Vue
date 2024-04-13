@@ -46,15 +46,15 @@
                 />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="handleClick(formRef)" v-show="!props.ticket">
+                <el-button type="primary" @click="handleClick(formRef)" v-if="!props.ticket">
                     发布门票
                 </el-button>
-                <el-button type="primary" @click="handleClick(formRef)" v-show="props.ticket">
+                <el-button type="primary" @click="handleClick(formRef)" v-if="props.ticket">
                     更新门票
                 </el-button>
                 <el-popconfirm title="确定删除吗？" @confirm="deleteTicket">
                     <template #reference>
-                        <el-button type="danger" v-show="props.ticket">
+                        <el-button type="danger" v-if="props.ticket">
                             删除门票
                         </el-button>
                     </template>

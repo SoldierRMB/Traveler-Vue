@@ -33,13 +33,13 @@
                 filter-placement="bottom"
             >
                 <template #default="scope">
-                    <el-tag type="warning" v-show="scope.row.attractionVO.reviewed === 0"
+                    <el-tag type="warning" v-if="scope.row.attractionVO.reviewed === 0"
                         >未审核</el-tag
                     >
-                    <el-tag type="success" v-show="scope.row.attractionVO.reviewed === 1"
+                    <el-tag type="success" v-if="scope.row.attractionVO.reviewed === 1"
                         >审核通过</el-tag
                     >
-                    <el-tag type="danger" v-show="scope.row.attractionVO.reviewed === 2"
+                    <el-tag type="danger" v-if="scope.row.attractionVO.reviewed === 2"
                         >审核不通过</el-tag
                     >
                 </template>

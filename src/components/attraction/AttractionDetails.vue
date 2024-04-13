@@ -11,15 +11,15 @@
         }}</el-descriptions-item>
         <el-descriptions-item label="审核状态" label-align="center" align="center" :span="1.5">
             <template #default>
-                <el-tag type="warning" v-show="attraction.reviewed === 0">未审核</el-tag>
-                <el-tag type="success" v-show="attraction.reviewed === 1">审核通过</el-tag>
-                <el-tag type="danger" v-show="attraction.reviewed === 2">审核不通过</el-tag>
+                <el-tag type="warning" v-if="attraction.reviewed === 0">未审核</el-tag>
+                <el-tag type="success" v-if="attraction.reviewed === 1">审核通过</el-tag>
+                <el-tag type="danger" v-if="attraction.reviewed === 2">审核不通过</el-tag>
             </template>
         </el-descriptions-item>
         <el-descriptions-item label="删除状态" label-align="center" align="center" :span="1.5">
             <template #default>
-                <el-tag type="info" v-show="attraction.isDeleted === 0">未删除</el-tag>
-                <el-tag type="danger" v-show="attraction.isDeleted === 1">已删除</el-tag>
+                <el-tag type="info" v-if="attraction.isDeleted === 0">未删除</el-tag>
+                <el-tag type="danger" v-if="attraction.isDeleted === 1">已删除</el-tag>
             </template>
         </el-descriptions-item>
         <el-descriptions-item label="省份" label-align="center">{{
@@ -48,13 +48,13 @@
         <el-button
             type="primary"
             @click="goToAttractionTickets"
-            v-show="userRole === 'ROLE_STAFF' && isDeleted === 0"
+            v-if="userRole === 'ROLE_STAFF' && isDeleted === 0"
             >景点门票</el-button
         >
-        <el-button type="primary" @click="updateDialogVisible = true" v-show="isDeleted === 0" plain
+        <el-button type="primary" @click="updateDialogVisible = true" v-if="isDeleted === 0" plain
             >更新景点</el-button
         >
-        <el-button type="primary" @click="restoreAttraction" v-show="isDeleted === 1"
+        <el-button type="primary" @click="restoreAttraction" v-if="isDeleted === 1"
             >恢复景点</el-button
         >
         <el-button @click="goToOrders">订单列表</el-button>
@@ -65,7 +65,7 @@
             @confirm="deleteAttraction"
         >
             <template #reference>
-                <el-button type="danger" plain v-show="userRole === 'ROLE_STAFF' && isDeleted === 0"
+                <el-button type="danger" plain v-if="userRole === 'ROLE_STAFF' && isDeleted === 0"
                     >删除景点</el-button
                 >
             </template>
@@ -73,7 +73,7 @@
         <el-button
             type="danger"
             @click="deleteDialogVisible = true"
-            v-show="userRole === 'ROLE_ADMIN'"
+            v-if="userRole === 'ROLE_ADMIN'"
             >彻底删除</el-button
         >
     </div>

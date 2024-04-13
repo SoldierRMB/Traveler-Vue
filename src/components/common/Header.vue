@@ -32,14 +32,14 @@
                     </el-avatar>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <div class="show" v-show="isAuthenticated">
+                            <div class="show" v-if="isAuthenticated">
                                 <el-dropdown-item command="/home">个人中心</el-dropdown-item>
                                 <el-dropdown-item @click="ordersDialogVisible = true"
                                     >我的订单</el-dropdown-item
                                 >
                                 <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
                             </div>
-                            <div class="hidden" v-show="!isAuthenticated">
+                            <div class="hidden" v-if="!isAuthenticated">
                                 <el-dropdown-item command="/login">登录</el-dropdown-item>
                             </div>
                         </el-dropdown-menu>
