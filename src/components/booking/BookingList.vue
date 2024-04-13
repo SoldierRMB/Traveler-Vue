@@ -71,7 +71,7 @@
         </template>
     </el-dialog>
     <el-dialog title="请使用支付宝付款" width="30rem" v-model="paymentDialogVisible">
-        <el-image src="src\assets\imgs\alipay.jpg" />
+        <el-image :src="alipay" />
         <template #footer>
             <div class="dialog-footer">
                 <el-button type="primary" @click="completePayment">已完成支付</el-button>
@@ -86,6 +86,7 @@ import { apiGetTicketsByAttractionId, apiBooking, apiCompletePayment } from '@/a
 import type { AttractionVO, TicketVO } from '@/types/interfaces';
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
+import alipay from '@/assets/imgs/alipay.jpg'
 
 const attractions = ref([] as AttractionVO[]);
 
