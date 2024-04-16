@@ -86,13 +86,18 @@ const login = async () => {
                 username: loginForm.username,
                 password: loginForm.password
             });
-            const token = response.data;
-            const authStore = useAuthStore();
-            authStore.$patch({ isAuthenticated: !!token });
-            authStore.$patch({ token: token });
-            const decode:UserVO = jwtDecode(token);
-            authStore.$patch({ user: decode as JwtPayload });
-            router.push('/');
+            if (response.status === 200) {
+                const token = response.data;
+                const authStore = useAuthStore();
+                authStore.$patch({ isAuthenticated: !!token });
+                authStore.$patch({ token: token });
+                const decode: UserVO = jwtDecode(token);
+                authStore.$patch({ user: decode as JwtPayload });
+                router.push('/');
+                ElMessage.success('登录成功');
+            } else {
+                ElMessage.error('用户名或密码错误');
+            }
         } else {
             ElMessage.error('请输入完整信息');
         }
