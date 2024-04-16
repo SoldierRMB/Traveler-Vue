@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="attractionsBox">
         <div class="filter">
-            <el-input v-model="keyword" placeholder="请输入景点名称" class="search"></el-input>
+            <el-input v-model="keyword" placeholder="请输入景点名称" class="search" />
             <el-button type="primary" @click="searchAttractions" class="searchButton"
                 >搜索</el-button
             >
@@ -12,6 +12,7 @@
             highlight-current-row
             :default-sort="{ prop: 'createTime', order: 'descending' }"
             @row-click="goToAttraction"
+            class="table"
         >
             <el-table-column
                 align="center"
@@ -68,6 +69,7 @@
             <el-table-column align="center" prop="createTime" label="创建时间" min-width="100" />
             <el-table-column align="center" prop="updateTime" label="更新时间" min-width="100" />
         </el-table>
+        <el-pagination layout="prev, pager, next" :total="50" class="pagination" />
     </div>
 </template>
 
@@ -115,25 +117,41 @@ const filterDeleted = (value: any, row: any) => {
 </script>
 
 <style lang="scss" scoped>
-.filter {
+.attractionsBox {
     display: flex;
-    align-items: center;
-    padding-bottom: 2rem;
+    flex-direction: column;
+    min-height: 100%;
 
-    .search {
-        max-width: 20rem;
+    .filter {
+        display: flex;
+        align-items: center;
+        padding-bottom: 2rem;
+
+        .search {
+            max-width: 20rem;
+        }
+
+        .searchButton {
+            margin-left: 2rem;
+        }
     }
 
-    .searchButton {
-        margin-left: 2rem;
+    .table {
+        flex: 1;
     }
-}
 
-:deep(.el-table__row) {
-    cursor: pointer;
+    :deep(.el-table__row) {
+        cursor: pointer;
 
-    &:hover {
-        color: var(--el-color-primary);
+        &:hover {
+            color: var(--el-color-primary);
+        }
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
     }
 }
 </style>
