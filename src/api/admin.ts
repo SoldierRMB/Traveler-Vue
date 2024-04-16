@@ -17,3 +17,9 @@ export const apiCompleteDeleteUserAttraction = async (attractionId: number) => {
         params: { attractionId: attractionId }
     });
 };
+
+export const apiGetAllOrders = async (current: number, size: number) => {
+    return await request.get('/admin/getAllOrders', {
+        params: { current: current, size: size }
+    });
+};

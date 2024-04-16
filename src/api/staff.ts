@@ -51,8 +51,8 @@ export const apiDeleteTicket = async (ticketId: number, username: string) => {
     });
 };
 
-export const apiGetOrdersByAttractionId = async (attractionId: number, username: string) => {
+export const apiGetOrdersByAttractionId = async (attractionId: number, username: string, current: number, size: number) => {
     return await request.get('/staff/getOrdersByAttractionId', {
-        params: { attractionId: attractionId, username: username }
+        params: { attractionId: attractionId, username: username, current: current, size: size }
     });
 };

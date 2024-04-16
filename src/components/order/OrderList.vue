@@ -1,60 +1,69 @@
 <template>
-    <el-table :data="orders" border>
-        <el-table-column align="center" label="订单编号" prop="orderVO.id" min-width="10rem" />
-        <el-table-column
-            align="center"
-            label="门票名称"
-            prop="ticketVO.ticketName"
-            min-width="10rem"
+    <div class="ordersBox">
+        <div class="filter">
+            <el-input v-model="keyword" placeholder="请输入订单编号" class="search" />
+            <el-button type="primary" @click="searchOrders" class="searchButton">搜索</el-button>
+        </div>
+        <el-table :data="orders.records" border class="table">
+            <el-table-column align="center" label="订单编号" prop="id" min-width="10rem" />
+            <el-table-column
+                align="center"
+                label="门票名称"
+                prop="ticket.ticketName"
+                min-width="10rem"
+            />
+            <el-table-column align="center" label="订单状态" prop="status" min-width="5rem">
+                <template #default="scope">
+                    <el-tag type="warning" v-if="scope.row.status === 1">待支付</el-tag>
+                    <el-tag type="success" v-if="scope.row.status === 2">已支付</el-tag>
+                    <el-tag type="success" v-if="scope.row.status === 3">已完成</el-tag>
+                    <el-tag type="info" v-if="scope.row.status === 4">已取消</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="门票数量(张)" prop="quantity" min-width="6rem" />
+            <el-table-column align="center" label="订单金额(元)" prop="amount" min-width="6rem" />
+            <el-table-column align="center" label="订单时间" prop="orderTime" min-width="10rem" />
+            <el-table-column
+                align="center"
+                label="操作"
+                min-width="15rem"
+                v-if="userRoleRef === 'ROLE_TOURIST'"
+            >
+                <template #default="scope">
+                    <el-button
+                        type="primary"
+                        size="small"
+                        @click="openPaymentDialog(scope.row)"
+                        v-if="scope.row.status === 1"
+                        >支付订单</el-button
+                    >
+                    <el-button type="primary" size="small" v-if="scope.row.status === 2"
+                        >查看门票</el-button
+                    >
+                    <el-button
+                        type="danger"
+                        size="small"
+                        v-if="scope.row.status === 1 || scope.row.status === 2"
+                        >取消订单</el-button
+                    >
+                    <el-button
+                        type="danger"
+                        size="small"
+                        v-if="scope.row.status === 3 || scope.row.status === 4"
+                        >删除订单</el-button
+                    >
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination
+            layout="total, prev, pager, next"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :total="Number(total)"
+            @current-change="currentPage = $event"
+            class="pagination"
         />
-        <el-table-column align="center" label="订单状态" prop="orderVO.status" min-width="5rem">
-            <template #default="scope">
-                <el-tag type="warning" v-if="scope.row.orderVO.status === 1">待支付</el-tag>
-                <el-tag type="success" v-if="scope.row.orderVO.status === 2">已支付</el-tag>
-                <el-tag type="success" v-if="scope.row.orderVO.status === 3">已完成</el-tag>
-                <el-tag type="info" v-if="scope.row.orderVO.status === 4">已取消</el-tag>
-            </template>
-        </el-table-column>
-        <el-table-column
-            align="center"
-            label="门票数量(张)"
-            prop="orderVO.quantity"
-            min-width="8rem"
-        />
-        <el-table-column
-            align="center"
-            label="订单金额(元)"
-            prop="orderVO.amount"
-            min-width="8rem"
-        />
-        <el-table-column align="center" label="订单时间" prop="orderTime" min-width="10rem" />
-        <el-table-column align="center" label="操作" min-width="15rem">
-            <template #default="scope">
-                <el-button
-                    type="primary"
-                    size="small"
-                    @click="openPaymentDialog(scope.row)"
-                    v-if="scope.row.orderVO.status === 1"
-                    >支付订单</el-button
-                >
-                <el-button type="primary" size="small" v-if="scope.row.orderVO.status === 2"
-                    >查看门票</el-button
-                >
-                <el-button
-                    type="danger"
-                    size="small"
-                    v-if="scope.row.orderVO.status === 1 || scope.row.orderVO.status === 2"
-                    >取消订单</el-button
-                >
-                <el-button
-                    type="danger"
-                    size="small"
-                    v-if="scope.row.orderVO.status === 3 || scope.row.orderVO.status === 4"
-                    >删除订单</el-button
-                >
-            </template>
-        </el-table-column>
-    </el-table>
+    </div>
     <el-dialog
         title="title"
         width="600px"
@@ -77,8 +86,9 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { useAuthStore } from '@/stores/auth';
-import { apiGetUserOrders, apiCompletePayment } from '@/api/tourist';
+import { apiGetAllOrders } from '@/api/admin';
 import { apiGetOrdersByAttractionId } from '@/api/staff';
+import { apiGetUserOrders, apiCompletePayment } from '@/api/tourist';
 import { useRoute } from 'vue-router';
 import alipay from '@/assets/imgs/alipay.jpg';
 import router from '@/router';
@@ -88,7 +98,10 @@ const orderTicketDialogVisible = ref(false);
 const authStore = useAuthStore();
 const userRoleRef = ref('');
 
-const orders = ref([]);
+const orders = ref({
+    records: [],
+    total: 0
+});
 
 const route = useRoute();
 
@@ -96,29 +109,45 @@ const props = defineProps({
     userRole: String
 });
 
+const currentPage = ref(1);
+const pageSize = ref(10);
+const total = ref();
+
 const username = authStore.user.sub as string;
+userRoleRef.value = props.userRole ? props.userRole : authStore.user.aud![0];
+
 onMounted(async () => {
-    userRoleRef.value = props.userRole ? props.userRole : authStore.user.aud![0];
-    if (userRoleRef.value === 'ROLE_TOURIST') {
-        orders.value = (await apiGetUserOrders(username)).data.map((order: any) => {
-            return {
-                ...order,
-                orderTime: moment(order.orderVO.orderTime).format('YYYY-MM-DD HH:mm:ss')
-            };
-        });
+    getOrders();
+});
+
+const getOrders = async () => {
+    if (userRoleRef.value === 'ROLE_ADMIN') {
+        orders.value = (await apiGetAllOrders(currentPage.value, pageSize.value)).data;
     } else if (userRoleRef.value === 'ROLE_STAFF') {
         const attractionId = route.query.attractionId as any;
-        console.log(attractionId);
-        orders.value = (await apiGetOrdersByAttractionId(attractionId, username)).data.map(
-            (order: any) => {
-                return {
-                    ...order,
-                    orderTime: moment(order.orderVO.orderTime).format('YYYY-MM-DD HH:mm:ss')
-                };
-            }
-        );
+        orders.value = (
+            await apiGetOrdersByAttractionId(
+                attractionId,
+                username,
+                currentPage.value,
+                pageSize.value
+            )
+        ).data;
+    } else if (userRoleRef.value === 'ROLE_TOURIST') {
+        orders.value = (await apiGetUserOrders(username, currentPage.value, pageSize.value)).data;
     }
-});
+    orders.value.records.forEach((order: any) => {
+        order.orderTime = moment(order.orderTime).format('YYYY-MM-DD HH:mm:ss');
+    });
+    total.value = orders.value.total;
+};
+
+watch(
+    () => currentPage.value,
+    () => {
+        getOrders();
+    }
+);
 
 const paymentDialogVisible = ref(false);
 const orderId = ref();
@@ -135,14 +164,48 @@ const completePayment = async (orderId: number, username: string) => {
         }
     });
 };
+
+const keyword = ref('');
+
+const searchOrders = async () => {};
 </script>
 
 <style lang="scss" scoped>
-:deep(.el-table__row) {
-    cursor: pointer;
+.ordersBox {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 
-    &:hover {
-        color: var(--el-color-primary);
+    .filter {
+        display: flex;
+        align-items: center;
+        padding-bottom: 2rem;
+
+        .search {
+            max-width: 20rem;
+        }
+
+        .searchButton {
+            margin-left: 2rem;
+        }
+    }
+
+    .table {
+        flex: 1 1 auto;
+    }
+
+    :deep(.el-table__row) {
+        cursor: pointer;
+
+        &:hover {
+            color: var(--el-color-primary);
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
     }
 }
 </style>
