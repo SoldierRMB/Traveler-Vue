@@ -15,3 +15,9 @@ export const apiGetAreasByCityCode = async (cityCode: number) => {
 export const apiGetStreetsByAreaCode = async (areaCode: number) => {
     return await request.get('/common/getStreetsByAreaCode', { params: { areaCode } });
 };
+
+export const apiGetAttractionImageByAttractionId = async (attractionId: number) => {
+    return await request.get('/common/getAttractionImageByAttractionId', {
+        params: { attractionId }
+    });
+};

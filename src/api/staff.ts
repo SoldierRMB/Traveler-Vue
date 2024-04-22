@@ -51,8 +51,21 @@ export const apiDeleteTicket = async (ticketId: number, username: string) => {
     });
 };
 
-export const apiGetOrdersByAttractionId = async (attractionId: number, username: string, current: number, size: number) => {
+export const apiGetOrdersByAttractionId = async (
+    attractionId: number,
+    username: string,
+    current: number,
+    size: number
+) => {
     return await request.get('/staff/getOrdersByAttractionId', {
         params: { attractionId: attractionId, username: username, current: current, size: size }
     });
+};
+
+export const apiUploadAttractionImage = async (formData: FormData) => {
+    return await request.post('/staff/uploadAttractionImage', formData);
+};
+
+export const apiUpdateAttractionImage = async (formData: FormData) => {
+    return await request.put('/staff/updateAttractionImage', formData);
 };
