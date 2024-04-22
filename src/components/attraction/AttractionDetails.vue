@@ -77,7 +77,7 @@
             >彻底删除</el-button
         >
     </div>
-    <el-dialog v-model="updateDialogVisible" title="更新景点" width="60%">
+    <el-dialog v-model="updateDialogVisible" title="更新景点" width="60%" top="10vh">
         <AttractionForm :isUpdate="true" />
     </el-dialog>
     <el-dialog v-model="deleteDialogVisible" title="彻底删除景点？" width="30%">
