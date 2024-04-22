@@ -69,7 +69,14 @@
             <el-table-column align="center" prop="createTime" label="创建时间" min-width="100" />
             <el-table-column align="center" prop="updateTime" label="更新时间" min-width="100" />
         </el-table>
-        <el-pagination layout="prev, pager, next" :total="50" class="pagination" />
+<!--         <el-pagination
+            layout="total, prev, pager, next"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :total="Number(total)"
+            @current-change="currentPage = $event"
+            class="pagination"
+        /> -->
     </div>
 </template>
 
@@ -84,12 +91,20 @@ const reviewedFilter = reactive([
     { text: '审核不通过', value: '2' }
 ]);
 
+/* const currentPage = ref(1);
+const pageSize = ref(10);
+const total = ref(); */
+
+const authStore = useAuthStore();
+const token = authStore.token;
+const decoded: JwtPayload = jwtDecode(token);
+const username = decoded.sub as string;
+const userRole = decoded.aud?.[0] as string;
 onMounted(async () => {
-    const authStore = useAuthStore();
-    const token = authStore.token;
-    const decoded: JwtPayload = jwtDecode(token);
-    const username = decoded.sub as string;
-    const userRole = decoded.aud?.[0] as string;
+    getAttractions();
+});
+
+const getAttractions = async () => {
     userAttractions.value =
         userRole === 'ROLE_ADMIN'
             ? await loadUserAttractions(userRole, username, true)
@@ -97,7 +112,14 @@ onMounted(async () => {
     if (userRole === 'ROLE_STAFF') {
         reviewedFilter.unshift({ text: '未审核', value: '0' });
     }
-});
+};
+
+/* watch(
+    () => currentPage.value,
+    () => {
+        getAttractions();
+    }
+); */
 
 const goToAttraction = (row: any) => {
     goToAttractionDetails(row);
@@ -147,7 +169,7 @@ const filterDeleted = (value: any, row: any) => {
             color: var(--el-color-primary);
         }
     }
-    
+
     .pagination {
         display: flex;
         justify-content: center;
