@@ -14,12 +14,12 @@ export const apiReviewAttractions = async (data: number[], pass: boolean) => {
 
 export const apiCompleteDeleteUserAttraction = async (attractionId: number) => {
     return await request.delete('/admin/completeDeleteUserAttraction', {
-        params: { attractionId: attractionId }
+        params: { attractionId }
     });
 };
 
 export const apiGetAllOrders = async (current: number, size: number) => {
     return await request.get('/admin/getAllOrders', {
-        params: { current: current, size: size }
+        params: { current, size }
     });
 };
