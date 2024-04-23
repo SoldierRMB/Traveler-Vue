@@ -6,9 +6,9 @@
             v-for="attraction in attractions"
             :key="attraction.id"
         >
-            <!-- <template #header>
-                <el-image src="src\assets\imgs\forbidden-city.jpg" fit="contain" />
-            </template> -->
+            <template #header>
+                <el-image :src="attractionImageUrl + attraction.id" fit="contain" />
+            </template>
             <div class="infos">
                 <div class="title">{{ attraction.attractionName }}</div>
                 <div class="scores">
@@ -86,9 +86,12 @@ import { apiGetTicketsByAttractionId, apiBooking, apiCompletePayment } from '@/a
 import type { AttractionVO, TicketVO } from '@/types/interfaces';
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
-import alipay from '@/assets/imgs/alipay.jpg'
+import alipay from '@/assets/imgs/alipay.jpg';
 
 const attractions = ref([] as AttractionVO[]);
+const attractionImageUrl =
+    import.meta.env.VITE_TRAVELER_BASE_URL +
+    'common/getAttractionImageByAttractionId?attractionId=';
 
 onMounted(async () => {
     const attractionsRes = await apiGetAttractions();
@@ -104,7 +107,7 @@ const username = authStore.user.sub;
 const orderId = ref();
 
 const bookingDialog = async (attractionId: number) => {
-    if(authStore.isAuthenticated == false){
+    if (authStore.isAuthenticated == false) {
         return router.push('/login');
     }
     bookingDialogVisible.value = true;

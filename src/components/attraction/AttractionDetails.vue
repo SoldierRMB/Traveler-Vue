@@ -51,7 +51,7 @@
             v-if="userRole === 'ROLE_STAFF' && isDeleted === 0"
             >景点门票</el-button
         >
-        <el-button type="primary" @click="updateDialogVisible = true" v-if="isDeleted === 0" plain
+        <el-button type="primary" @click="updateDialogVisible = true" v-if="isDeleted === 0 && reviewed === 1 && userRole === 'ROLE_STAFF'" plain
             >更新景点</el-button
         >
         <el-button type="primary" @click="restoreAttraction" v-if="isDeleted === 1"
@@ -120,6 +120,7 @@ const userRole = userAuthStore.user.aud![0];
 const username = userAuthStore.user.sub as string;
 const attractionId = attraction.value.id;
 const isDeleted = attraction.value.isDeleted;
+const reviewed = attraction.value.reviewed;
 
 const goToAttractionTickets = () => {
     router.push(`/attractions/${attractionId}/tickets`);

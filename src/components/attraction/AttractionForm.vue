@@ -93,9 +93,10 @@
             </el-row>
             <el-form-item label="景点图片" prop="attractionImage">
                 <UploadImage
+                    ref="uploadImage"
                     :imageUrl="attractionImageUrl"
                     :isUpdate="props.isUpdate"
-                    :form="form"
+                    :attractionId="attractionId"
                     @image="(image) => (form.attractionImage = image)"
                 />
             </el-form-item>
@@ -129,6 +130,8 @@ const cities = ref([] as CityVO[]);
 const areas = ref([] as AreaVO[]);
 const streets = ref([] as StreetVO[]);
 const attractionImageUrl = ref();
+const uploadImage = ref();
+const attractionId = ref(0)
 
 interface AttractionForm extends AttractionVO {
     attractionImage: any;
@@ -141,7 +144,8 @@ const rules = reactive<FormRules<AttractionForm>>({
     provinceCode: [{ required: true, message: '请选择省份', trigger: 'change' }],
     cityCode: [{ required: true, message: '请选择城市', trigger: 'change' }],
     areaCode: [{ required: true, message: '请选择县区', trigger: 'change' }],
-    streetCode: [{ required: true, message: '请选择街道', trigger: 'change' }]
+    streetCode: [{ required: true, message: '请选择街道', trigger: 'change' }],
+    attractionImage: [{ required: true, message: '请上传景点图片', trigger: 'blur' }]
 });
 
 const props = defineProps({
@@ -198,13 +202,13 @@ const authStore = useAuthStore();
 const username = authStore.user?.sub;
 
 const handleClick = async (formEl: FormInstance | undefined) => {
-    console.log(form.value.attractionImage);
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
         if (valid) {
             let apiAttractionFunction = props.isUpdate ? apiUpdateAttraction : apiPublishAttraction;
             const attractionRes = await apiAttractionFunction(form.value, username as string);
-            if (attractionRes.status === 200) {
+            attractionId.value = attractionRes.data.id;
+            if (attractionRes.status === 200 && uploadImage.value.handleSubmit()) {
                 ElMessage.success('操作成功');
                 router.push('/attractions');
             } else {
@@ -213,12 +217,6 @@ const handleClick = async (formEl: FormInstance | undefined) => {
         }
     });
 };
-
-watchEffect(
-    () => {
-        console.log(form.value.attractionImage);
-    }
-);
 </script>
 
 <style lang="scss" scoped>

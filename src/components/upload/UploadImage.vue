@@ -1,5 +1,6 @@
 <template>
     <el-upload
+        ref="uploadRef"
         :http-request="uploadAttractionImage"
         accept="image/jpeg, image/png"
         v-model:file-list="fileList"
@@ -30,8 +31,10 @@
                 </span>
             </div>
         </template>
+        <template #tip>
+            <div class="description">仅支持JPEG/PNG格式</div>
+        </template>
     </el-upload>
-    <div class="description">仅支持JPEG/PNG格式</div>
 
     <el-dialog width="80%" :modal="false" align-center v-model="dialogVisible">
         <el-image :src="dialogImageUrl" alt="Preview Image" style="padding-top: 1rem" />
@@ -43,6 +46,7 @@ import type { UploadProps, UploadFile, UploadFiles, UploadUserFile } from 'eleme
 import { apiUpdateAttractionImage, apiUploadAttractionImage } from '@/api/staff';
 import { useAuthStore } from '@/stores/auth';
 
+const uploadRef = ref();
 const fileList = ref<UploadUserFile[]>([]);
 const dialogImageUrl = ref('');
 const dialogVisible = ref(false);
@@ -51,7 +55,7 @@ const username = useAuthStore().user.sub;
 const props = defineProps({
     imageUrl: String,
     isUpdate: Boolean,
-    form: Object
+    attractionId: Number
 });
 
 watch(
@@ -62,6 +66,7 @@ watch(
                 name: 'attraction_image',
                 url: newVal
             });
+            emits('image', fileList.value[0]);
         }
     }
 );
@@ -86,10 +91,19 @@ const uploadAttractionImage = async () => {
     const formData = new FormData();
     const file = fileList.value[0].raw as File;
     formData.append('file', file);
-    formData.append('attractionId', props.form?.id as string);
+    formData.append('attractionId', String(props.attractionId));
     formData.append('username', username as string);
     await apiFunction(formData);
 };
+
+const handleSubmit = () => {
+    uploadRef.value.submit();
+    return true;
+};
+
+defineExpose({
+    handleSubmit
+});
 </script>
 
 <style lang="scss" scoped>

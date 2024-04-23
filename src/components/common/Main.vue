@@ -26,6 +26,10 @@
     background-color: transparent !important;
 }
 
+:deep(.el-menu-item.is-active) {
+    background-color: transparent !important;
+}
+
 @media screen and (max-width: 1200px) {
     .menuBox {
         padding: 0 10rem;
