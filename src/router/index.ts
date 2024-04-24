@@ -21,7 +21,7 @@ const router = createRouter({
                 {
                     path: '/post',
                     name: 'Post',
-                    component: () => import('@/components/post/Post.vue'),
+                    component: () => import('@/components/post/PostList.vue'),
                     meta: { title: '【行者】旅游攻略' }
                 },
                 {
