@@ -1,6 +1,6 @@
 <template>
     <el-space direction="vertical" alignment="flex-start">
-        <el-card shadow="always" class="postCard" v-for="posts in 5" :key="posts">
+        <el-card shadow="always" class="postCard" v-for="post in posts" :key="post">
             <template #header>
                 <div class="avatar">
                     <el-avatar>
@@ -10,11 +10,11 @@
                     </el-avatar>
                 </div>
                 <div class="info">
-                    <div class="username">Admin</div>
-                    <div class="postTime">2024-1-1 12:00</div>
+                    <div class="username">{{ post.user.username }}</div>
+                    <div class="postTime">{{ post.postTime }}</div>
                 </div>
             </template>
-            <div>故宫很好玩故宫很好玩故宫很好玩故宫很好玩</div>
+            <div>{{ post.content }}</div>
             <template #footer>
                 <el-button type="primary" round>
                     <template #icon>
@@ -26,11 +26,48 @@
     </el-space>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import moment from 'moment';
+import { apiGetPosts } from '@/api/guest';
+import { useInfiniteScroll } from '@vueuse/core';
+
+const cards = ref<HTMLElement | null>(null);
+const posts = ref();
+const current = ref(1);
+const size = ref(10000000);
+
+onMounted(async () => {
+    getPosts();
+});
+
+const getPosts = async () => {
+    const res = await apiGetPosts(current.value, size.value);
+    posts.value = res.data.records.map((post: any) => {
+        return {
+            ...post,
+            postTime: moment(post.createTime).format('YYYY-MM-DD HH:mm:ss')
+        };
+    });
+};
+
+const loadMore = async () => {
+    current.value += 1;
+        const res = await apiGetPosts(current.value, size.value);
+        posts.value.push(
+            res.data.records.map((post: any) => {
+                return {
+                    ...post,
+                    postTime: moment(post.createTime).format('YYYY-MM-DD HH:mm:ss')
+                };
+            })
+        );
+}
+</script>
 
 <style scoped lang="scss">
 .postCard {
     flex: 1;
+    min-width: 50rem;
 }
 
 :deep(.el-card__header) {

@@ -21,3 +21,7 @@ export const apiGetUserOrders = async (username: string, current: number, size: 
         params: { username, current, size }
     });
 };
+
+export const apiPublishPost = async (data: any, username: string) => {
+    return await request.post('/tourist/publishPost', data, { params: { username } });
+};

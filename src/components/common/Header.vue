@@ -46,6 +46,9 @@
                     </template>
                 </el-dropdown>
             </div>
+            <div class="postButton" v-if="authStore.isAuthenticated" title="发布旅游动态" @click="postDialogVisible = true">
+                <el-icon><SvgIcon name="edit" /></el-icon>
+            </div>
             <div class="toggleDark">
                 <el-switch v-model="isDark" @update="toggleDark" class="switch">
                     <template #active-action>
@@ -85,6 +88,9 @@
             </div>
         </div>
     </div>
+    <el-dialog title="发布旅游动态" width="60%" v-model="postDialogVisible" @close="postDialogVisible = false">
+        <PostForm />
+    </el-dialog>
     <el-dialog
         title="我的订单"
         width="80%"
@@ -160,6 +166,7 @@ const redirectToGithub = () => {
     window.open('https://github.com/SoldierRMB/Traveler', '_blank');
 };
 
+const postDialogVisible = ref(false);
 const ordersDialogVisible = ref(false);
 </script>
 
@@ -229,9 +236,17 @@ const ordersDialogVisible = ref(false);
         justify-content: center;
         align-items: center;
         margin-left: auto;
+        gap: 1.5rem;
+
+        .postButton {
+            cursor: pointer;
+        }
+
+        .postButton:hover{
+            color: var(--el-color-primary);
+        }
 
         .toggleDark {
-            padding-left: 2rem;
             .switch {
                 --el-switch-on-color: #2f2f2f;
                 --el-switch-off-color: #f1f1f1;
@@ -247,7 +262,6 @@ const ordersDialogVisible = ref(false);
 
             .langSvg {
                 display: flex;
-                padding-left: 2rem;
             }
         }
 
@@ -261,7 +275,6 @@ const ordersDialogVisible = ref(false);
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            padding-left: 2rem;
         }
     }
 }
