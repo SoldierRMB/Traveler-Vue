@@ -92,11 +92,11 @@
                                 </i>
                                 <span>用户管理</span>
                             </template>
-                            <el-menu-item index="/user" v-if="userRole === 'ROLE_ADMIN'">
+                            <el-menu-item index="/users" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="user"></SvgIcon>
                                 </i>
-                                <span>角色管理</span>
+                                <span>用户管理</span>
                             </el-menu-item>
                             <el-menu-item index="/userInfo">
                                 <i class="el-icon">
