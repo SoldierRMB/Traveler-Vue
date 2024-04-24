@@ -80,6 +80,12 @@ const router = createRouter({
                     name: 'Orders',
                     component: () => import('@/components/order/OrderList.vue'),
                     meta: { title: '订单管理', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
+                },
+                {
+                    path: '/userInfo',
+                    name: 'UserInfo',
+                    component: () => import('@/components/user/UserInfo.vue'),
+                    meta: { title: '个人信息' }
                 }
             ]
         },

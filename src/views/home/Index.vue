@@ -10,7 +10,10 @@
                             </i>
                             <span>首页</span>
                         </el-menu-item>
-                        <el-sub-menu index="attraction">
+                        <el-sub-menu
+                            index="attraction"
+                            v-if="userRole === 'ROLE_ADMIN' || userRole === 'ROLE_STAFF'"
+                        >
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="camera"></SvgIcon>
@@ -39,10 +42,7 @@
                                 <span>发布景点</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-menu-item
-                            index="/orders"
-                            v-if="userRole === 'ROLE_ADMIN'"
-                        >
+                        <el-menu-item index="/orders" v-if="userRole === 'ROLE_ADMIN'">
                             <i class="el-icon">
                                 <SvgIcon name="order"></SvgIcon>
                             </i>
@@ -62,7 +62,10 @@
                                 <span>动态列表</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="messages">
+                        <el-sub-menu
+                            index="messages"
+                            v-if="userRole === 'ROLE_ADMIN' || userRole === 'ROLE_STAFF'"
+                        >
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="message"></SvgIcon>
@@ -82,18 +85,24 @@
                                 <span>公告管理</span>
                             </el-menu-item>
                         </el-sub-menu>
-                        <el-sub-menu index="users" v-if="userRole === 'ROLE_ADMIN'">
+                        <el-sub-menu index="users">
                             <template #title>
                                 <i class="el-icon">
                                     <SvgIcon name="team"></SvgIcon>
                                 </i>
                                 <span>用户管理</span>
                             </template>
-                            <el-menu-item index="/user">
+                            <el-menu-item index="/user" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
                                     <SvgIcon name="user"></SvgIcon>
                                 </i>
                                 <span>角色管理</span>
+                            </el-menu-item>
+                            <el-menu-item index="/userInfo">
+                                <i class="el-icon">
+                                    <SvgIcon name="user"></SvgIcon>
+                                </i>
+                                <span>个人信息管理</span>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-menu-item index="/settings" v-if="userRole === 'ROLE_ADMIN'">
@@ -109,9 +118,7 @@
                 <el-header class="header">
                     <div class="left">
                         <div>
-                            {{
-                                userRole === 'ROLE_ADMIN' ? '系统管理员' : '景点管理员'
-                            }}后台管理系统
+                            {{ welcome }}
                         </div>
                     </div>
                     <div class="right">
@@ -125,7 +132,7 @@
                                 </template>
                             </el-switch>
                         </div>
-                        <el-button type="info" @click="logout">退出</el-button>
+                        <el-button type="info" @click="exit">退出</el-button>
                     </div>
                 </el-header>
                 <el-main class="main">
@@ -155,12 +162,23 @@ const toggleDark = useToggle(isDark);
 const userRole = ref('');
 
 const authStore = useAuthStore();
+
 onMounted(() => {
     const token = authStore.token;
     userRole.value = jwtDecode<JwtPayload>(token).aud![0];
 });
 
-const logout = () => {
+const welcome = computed(() => {
+    if (userRole.value === 'ROLE_ADMIN') {
+        return '管理员后台管理系统';
+    } else if (userRole.value === 'ROLE_STAFF') {
+        return '景点管理员后台管理系统';
+    } else if (userRole.value === 'ROLE_TOURIST') {
+        return '游客用户个人中心';
+    }
+});
+
+const exit = () => {
     router.push('/');
     ElMessage({ message: '退出成功', type: 'success' });
 };
@@ -173,6 +191,7 @@ const logout = () => {
 }
 
 .aside {
+    min-width: 20rem;
     justify-content: center;
     align-items: center;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -207,7 +226,7 @@ const logout = () => {
 
         .toggleDark {
             padding-right: 2rem;
-            
+
             .switch {
                 --el-switch-on-color: #2f2f2f;
                 --el-switch-off-color: #f1f1f1;
