@@ -83,3 +83,12 @@ export interface OrderVO {
     amount:number;
     orderTime:string;
 }
+
+export interface PostVO {
+    id: number;
+    title: string;
+    content: string;
+    userId: number;
+    createTime: string;
+    updateTime: string;
+}
