@@ -12,7 +12,7 @@
                 prop="ticket.ticketName"
                 min-width="10rem"
             />
-            <el-table-column align="center" label="订单状态" prop="status" min-width="5rem">
+            <el-table-column align="center" label="订单状态" prop="status" min-width="6rem">
                 <template #default="scope">
                     <el-tag type="warning" v-if="scope.row.status === 1">待支付</el-tag>
                     <el-tag type="success" v-if="scope.row.status === 2">已支付</el-tag>
@@ -20,38 +20,40 @@
                     <el-tag type="info" v-if="scope.row.status === 4">已取消</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="门票数量(张)" prop="quantity" min-width="6rem" />
-            <el-table-column align="center" label="订单金额(元)" prop="amount" min-width="6rem" />
-            <el-table-column align="center" label="订单时间" prop="orderTime" min-width="10rem" />
+            <el-table-column align="center" label="门票数量(张)" prop="quantity" min-width="8rem" />
+            <el-table-column align="center" label="订单金额(元)" prop="amount" min-width="8rem" />
+            <el-table-column align="center" label="订单时间" prop="orderTime" min-width="8rem" />
             <el-table-column
                 align="center"
                 label="操作"
-                min-width="15rem"
+                min-width="8rem"
                 v-if="userRoleRef === 'ROLE_TOURIST'"
             >
                 <template #default="scope">
-                    <el-button
-                        type="primary"
-                        size="small"
-                        @click="openPaymentDialog(scope.row)"
-                        v-if="scope.row.status === 1"
-                        >支付订单</el-button
-                    >
-                    <el-button type="primary" size="small" v-if="scope.row.status === 2"
-                        >查看门票</el-button
-                    >
-                    <el-button
-                        type="danger"
-                        size="small"
-                        v-if="scope.row.status === 1 || scope.row.status === 2"
-                        >取消订单</el-button
-                    >
-                    <el-button
-                        type="danger"
-                        size="small"
-                        v-if="scope.row.status === 3 || scope.row.status === 4"
-                        >删除订单</el-button
-                    >
+                    <div class="buttons">
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="openPaymentDialog(scope.row)"
+                            v-if="scope.row.status === 1"
+                            >支付订单</el-button
+                        >
+                        <el-button type="primary" size="small" v-if="scope.row.status === 2"
+                            >查看门票</el-button
+                        >
+                        <el-button
+                            type="danger"
+                            size="small"
+                            v-if="scope.row.status === 1 || scope.row.status === 2"
+                            >取消订单</el-button
+                        >
+                        <el-button
+                            type="danger"
+                            size="small"
+                            v-if="scope.row.status === 3 || scope.row.status === 4"
+                            >删除订单</el-button
+                        >
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
@@ -224,6 +226,19 @@ const searchOrders = async () => {};
         display: flex;
         justify-content: center;
         margin-top: 2rem;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        .el-button + .el-button,
+        .el-checkbox.is-bordered + .el-checkbox.is-bordered {
+            margin-left: 0px;
+        }
     }
 }
 </style>
