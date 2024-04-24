@@ -62,6 +62,12 @@ export const apiGetOrdersByAttractionId = async (
     });
 };
 
+export const apiUseTicket = async (attractionId: number, orderId: number, username: string) => {
+    return await request.put('/staff/useTicket', null, {
+        params: { attractionId, orderId, username }
+    });
+};
+
 export const apiUploadAttractionImage = async (formData: FormData) => {
     return await request.post('/staff/uploadAttractionImage', formData);
 };

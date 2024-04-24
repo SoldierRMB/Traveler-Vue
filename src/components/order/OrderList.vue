@@ -4,7 +4,7 @@
             <el-input v-model="keyword" placeholder="请输入订单编号" class="search" />
             <el-button type="primary" @click="searchOrders" class="searchButton">搜索</el-button>
         </div>
-        <el-table :data="orders.records" border class="table">
+        <el-table :data="orders.records" border class="table" @row-click="handleRowClick">
             <el-table-column align="center" label="订单编号" prop="id" min-width="10rem" />
             <el-table-column
                 align="center"
@@ -87,7 +87,7 @@
 import moment from 'moment';
 import { useAuthStore } from '@/stores/auth';
 import { apiGetAllOrders } from '@/api/admin';
-import { apiGetOrdersByAttractionId } from '@/api/staff';
+import { apiGetOrdersByAttractionId, apiUseTicket } from '@/api/staff';
 import { apiGetUserOrders, apiCompletePayment } from '@/api/tourist';
 import { useRoute } from 'vue-router';
 import alipay from '@/assets/imgs/alipay.jpg';
@@ -104,6 +104,7 @@ const orders = ref({
 });
 
 const route = useRoute();
+const attractionId = route.query.attractionId as any;
 
 const props = defineProps({
     userRole: String
@@ -124,7 +125,6 @@ const getOrders = async () => {
     if (userRoleRef.value === 'ROLE_ADMIN') {
         orders.value = (await apiGetAllOrders(currentPage.value, pageSize.value)).data;
     } else if (userRoleRef.value === 'ROLE_STAFF') {
-        const attractionId = route.query.attractionId as any;
         orders.value = (
             await apiGetOrdersByAttractionId(
                 attractionId,
@@ -163,6 +163,24 @@ const completePayment = async (orderId: number, username: string) => {
             router.push(`/success/${orderId}`);
         }
     });
+};
+
+const handleRowClick = async (row: any, column: any, event: Event) => {
+    if (userRoleRef.value === 'ROLE_STAFF' && row.status === 2) {
+        ElMessageBox.confirm('使用此门票吗？', '使用门票', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }).then(async () => {
+            const res = await apiUseTicket(attractionId, row.id, username);
+            if (res.status === 200) {
+                ElMessage.success('门票使用成功');
+            } else {
+                ElMessage.error('门票使用失败');
+            }
+            location.reload();
+        });
+    }
 };
 
 const keyword = ref('');
