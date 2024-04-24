@@ -22,6 +22,12 @@ export const apiGetUserOrders = async (username: string, current: number, size: 
     });
 };
 
+export const apiCancelOrder = async (orderId: number, username: string) => {
+    return await request.put('/tourist/cancelOrder', null, {
+        params: { orderId, username }
+    });
+};
+
 export const apiPublishPost = async (data: any, username: string) => {
     return await request.post('/tourist/publishPost', data, { params: { username } });
 };

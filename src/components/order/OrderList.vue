@@ -41,12 +41,22 @@
                         <el-button type="primary" size="small" v-if="scope.row.status === 2"
                             >查看门票</el-button
                         >
-                        <el-button
-                            type="danger"
-                            size="small"
+                        <el-popconfirm
+                            title="确认取消订单吗？"
+                            confirm-button-text="确认"
+                            cancel-button-text="取消"
                             v-if="scope.row.status === 1 || scope.row.status === 2"
-                            >取消订单</el-button
+                            @confirm="cancelOrder(scope.row.id)"
                         >
+                            <template #reference>
+                                <el-button
+                                    type="danger"
+                                    size="small"
+                                    v-if="scope.row.status === 1 || scope.row.status === 2"
+                                    >取消订单</el-button
+                                >
+                            </template>
+                        </el-popconfirm>
                         <el-button
                             type="danger"
                             size="small"
@@ -66,13 +76,6 @@
             class="pagination"
         />
     </div>
-    <el-dialog
-        title="title"
-        width="600px"
-        v-model="orderTicketDialogVisible"
-        @close="orderTicketDialogVisible = false"
-    >
-    </el-dialog>
     <el-dialog title="请使用支付宝付款" width="30rem" v-model="paymentDialogVisible">
         <el-image :src="alipay" />
         <template #footer>
@@ -90,7 +93,7 @@ import moment from 'moment';
 import { useAuthStore } from '@/stores/auth';
 import { apiGetAllOrders } from '@/api/admin';
 import { apiGetOrdersByAttractionId, apiUseTicket } from '@/api/staff';
-import { apiGetUserOrders, apiCompletePayment } from '@/api/tourist';
+import { apiGetUserOrders, apiCompletePayment, apiCancelOrder } from '@/api/tourist';
 import { useRoute } from 'vue-router';
 import alipay from '@/assets/imgs/alipay.jpg';
 import router from '@/router';
@@ -156,13 +159,21 @@ const orderId = ref();
 
 const openPaymentDialog = (row: any) => {
     paymentDialogVisible.value = true;
-    orderId.value = row.orderVO.id;
+    orderId.value = row.id;
 };
 
 const completePayment = async (orderId: number, username: string) => {
     await apiCompletePayment(orderId, username).then((res) => {
         if (res.status === 200) {
             router.push(`/success/${orderId}`);
+        }
+    });
+};
+
+const cancelOrder = async (orderId: number) => {
+    await apiCancelOrder(orderId, username).then((res) => {
+        if (res.status === 200) {
+            location.reload();
         }
     });
 };
