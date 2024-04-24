@@ -51,7 +51,11 @@
             v-if="userRole === 'ROLE_STAFF' && isDeleted === 0"
             >景点门票</el-button
         >
-        <el-button type="primary" @click="updateDialogVisible = true" v-if="isDeleted === 0 && reviewed === 1 && userRole === 'ROLE_STAFF'" plain
+        <el-button
+            type="primary"
+            @click="updateDialogVisible = true"
+            v-if="isDeleted === 0 && reviewed === 1 && userRole === 'ROLE_STAFF'"
+            plain
             >更新景点</el-button
         >
         <el-button type="primary" @click="restoreAttraction" v-if="isDeleted === 1"

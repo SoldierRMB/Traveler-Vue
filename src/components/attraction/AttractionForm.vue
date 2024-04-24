@@ -131,7 +131,7 @@ const areas = ref([] as AreaVO[]);
 const streets = ref([] as StreetVO[]);
 const attractionImageUrl = ref();
 const uploadImage = ref();
-const attractionId = ref(0)
+const attractionId = ref(0);
 
 interface AttractionForm extends AttractionVO {
     attractionImage: any;

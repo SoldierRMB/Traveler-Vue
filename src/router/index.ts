@@ -29,7 +29,7 @@ const router = createRouter({
                     name: 'Booking',
                     component: () => import('@/components/booking/BookingList.vue'),
                     meta: { title: '【行者】旅游订票' }
-                },
+                }
             ]
         },
         {

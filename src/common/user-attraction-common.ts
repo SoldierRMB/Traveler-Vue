@@ -1,7 +1,7 @@
 import router from '@/router';
 import moment from 'moment';
 import { apiGetUserAttractions, apiGetUnreviewedUserAttractions } from '@/api/admin';
-import {apiGetAttractionsByUsername} from '@/api/staff'
+import { apiGetAttractionsByUsername } from '@/api/staff';
 import { useUserAttractionStore } from '@/stores/user-attraction';
 import type { UserAttractionVO } from '@/types/interfaces';
 
@@ -12,13 +12,13 @@ export async function loadUserAttractions(
 ): Promise<UserAttractionVO[]> {
     const userAttractions: UserAttractionVO[] = [];
     let data;
-    if(userRole === 'ROLE_ADMIN'){
+    if (userRole === 'ROLE_ADMIN') {
         if (reviewed) {
             data = (await apiGetUserAttractions()).data;
         } else {
             data = (await apiGetUnreviewedUserAttractions()).data;
         }
-    } else if(userRole === 'ROLE_STAFF' && username){
+    } else if (userRole === 'ROLE_STAFF' && username) {
         data = (await apiGetAttractionsByUsername(username)).data;
     } else {
         return [];

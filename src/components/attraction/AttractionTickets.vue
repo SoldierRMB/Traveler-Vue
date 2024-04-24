@@ -18,7 +18,7 @@
         <PublishAttractionTicketForm />
     </el-dialog>
     <el-dialog v-model="detailsDialogVisible" title="景点门票详情">
-        <PublishAttractionTicketForm :ticket="ticket"/>
+        <PublishAttractionTicketForm :ticket="ticket" />
     </el-dialog>
 </template>
 
@@ -27,7 +27,7 @@ import { apiGetTicketsByAttractionId } from '@/api/staff';
 import { useAuthStore } from '@/stores/auth';
 import { useRoute } from 'vue-router';
 
-const ticket = ref()
+const ticket = ref();
 
 const tickets = ref([]);
 const publishDialogVisible = ref(false);
@@ -43,10 +43,10 @@ onMounted(async () => {
     tickets.value = ticketsRes.data;
 });
 
-const rowClickHandler = (row: any, column:any, event:Event) => {
-    detailsDialogVisible.value = true
-    ticket.value = row
-}
+const rowClickHandler = (row: any, column: any, event: Event) => {
+    detailsDialogVisible.value = true;
+    ticket.value = row;
+};
 </script>
 
 <style lang="scss" scoped>

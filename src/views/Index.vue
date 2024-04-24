@@ -15,8 +15,7 @@
     <el-backtop :bottom="150" />
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .containerBox {

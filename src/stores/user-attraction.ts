@@ -24,7 +24,7 @@ export const useUserAttractionStore = defineStore(
             city.value = {} as CityVO;
             area.value = {} as AreaVO;
             street.value = {} as StreetVO;
-        }
+        };
         return {
             attraction,
             user,

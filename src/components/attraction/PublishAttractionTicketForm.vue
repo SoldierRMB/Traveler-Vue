@@ -54,9 +54,7 @@
                 </el-button>
                 <el-popconfirm title="确定删除吗？" @confirm="deleteTicket">
                     <template #reference>
-                        <el-button type="danger" v-if="props.ticket">
-                            删除门票
-                        </el-button>
+                        <el-button type="danger" v-if="props.ticket"> 删除门票 </el-button>
                     </template>
                 </el-popconfirm>
             </el-form-item>

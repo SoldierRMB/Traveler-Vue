@@ -69,7 +69,7 @@
             <el-table-column align="center" prop="createTime" label="创建时间" min-width="100" />
             <el-table-column align="center" prop="updateTime" label="更新时间" min-width="100" />
         </el-table>
-<!--         <el-pagination
+        <!--         <el-pagination
             layout="total, prev, pager, next"
             :current-page="currentPage"
             :page-size="pageSize"

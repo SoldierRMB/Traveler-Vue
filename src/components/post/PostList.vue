@@ -52,16 +52,16 @@ const getPosts = async () => {
 
 const loadMore = async () => {
     current.value += 1;
-        const res = await apiGetPosts(current.value, size.value);
-        posts.value.push(
-            res.data.records.map((post: any) => {
-                return {
-                    ...post,
-                    postTime: moment(post.createTime).format('YYYY-MM-DD HH:mm:ss')
-                };
-            })
-        );
-}
+    const res = await apiGetPosts(current.value, size.value);
+    posts.value.push(
+        res.data.records.map((post: any) => {
+            return {
+                ...post,
+                postTime: moment(post.createTime).format('YYYY-MM-DD HH:mm:ss')
+            };
+        })
+    );
+};
 </script>
 
 <style scoped lang="scss">

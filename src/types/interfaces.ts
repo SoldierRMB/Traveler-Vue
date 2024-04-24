@@ -77,11 +77,11 @@ export interface TicketVO {
 export interface OrderVO {
     id: number[];
     userId: number;
-    ticketId:number;
-    status:number;
-    quantity:number;
-    amount:number;
-    orderTime:string;
+    ticketId: number;
+    status: number;
+    quantity: number;
+    amount: number;
+    orderTime: string;
 }
 
 export interface PostVO {

@@ -46,7 +46,12 @@
                     </template>
                 </el-dropdown>
             </div>
-            <div class="postButton" v-if="authStore.isAuthenticated" title="发布旅游动态" @click="postDialogVisible = true">
+            <div
+                class="postButton"
+                v-if="authStore.isAuthenticated"
+                title="发布旅游动态"
+                @click="postDialogVisible = true"
+            >
                 <el-icon><SvgIcon name="edit" /></el-icon>
             </div>
             <div class="toggleDark">
@@ -88,7 +93,12 @@
             </div>
         </div>
     </div>
-    <el-dialog title="发布旅游动态" width="60%" v-model="postDialogVisible" @close="postDialogVisible = false">
+    <el-dialog
+        title="发布旅游动态"
+        width="60%"
+        v-model="postDialogVisible"
+        @close="postDialogVisible = false"
+    >
         <PostForm />
     </el-dialog>
     <el-dialog
@@ -97,7 +107,7 @@
         v-model="ordersDialogVisible"
         @close="ordersDialogVisible = false"
     >
-        <OrderList :userRole="'ROLE_TOURIST'"/>
+        <OrderList :userRole="'ROLE_TOURIST'" />
     </el-dialog>
 </template>
 
@@ -242,7 +252,7 @@ const ordersDialogVisible = ref(false);
             cursor: pointer;
         }
 
-        .postButton:hover{
+        .postButton:hover {
             color: var(--el-color-primary);
         }
 
