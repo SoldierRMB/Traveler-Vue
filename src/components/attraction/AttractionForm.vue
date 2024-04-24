@@ -211,6 +211,7 @@ const handleClick = async (formEl: FormInstance | undefined) => {
             if (attractionRes.status === 200 && uploadImage.value.handleSubmit()) {
                 ElMessage.success('操作成功');
                 router.push('/attractions');
+                location.reload();
             } else {
                 ElMessage.error('操作失败');
             }
