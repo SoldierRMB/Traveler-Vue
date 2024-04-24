@@ -75,5 +75,6 @@ declare module 'vue' {
     Success: typeof import('./components/common/Success.vue')['default']
     SvgIcon: typeof import('./components/icon/SvgIcon.vue')['default']
     UploadImage: typeof import('./components/upload/UploadImage.vue')['default']
+    UserInfo: typeof import('./components/user/UserInfo.vue')['default']
   }
 }
