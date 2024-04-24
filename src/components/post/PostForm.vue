@@ -10,7 +10,7 @@
     >
         <div class="formItems">
             <el-form-item label="旅游动态标题" prop="title">
-                <el-input placeholder="请填写标题" v-model="form.title"></el-input>
+                <el-input placeholder="请填写标题" v-model="form.title" />
             </el-form-item>
             <el-form-item label="旅游动态内容" prop="content">
                 <el-input
@@ -19,7 +19,7 @@
                     type="textarea"
                     :autosize="{ minRows: 4, maxRows: 4 }"
                     resize="none"
-                ></el-input>
+                />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="handleClick(formRef)">发布旅游动态</el-button>

@@ -107,7 +107,7 @@
         v-model="ordersDialogVisible"
         @close="ordersDialogVisible = false"
     >
-        <OrderList :userRole="'ROLE_TOURIST'" />
+        <Orders :userRole="'ROLE_TOURIST'" />
     </el-dialog>
 </template>
 
