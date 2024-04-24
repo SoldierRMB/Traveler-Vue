@@ -24,8 +24,8 @@ dependencies:
     specifier: ^1.6.8
     version: 1.6.8
   element-plus:
-    specifier: ^2.6.1
-    version: 2.6.1(vue@3.4.21)
+    specifier: ^2.7.1
+    version: 2.7.1(vue@3.4.21)
   fast-glob:
     specifier: ^3.3.2
     version: 3.3.2
@@ -2052,8 +2052,8 @@ packages:
     resolution: {integrity: sha512-XzWNH4ZSa9BwVUQSDorPWAUQ5WGuYz7zJUNpNif40zFCiCl20t8zgylmreNmn26h5kiyw2lg7RfTmeMBsDklqg==}
     dev: true
 
-  /element-plus@2.6.1(vue@3.4.21):
-    resolution: {integrity: sha512-6VRpLjwtIVdtUuITJPPKtpOH1NM6nuAkRE3q5O4Lrx0N1bYMhTkiqb2Jy7zfQuDPbOIkkF2OABTzegpNnzgsnQ==}
+  /element-plus@2.7.1(vue@3.4.21):
+    resolution: {integrity: sha512-yk/vXFwJp0flMrd2kfcR0XlumhwtPjB19HJvwcf0n3DvRE7UK8LeSK14LVghSzk0TzPsFFElweMnZEEv7+MYuQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
