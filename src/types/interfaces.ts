@@ -92,3 +92,10 @@ export interface PostVO {
     createTime: string;
     updateTime: string;
 }
+
+export interface PasswordVO {
+    id: number;
+    username: string;
+    password: string;
+    confirmPassword: string;
+}

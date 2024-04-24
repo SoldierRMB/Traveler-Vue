@@ -23,3 +23,9 @@ export const apiGetAllOrders = async (current: number, size: number) => {
         params: { current, size }
     });
 };
+
+export const apiGetUserRoles = async (current: number, size: number) => {
+    return await request.get('/admin/getUserRoles', {
+        params: { current, size }
+    });
+};
