@@ -85,7 +85,7 @@ const router = createRouter({
                     path: '/users',
                     name: 'Users',
                     component: () => import('@/components/user/Users.vue'),
-                    meta: { title: '用户管理', roles: ['ROLE_ADMIN'] }
+                    meta: { title: '用户列表', roles: ['ROLE_ADMIN'] }
                 },
                 {
                     path: '/userInfo',

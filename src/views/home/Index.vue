@@ -68,46 +68,52 @@
                         >
                             <template #title>
                                 <i class="el-icon">
-                                    <SvgIcon name="message"></SvgIcon>
+                                    <SvgIcon name="message" />
                                 </i>
                                 <span>消息管理</span>
                             </template>
                             <el-menu-item index="/comments" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
-                                    <SvgIcon name="comment"></SvgIcon>
+                                    <SvgIcon name="comment" />
                                 </i>
-                                <span>评论管理</span>
+                                <span>评论列表</span>
                             </el-menu-item>
-                            <el-menu-item index="/announcements" v-if="userRole === 'ROLE_STAFF'">
+                            <el-menu-item index="/announcements" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
-                                    <SvgIcon name="alert"></SvgIcon>
+                                    <SvgIcon name="alert" />
                                 </i>
-                                <span>公告管理</span>
+                                <span>系统公告列表</span>
+                            </el-menu-item>
+                            <el-menu-item index="/attraction_announcements" v-if="userRole === 'ROLE_STAFF'">
+                                <i class="el-icon">
+                                    <SvgIcon name="alert" />
+                                </i>
+                                <span>景点公告列表</span>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-sub-menu index="users">
                             <template #title>
                                 <i class="el-icon">
-                                    <SvgIcon name="team"></SvgIcon>
+                                    <SvgIcon name="team" />
                                 </i>
                                 <span>用户管理</span>
                             </template>
                             <el-menu-item index="/users" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
-                                    <SvgIcon name="user"></SvgIcon>
+                                    <SvgIcon name="user" />
                                 </i>
-                                <span>用户管理</span>
+                                <span>用户列表</span>
                             </el-menu-item>
                             <el-menu-item index="/userInfo">
                                 <i class="el-icon">
-                                    <SvgIcon name="user"></SvgIcon>
+                                    <SvgIcon name="user" />
                                 </i>
                                 <span>个人信息管理</span>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-menu-item index="/settings" v-if="userRole === 'ROLE_ADMIN'">
                             <i class="el-icon">
-                                <SvgIcon name="setting"></SvgIcon>
+                                <SvgIcon name="setting" />
                             </i>
                             <span>系统管理</span>
                         </el-menu-item>
@@ -170,7 +176,7 @@ onMounted(() => {
 
 const welcome = computed(() => {
     if (userRole.value === 'ROLE_ADMIN') {
-        return '管理员后台管理系统';
+        return '系统管理员后台管理系统';
     } else if (userRole.value === 'ROLE_STAFF') {
         return '景点管理员后台管理系统';
     } else if (userRole.value === 'ROLE_TOURIST') {
