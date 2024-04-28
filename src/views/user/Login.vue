@@ -96,7 +96,7 @@ const login = async () => {
                 router.push('/');
                 ElMessage.success('登录成功');
             } else {
-                ElMessage.error('用户名或密码错误');
+                ElMessage.error(response.statusText);
             }
         } else {
             ElMessage.error('请输入完整信息');
@@ -112,7 +112,7 @@ const reset = (formEl: FormInstance | undefined) => {
 
 <style lang="scss">
 .login {
-    background-image: url('../assets/img/bg-image.png');
+    // background-image: url('../assets/img/bg-image.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
