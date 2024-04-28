@@ -13,6 +13,9 @@
                     <div class="username">{{ post.user.username }}</div>
                     <div class="postTime">{{ post.postTime }}</div>
                 </div>
+                <div class="title">
+                    {{ post.title }}
+                </div>
             </template>
             <div>{{ post.content }}</div>
             <template #footer>
@@ -67,7 +70,8 @@ const loadMore = async () => {
 <style scoped lang="scss">
 .postCard {
     flex: 1;
-    min-width: 50rem;
+    width: 50rem;
+    flex-shrink: 0;
 }
 
 :deep(.el-card__header) {
@@ -78,7 +82,10 @@ const loadMore = async () => {
     .info {
         display: flex;
         flex-direction: column;
-        padding: 0.5rem 1rem;
+        padding-left: 1rem;
+        flex-shrink: 0;
+        margin-right: auto;
+        padding: 0 1rem;
 
         .username {
             font-size: 1.5rem;
@@ -86,9 +93,16 @@ const loadMore = async () => {
         }
 
         .postTime {
-            margin-top: auto;
+            margin-top: 1rem;
             color: #9c9c9c;
         }
+    }
+
+    .title {
+        display: flex;
+        font-size: 1.8rem;
+        font-weight: bold;
+        align-items: center;
     }
 }
 
