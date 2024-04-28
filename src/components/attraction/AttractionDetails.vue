@@ -1,22 +1,31 @@
 <template>
     <el-descriptions title="景点详细信息" border :column="4">
+        <el-descriptions-item label="景点图片" label-align="center" :span="1.5">
+            <template #default>
+                <el-image
+                    style="width: 32rem; height: 18rem"
+                    :src="attractionImageUrl"
+                    fit="cover"
+                />
+            </template>
+        </el-descriptions-item>
+        <el-descriptions-item label="描述" label-align="center" :span="2.5">{{
+            attraction.description
+        }}</el-descriptions-item>
         <el-descriptions-item label="景点名称" label-align="center">{{
             attraction.attractionName
-        }}</el-descriptions-item>
-        <el-descriptions-item label="描述" label-align="center" :span="3">{{
-            attraction.description
         }}</el-descriptions-item>
         <el-descriptions-item label="评分" label-align="center">{{
             attraction.score ? attraction.score : '暂无评分'
         }}</el-descriptions-item>
-        <el-descriptions-item label="审核状态" label-align="center" align="center" :span="1.5">
+        <el-descriptions-item label="审核状态" label-align="center" align="center">
             <template #default>
                 <el-tag type="warning" v-if="attraction.reviewed === 0">未审核</el-tag>
                 <el-tag type="success" v-if="attraction.reviewed === 1">审核通过</el-tag>
                 <el-tag type="danger" v-if="attraction.reviewed === 2">审核不通过</el-tag>
             </template>
         </el-descriptions-item>
-        <el-descriptions-item label="删除状态" label-align="center" align="center" :span="1.5">
+        <el-descriptions-item label="删除状态" label-align="center" align="center">
             <template #default>
                 <el-tag type="info" v-if="attraction.isDeleted === 0">未删除</el-tag>
                 <el-tag type="danger" v-if="attraction.isDeleted === 1">已删除</el-tag>
@@ -61,12 +70,13 @@
         <el-button type="primary" @click="restoreAttraction" v-if="isDeleted === 1"
             >恢复景点</el-button
         >
-        <el-button @click="goToOrders">订单列表</el-button>
+        <el-button @click="goToOrders" v-if="reviewed !== 0">订单列表</el-button>
         <el-popconfirm
             title="确认删除吗？"
             confirm-button-text="确认"
             cancel-button-text="取消"
             @confirm="deleteAttraction"
+            v-if="userRole === 'ROLE_STAFF' && isDeleted === 0"
         >
             <template #reference>
                 <el-button type="danger" plain v-if="userRole === 'ROLE_STAFF' && isDeleted === 0"
@@ -99,6 +109,13 @@ import { useAuthStore } from '@/stores/auth';
 import { apiDeleteAttraction, apiRestoreAttraction } from '@/api/staff';
 import { apiCompleteDeleteUserAttraction } from '@/api/admin';
 import router from '@/router';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const attractionImageUrl = ref('');
+attractionImageUrl.value = (import.meta.env.VITE_TRAVELER_BASE_URL +
+    'common/getAttractionImageByAttractionId?attractionId=' +
+    route.params.id) as string;
 
 const store = useUserAttractionStore();
 
