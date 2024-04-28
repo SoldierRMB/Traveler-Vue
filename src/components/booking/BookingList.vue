@@ -70,23 +70,17 @@
             </div>
         </template>
     </el-dialog>
-    <el-dialog title="请使用支付宝付款" width="30rem" v-model="paymentDialogVisible">
-        <el-image :src="alipay" />
-        <template #footer>
-            <div class="dialog-footer">
-                <el-button type="primary" @click="completePayment">已完成支付</el-button>
-            </div>
-        </template>
+    <el-dialog title="订单支付" width="30rem" v-model="paymentDialogVisible">
+        <Payment :orderId="orderId"/>
     </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { apiGetAttractions } from '@/api/guest';
-import { apiGetTicketsByAttractionId, apiBooking, apiCompletePayment } from '@/api/tourist';
+import { apiGetTicketsByAttractionId, apiBooking } from '@/api/tourist';
 import type { AttractionVO, TicketVO } from '@/types/interfaces';
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
-import alipay from '@/assets/imgs/alipay.jpg';
 
 const attractions = ref([] as AttractionVO[]);
 const attractionImageUrl =
@@ -127,17 +121,7 @@ const booking = async (ticketId: number) => {
     await apiBooking(orderVO, username as string).then((res) => {
         if (res.status === 200) {
             paymentDialogVisible.value = true;
-            console.log(res.data);
-
             orderId.value = res.data.id;
-        }
-    });
-};
-
-const completePayment = async () => {
-    await apiCompletePayment(orderId.value, username as string).then((res) => {
-        if (res.status === 200) {
-            router.push(`/success/${orderId.value}`);
         }
     });
 };

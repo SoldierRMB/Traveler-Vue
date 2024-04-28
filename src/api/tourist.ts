@@ -10,7 +10,7 @@ export const apiBooking = async (data: any, username: string) => {
     return await request.post('/tourist/booking', data, { params: { username } });
 };
 
-export const apiCompletePayment = async (orderId: number, username: string) => {
+export const apiCompletePayment = async (orderId: string, username: string) => {
     return await request.put('/tourist/completePayment', null, {
         params: { orderId, username }
     });
@@ -22,7 +22,7 @@ export const apiGetUserOrders = async (username: string, current: number, size: 
     });
 };
 
-export const apiCancelOrder = async (orderId: number, username: string) => {
+export const apiCancelOrder = async (orderId: string, username: string) => {
     return await request.put('/tourist/cancelOrder', null, {
         params: { orderId, username }
     });

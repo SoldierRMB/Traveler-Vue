@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column align="center" label="门票数量(张)" prop="quantity" min-width="8rem" />
             <el-table-column align="center" label="订单金额(元)" prop="amount" min-width="8rem" />
-            <el-table-column align="center" label="订单时间" prop="orderTime" min-width="8rem" />
+            <el-table-column align="center" label="订单时间" prop="orderTime" min-width="10rem" />
             <el-table-column
                 align="center"
                 label="操作"
@@ -76,15 +76,8 @@
             class="pagination"
         />
     </div>
-    <el-dialog title="请使用支付宝付款" width="30rem" v-model="paymentDialogVisible">
-        <el-image :src="alipay" />
-        <template #footer>
-            <div class="dialog-footer">
-                <el-button type="primary" @click="completePayment(orderId, username)"
-                    >已完成支付</el-button
-                >
-            </div>
-        </template>
+    <el-dialog title="订单支付" width="30rem" v-model="paymentDialogVisible">
+        <Payment :orderId="orderId"/>
     </el-dialog>
 </template>
 
@@ -93,12 +86,8 @@ import moment from 'moment';
 import { useAuthStore } from '@/stores/auth';
 import { apiGetAllOrders } from '@/api/admin';
 import { apiGetOrdersByAttractionId, apiUseTicket } from '@/api/staff';
-import { apiGetUserOrders, apiCompletePayment, apiCancelOrder } from '@/api/tourist';
+import { apiGetUserOrders, apiCancelOrder } from '@/api/tourist';
 import { useRoute } from 'vue-router';
-import alipay from '@/assets/imgs/alipay.jpg';
-import router from '@/router';
-
-const orderTicketDialogVisible = ref(false);
 
 const authStore = useAuthStore();
 const userRoleRef = ref('');
@@ -162,15 +151,7 @@ const openPaymentDialog = (row: any) => {
     orderId.value = row.id;
 };
 
-const completePayment = async (orderId: number, username: string) => {
-    await apiCompletePayment(orderId, username).then((res) => {
-        if (res.status === 200) {
-            router.push(`/success/${orderId}`);
-        }
-    });
-};
-
-const cancelOrder = async (orderId: number) => {
+const cancelOrder = async (orderId: string) => {
     await apiCancelOrder(orderId, username).then((res) => {
         if (res.status === 200) {
             location.reload();
