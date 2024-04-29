@@ -118,6 +118,7 @@ const disableUser = async (userId: number) => {
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    justify-content: space-between;
 
     :deep(.el-table__row) {
         cursor: pointer;

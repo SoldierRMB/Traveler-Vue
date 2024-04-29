@@ -10,6 +10,7 @@
                             :props="props"
                             @change="handleChange()"
                             placeholder="城市"
+                            clearable
                         />
                     </template>
                     <template #append>
@@ -124,6 +125,7 @@ const isAuthenticated = authStore.isAuthenticated;
 const logout = () => {
     authStore.$reset();
     location.reload();
+    ElMessage.success('退出成功');
 };
 
 const i18nStore = useI18nStore();
