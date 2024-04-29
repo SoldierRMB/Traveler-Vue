@@ -94,6 +94,12 @@ const router = createRouter({
                     meta: { title: '旅游动态列表', roles: ['ROLE_ADMIN'] }
                 },
                 {
+                    path: '/comments',
+                    name: 'Comments',
+                    component: () => import('@/components/comment/Comments.vue'),
+                    meta: { title: '评论列表', roles: ['ROLE_ADMIN'] }
+                },
+                {
                     path: '/announcements',
                     name: 'Announcements',
                     component: () => import('@/components/announcement/Announcements.vue'),
