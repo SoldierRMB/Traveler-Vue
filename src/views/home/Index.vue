@@ -104,7 +104,7 @@
                                 </i>
                                 <span>用户列表</span>
                             </el-menu-item>
-                            <el-menu-item index="/userInfo">
+                            <el-menu-item index="/user_info">
                                 <i class="el-icon">
                                     <SvgIcon name="user" />
                                 </i>

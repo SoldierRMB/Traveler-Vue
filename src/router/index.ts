@@ -88,7 +88,7 @@ const router = createRouter({
                     meta: { title: '用户列表', roles: ['ROLE_ADMIN'] }
                 },
                 {
-                    path: '/userInfo',
+                    path: '/user_info',
                     name: 'UserInfo',
                     component: () => import('@/components/user/UserInfo.vue'),
                     meta: { title: '个人信息' }
