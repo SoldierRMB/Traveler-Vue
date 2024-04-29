@@ -12,10 +12,10 @@
             <div class="infos">
                 <div class="title">{{ attraction.attractionName }}</div>
                 <div class="rating">
-                    <el-tag type="primary" v-if="attraction?.rate">
-                        {{ attraction.rate }}分
+                    <el-tag type="primary" v-if="attraction?.rating">
+                        {{ attraction.rating }}分
                     </el-tag>
-                    <el-tag type="info" v-if="attraction.rate === null"> 暂无评分 </el-tag>
+                    <el-tag type="info" v-if="attraction.rating === null"> 暂无评分 </el-tag>
                 </div>
                 <div class="location">
                     {{ attraction.location }}

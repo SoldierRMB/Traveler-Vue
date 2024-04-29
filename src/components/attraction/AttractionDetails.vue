@@ -16,7 +16,7 @@
             attraction.attractionName
         }}</el-descriptions-item>
         <el-descriptions-item label="评分" label-align="center">{{
-            attraction.rate ? attraction.rate : '暂无评分'
+            attraction.rating ? attraction.rating : '暂无评分'
         }}</el-descriptions-item>
         <el-descriptions-item label="审核状态" label-align="center" align="center">
             <template #default>
