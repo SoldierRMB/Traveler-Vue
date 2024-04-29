@@ -43,7 +43,6 @@
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import type { FormInstance, FormRules } from 'element-plus';
-import { ElMessage } from 'element-plus';
 import { apiLogin } from '@/api/user';
 import { useAuthStore } from '@/stores/auth';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';

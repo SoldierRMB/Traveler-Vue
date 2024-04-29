@@ -153,7 +153,6 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
-import { ElMessage } from 'element-plus';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import { useDark, useToggle } from '@vueuse/core';
 
@@ -181,7 +180,6 @@ const welcome = computed(() => {
 
 const exit = () => {
     router.push('/');
-    ElMessage({ message: '退出成功', type: 'success' });
 };
 </script>
 

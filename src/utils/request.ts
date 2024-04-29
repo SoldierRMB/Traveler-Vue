@@ -1,5 +1,4 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
-import { ElMessage } from 'element-plus';
 import { useAuthStore } from '@/stores/auth';
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_TRAVELER_BASE_URL,

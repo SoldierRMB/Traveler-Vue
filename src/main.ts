@@ -5,9 +5,6 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 import router from './router';
 
-import 'element-plus/theme-chalk/el-message.css';
-import 'element-plus/theme-chalk/el-message-box.css';
-
 import SvgIcon from '@/components/icon/SvgIcon.vue';
 import 'virtual:svg-icons-register';
 
