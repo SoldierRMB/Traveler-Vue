@@ -14,7 +14,7 @@ export interface AttractionVO {
     attractionName: string;
     description: string;
     location: string;
-    score?: any;
+    rate?: any;
     provinceCode: number;
     cityCode: number;
     areaCode: number;
