@@ -79,7 +79,31 @@ const router = createRouter({
                     path: '/orders',
                     name: 'Orders',
                     component: () => import('@/components/order/Orders.vue'),
-                    meta: { title: '订单管理', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
+                    meta: { title: '订单列表', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
+                },
+                {
+                    path: '/orders/:id',
+                    name: 'OrderDetails',
+                    component: () => import('@/components/order/OrderDetails.vue'),
+                    meta: { title: '订单详情', roles: ['ROLE_ADMIN', 'ROLE_STAFF'] }
+                },
+                {
+                    path: '/posts',
+                    name: 'Posts',
+                    component: () => import('@/components/post/Posts.vue'),
+                    meta: { title: '旅游动态列表', roles: ['ROLE_ADMIN'] }
+                },
+                {
+                    path: '/announcements',
+                    name: 'Announcements',
+                    component: () => import('@/components/announcement/Announcements.vue'),
+                    meta: { title: '系统公告列表', roles: ['ROLE_ADMIN'] }
+                },
+                {
+                    path: '/attraction_announcements',
+                    name: 'AttractionAnnouncements',
+                    component: () => import('@/components/announcement/AttractionAnnouncements.vue'),
+                    meta: { title: '景点公告列表', roles: ['ROLE_STAFF'] }
                 },
                 {
                     path: '/users',
@@ -92,6 +116,12 @@ const router = createRouter({
                     name: 'UserInfo',
                     component: () => import('@/components/user/UserInfo.vue'),
                     meta: { title: '个人信息' }
+                },
+                {
+                    path: '/settings',
+                    name: 'Settings',
+                    component: () => import('@/components/setting/Settings.vue'),
+                    meta: { title: '系统设置', roles: ['ROLE_ADMIN'] }
                 }
             ]
         },

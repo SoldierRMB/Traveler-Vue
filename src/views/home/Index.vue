@@ -6,29 +6,29 @@
                     <el-menu :default-active="$route.path" router>
                         <el-menu-item index="/home">
                             <i class="el-icon">
-                                <SvgIcon name="home"></SvgIcon>
+                                <SvgIcon name="home" />
                             </i>
                             <span>首页</span>
                         </el-menu-item>
                         <el-sub-menu
-                            index="attraction"
+                            index="attractions"
                             v-if="userRole === 'ROLE_ADMIN' || userRole === 'ROLE_STAFF'"
                         >
                             <template #title>
                                 <i class="el-icon">
-                                    <SvgIcon name="camera"></SvgIcon>
+                                    <SvgIcon name="camera" />
                                 </i>
                                 <span>景点管理</span>
                             </template>
                             <el-menu-item index="/attractions">
                                 <i class="el-icon">
-                                    <SvgIcon name="image"></SvgIcon>
+                                    <SvgIcon name="image" />
                                 </i>
                                 <span>景点列表</span>
                             </el-menu-item>
                             <el-menu-item index="/review" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
-                                    <SvgIcon name="bulb"></SvgIcon>
+                                    <SvgIcon name="bulb" />
                                 </i>
                                 <span>景点审核</span>
                             </el-menu-item>
@@ -37,31 +37,23 @@
                                 v-if="userRole === 'ROLE_STAFF'"
                             >
                                 <i class="el-icon">
-                                    <SvgIcon name="bulb"></SvgIcon>
+                                    <SvgIcon name="bulb" />
                                 </i>
                                 <span>发布景点</span>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-menu-item index="/orders" v-if="userRole === 'ROLE_ADMIN'">
                             <i class="el-icon">
-                                <SvgIcon name="order"></SvgIcon>
+                                <SvgIcon name="order" />
                             </i>
-                            <span>订单管理</span>
+                            <span>订单列表</span>
                         </el-menu-item>
-                        <el-sub-menu index="posts" v-if="userRole === 'ROLE_ADMIN'">
-                            <template #title>
-                                <i class="el-icon">
-                                    <SvgIcon name="document"></SvgIcon>
-                                </i>
-                                <span>动态管理</span>
-                            </template>
-                            <el-menu-item index="/posts">
-                                <i class="el-icon">
-                                    <SvgIcon name="book"></SvgIcon>
-                                </i>
-                                <span>动态列表</span>
-                            </el-menu-item>
-                        </el-sub-menu>
+                        <el-menu-item index="/posts" v-if="userRole === 'ROLE_ADMIN'">
+                            <i class="el-icon">
+                                <SvgIcon name="edit" />
+                            </i>
+                            <span>动态列表</span>
+                        </el-menu-item>
                         <el-sub-menu
                             index="messages"
                             v-if="userRole === 'ROLE_ADMIN' || userRole === 'ROLE_STAFF'"
@@ -84,7 +76,10 @@
                                 </i>
                                 <span>系统公告列表</span>
                             </el-menu-item>
-                            <el-menu-item index="/attraction_announcements" v-if="userRole === 'ROLE_STAFF'">
+                            <el-menu-item
+                                index="/attraction_announcements"
+                                v-if="userRole === 'ROLE_STAFF'"
+                            >
                                 <i class="el-icon">
                                     <SvgIcon name="alert" />
                                 </i>
@@ -115,7 +110,7 @@
                             <i class="el-icon">
                                 <SvgIcon name="setting" />
                             </i>
-                            <span>系统管理</span>
+                            <span>系统设置</span>
                         </el-menu-item>
                     </el-menu>
                 </el-scrollbar>
