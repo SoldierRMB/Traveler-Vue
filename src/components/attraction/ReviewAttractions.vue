@@ -75,8 +75,12 @@ const columns = [
 const userAttractions = ref();
 
 onMounted(async () => {
-    userAttractions.value = await loadUserAttractions('ROLE_ADMIN', undefined, false);
+    getUserAttractions();
 });
+
+const getUserAttractions = async () => {
+    userAttractions.value = await loadUserAttractions('ROLE_ADMIN', undefined, false);
+};
 
 const goToAttraction = (row: any) => {
     goToAttractionDetails(row);
@@ -89,7 +93,7 @@ const handleSelectionChange = (val: any) => {
 
 const reviewAttractions = async (pass: boolean) => {
     return await apiReviewAttractions(multipleSelection.value, pass).then((res) => {
-        location.reload();
+        getUserAttractions();
         ElMessage.success(`${res.data}`);
     });
 };

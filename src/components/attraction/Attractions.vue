@@ -1,74 +1,91 @@
 <template>
     <div class="attractionsBox">
-        <div class="filter">
-            <el-input v-model="keyword" placeholder="请输入景点名称" class="search" />
-            <el-button type="primary" @click="searchAttractions" class="searchButton"
-                >搜索</el-button
+        <div>
+            <div class="filter">
+                <el-input v-model="keyword" placeholder="请输入景点名称" class="search" />
+                <el-button type="primary" @click="searchAttractions" class="searchButton"
+                    >搜索</el-button
+                >
+            </div>
+            <el-table
+                :data="userAttractions"
+                stripe
+                highlight-current-row
+                :default-sort="{ prop: 'createTime', order: 'descending' }"
+                @row-click="goToAttraction"
+                class="table"
             >
+                <el-table-column
+                    align="center"
+                    prop="attractionVO.attractionName"
+                    label="景点名称"
+                    min-width="150"
+                />
+                <el-table-column
+                    align="center"
+                    prop="provinceVO.name"
+                    label="省份"
+                    min-width="80"
+                />
+                <el-table-column align="center" prop="cityVO.name" label="城市" min-width="80" />
+                <el-table-column align="center" prop="areaVO.name" label="县区" min-width="80" />
+                <el-table-column align="center" prop="streetVO.name" label="街道" min-width="100" />
+                <el-table-column
+                    align="center"
+                    prop="attractionVO.reviewed"
+                    label="审核状态"
+                    min-width="100"
+                    :filters="reviewedFilter"
+                    :filter-method="filterReviewed"
+                    filter-placement="bottom"
+                >
+                    <template #default="scope">
+                        <el-tag type="warning" v-if="scope.row.attractionVO.reviewed === 0"
+                            >未审核</el-tag
+                        >
+                        <el-tag type="success" v-if="scope.row.attractionVO.reviewed === 1"
+                            >审核通过</el-tag
+                        >
+                        <el-tag type="danger" v-if="scope.row.attractionVO.reviewed === 2"
+                            >审核不通过</el-tag
+                        >
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    align="center"
+                    prop="attractionVO.isDeleted"
+                    label="删除状态"
+                    min-width="100"
+                    :filters="[
+                        { text: '未删除', value: '0' },
+                        { text: '已删除', value: '1' }
+                    ]"
+                    :filter-method="filterDeleted"
+                    filter-placement="bottom"
+                >
+                    <template #default="scope">
+                        <el-tag
+                            :type="scope.row.attractionVO.isDeleted === 0 ? 'info' : 'danger'"
+                            disable-transitions
+                        >
+                            {{ scope.row.attractionVO.isDeleted === 0 ? '未删除' : '已删除' }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    align="center"
+                    prop="createTime"
+                    label="创建时间"
+                    min-width="100"
+                />
+                <el-table-column
+                    align="center"
+                    prop="updateTime"
+                    label="更新时间"
+                    min-width="100"
+                />
+            </el-table>
         </div>
-        <el-table
-            :data="userAttractions"
-            stripe
-            highlight-current-row
-            :default-sort="{ prop: 'createTime', order: 'descending' }"
-            @row-click="goToAttraction"
-            class="table"
-        >
-            <el-table-column
-                align="center"
-                prop="attractionVO.attractionName"
-                label="景点名称"
-                min-width="150"
-            />
-            <el-table-column align="center" prop="provinceVO.name" label="省份" min-width="80" />
-            <el-table-column align="center" prop="cityVO.name" label="城市" min-width="80" />
-            <el-table-column align="center" prop="areaVO.name" label="县区" min-width="80" />
-            <el-table-column align="center" prop="streetVO.name" label="街道" min-width="100" />
-            <el-table-column
-                align="center"
-                prop="attractionVO.reviewed"
-                label="审核状态"
-                min-width="100"
-                :filters="reviewedFilter"
-                :filter-method="filterReviewed"
-                filter-placement="bottom"
-            >
-                <template #default="scope">
-                    <el-tag type="warning" v-if="scope.row.attractionVO.reviewed === 0"
-                        >未审核</el-tag
-                    >
-                    <el-tag type="success" v-if="scope.row.attractionVO.reviewed === 1"
-                        >审核通过</el-tag
-                    >
-                    <el-tag type="danger" v-if="scope.row.attractionVO.reviewed === 2"
-                        >审核不通过</el-tag
-                    >
-                </template>
-            </el-table-column>
-            <el-table-column
-                align="center"
-                prop="attractionVO.isDeleted"
-                label="删除状态"
-                min-width="100"
-                :filters="[
-                    { text: '未删除', value: '0' },
-                    { text: '已删除', value: '1' }
-                ]"
-                :filter-method="filterDeleted"
-                filter-placement="bottom"
-            >
-                <template #default="scope">
-                    <el-tag
-                        :type="scope.row.attractionVO.isDeleted === 0 ? 'info' : 'danger'"
-                        disable-transitions
-                    >
-                        {{ scope.row.attractionVO.isDeleted === 0 ? '未删除' : '已删除' }}
-                    </el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" prop="createTime" label="创建时间" min-width="100" />
-            <el-table-column align="center" prop="updateTime" label="更新时间" min-width="100" />
-        </el-table>
         <!--         <el-pagination
             layout="total, prev, pager, next"
             :current-page="currentPage"
@@ -143,6 +160,7 @@ const filterDeleted = (value: any, row: any) => {
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    justify-content: space-between;
 
     .filter {
         display: flex;

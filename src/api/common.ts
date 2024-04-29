@@ -21,3 +21,7 @@ export const apiGetAttractionImageByAttractionId = async (attractionId: number) 
         params: { attractionId }
     });
 };
+
+export const apiGetPosts = async (current: number, size: number) => {
+    return await request.get('/common/getPosts', { params: { current, size } });
+};

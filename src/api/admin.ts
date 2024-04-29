@@ -29,3 +29,9 @@ export const apiGetUserRoles = async (current: number, size: number) => {
         params: { current, size }
     });
 };
+
+export const apiCompleteDeletePost = async (postId: number) => {
+    return await request.delete('/admin/completeDeletePost', {
+        params: { postId }
+    });
+}

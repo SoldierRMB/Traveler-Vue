@@ -30,32 +30,23 @@
 </template>
 
 <script setup lang="ts">
-import moment from 'moment';
-import { apiGetPosts } from '@/api/guest';
-import { useInfiniteScroll } from '@vueuse/core';
+import { loadPosts } from '@/common/post-common';
+// import { useInfiniteScroll } from '@vueuse/core';
 
-const cards = ref<HTMLElement | null>(null);
+// const cards = ref<HTMLElement | null>(null);
 const posts = ref();
 const current = ref(1);
 const size = ref(10000000);
 
 onMounted(async () => {
-    getPosts();
+    await loadPosts(current.value, size.value).then((res) => {
+        posts.value = res.records;
+    });
 });
 
-const getPosts = async () => {
-    const res = await apiGetPosts(current.value, size.value);
-    posts.value = res.data.records.map((post: any) => {
-        return {
-            ...post,
-            postTime: moment(post.createTime).format('YYYY-MM-DD HH:mm:ss')
-        };
-    });
-};
-
-const loadMore = async () => {
+/* const loadMore = async () => {
     current.value += 1;
-    const res = await apiGetPosts(current.value, size.value);
+    const res = await getPosts(current.value, size.value);
     posts.value.push(
         res.data.records.map((post: any) => {
             return {
@@ -64,7 +55,7 @@ const loadMore = async () => {
             };
         })
     );
-};
+}; */
 </script>
 
 <style scoped lang="scss">
