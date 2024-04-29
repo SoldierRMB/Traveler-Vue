@@ -27,7 +27,7 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
-                additionalData: `@use "@/assets/scss/index.scss" as *; @use "@/assets/scss/dark.scss";`
+                additionalData: `@use "@/assets/scss/index.scss"; @use "@/assets/scss/dark.scss";`
             }
         }
     },
@@ -49,7 +49,10 @@ export default defineConfig({
                     prefix: 'Icon'
                 })
             ],
-            dts: path.resolve(pathSrc, 'auto-imports.d.ts')
+            dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
+            eslintrc: {
+                enabled: true
+            }
         }),
         Components({
             resolvers: [
