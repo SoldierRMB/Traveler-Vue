@@ -96,8 +96,7 @@
                     ref="uploadImage"
                     :imageUrl="attractionImageUrl"
                     :isUpdate="props.isUpdate"
-                    :attractionId="attractionId"
-                    @image="(image) => (form.attractionImage = image)"
+                    @image="(image: any) => (form.attractionImage = image)"
                 />
             </el-form-item>
             <el-form-item>
@@ -121,7 +120,6 @@ import {
 import { apiUpdateAttraction, apiPublishAttraction } from '@/api/staff';
 import { useAuthStore } from '@/stores/auth';
 import { useUserAttractionStore } from '@/stores/user-attraction';
-import router from '@/router';
 const formRef = ref<FormInstance>();
 
 const form = ref({} as AttractionForm);
@@ -131,7 +129,6 @@ const areas = ref([] as AreaVO[]);
 const streets = ref([] as StreetVO[]);
 const attractionImageUrl = ref();
 const uploadImage = ref();
-const attractionId = ref(0);
 
 interface AttractionForm extends AttractionVO {
     attractionImage: any;
@@ -207,10 +204,9 @@ const handleClick = async (formEl: FormInstance | undefined) => {
         if (valid) {
             let apiAttractionFunction = props.isUpdate ? apiUpdateAttraction : apiPublishAttraction;
             const attractionRes = await apiAttractionFunction(form.value, username as string);
-            attractionId.value = attractionRes.data.id;
-            if (attractionRes.status === 200 && uploadImage.value.handleSubmit()) {
+            const uploadStatus = await uploadImage.value.handleSubmit();
+            if (attractionRes.status === 200 && uploadStatus) {
                 ElMessage.success('操作成功');
-                router.push('/attractions');
                 location.reload();
             } else {
                 ElMessage.error('操作失败');

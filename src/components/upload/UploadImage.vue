@@ -1,6 +1,7 @@
 <template>
     <el-upload
         ref="uploadRef"
+        action="#"
         :http-request="uploadAttractionImage"
         accept="image/jpeg, image/png"
         v-model:file-list="fileList"
@@ -45,17 +46,18 @@
 import type { UploadProps, UploadFile, UploadFiles, UploadUserFile } from 'element-plus';
 import { apiUpdateAttractionImage, apiUploadAttractionImage } from '@/api/staff';
 import { useAuthStore } from '@/stores/auth';
+import { useUserAttractionStore } from '@/stores/user-attraction';
 
 const uploadRef = ref();
 const fileList = ref<UploadUserFile[]>([]);
 const dialogImageUrl = ref('');
 const dialogVisible = ref(false);
 const username = useAuthStore().user.sub;
+const attractionId = useUserAttractionStore().attraction.id;
 
 const props = defineProps({
     imageUrl: String,
-    isUpdate: Boolean,
-    attractionId: Number
+    isUpdate: Boolean
 });
 
 watch(
@@ -91,14 +93,13 @@ const uploadAttractionImage = async () => {
     const formData = new FormData();
     const file = fileList.value[0].raw as File;
     formData.append('file', file);
-    formData.append('attractionId', String(props.attractionId));
+    formData.append('attractionId', String(attractionId));
     formData.append('username', username as string);
-    await apiFunction(formData);
+    return (await apiFunction(formData)).status === 200 ? true : false;
 };
 
 const handleSubmit = () => {
-    uploadRef.value.submit();
-    return true;
+    return uploadAttractionImage();
 };
 
 defineExpose({
