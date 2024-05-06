@@ -1,7 +1,7 @@
 <template>
     <div class="attractionsBox">
         <div>
-            <div class="filter">
+            <div class="filter" v-if="false">
                 <el-input v-model="keyword" placeholder="请输入景点名称" class="search" />
                 <el-button type="primary" @click="searchAttractions" class="searchButton"
                     >搜索</el-button
