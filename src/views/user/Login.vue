@@ -1,39 +1,42 @@
 <template>
     <div class="login">
         <transition name="el-zoom-in-top" appear>
-            <el-card id="formCard">
+            <el-card class="loginCard">
                 <template #header>
-                    <div id="loginFromHeader">行者旅游在线预订平台</div>
+                    <div class="loginCardHeader">行者旅游在线预订平台</div>
                 </template>
                 <el-form
                     ref="loginFormRef"
                     :model="loginForm"
                     :rules="rules"
-                    label-position="right"
-                    id="loginFormBody"
+                    label-width="auto"
+                    class="loginForm"
                 >
-                    <div id="inputs">
-                        <el-form-item label="姓名" prop="username">
+                    <div class="formItems">
+                        <el-form-item label="用户名" prop="username">
                             <el-input
-                                placeholder="用户名"
+                                placeholder="请输入用户名"
                                 :maxLength="20"
                                 v-model="loginForm.username"
                             />
                         </el-form-item>
                         <el-form-item label="密码" prop="password">
                             <el-input
-                                placeholder="密码"
+                                placeholder="请输入密码"
                                 type="password"
                                 show-password
                                 v-model="loginForm.password"
                             />
                         </el-form-item>
                     </div>
-                    <div id="buttons">
-                        <el-button type="primary" @click="login()"> 登录 </el-button>
+                    <div class="buttons">
+                        <el-button type="primary" @click="login()">登录</el-button>
                         <el-button @click="reset(loginFormRef)">重置</el-button>
                     </div>
                 </el-form>
+                <router-link to="/register">
+                    <el-button link type="primary" class="registerButton">没有账号？点击注册</el-button>
+                </router-link>
             </el-card>
         </transition>
     </div>
@@ -109,9 +112,8 @@ const reset = (formEl: FormInstance | undefined) => {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .login {
-    // background-image: url('../assets/img/bg-image.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -121,32 +123,39 @@ const reset = (formEl: FormInstance | undefined) => {
     flex: auto;
     justify-content: center;
     align-items: center;
-}
 
-#formCard {
-    margin: 0 2rem;
-}
+    .loginCard {
+        margin: 0 2rem;
 
-#loginFromHeader {
-    font-size: 1.6rem;
-}
+        .loginCardHeader {
+            font-size: 1.6rem;
+        }
 
-#inputs {
-    flex: auto;
-    padding: 0 2rem;
+        .formItems {
+            flex: auto;
+            padding: 0 2rem;
 
-    .el-input {
-        width: 20rem;
+            .el-input {
+                width: 20rem;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            padding-top: 1rem;
+
+            &:nth-child(2) {
+                margin-left: 2rem;
+            }
+        }
+
+        .registerButton {
+            width: 100%;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            text-align: center;
+        }
     }
-}
-
-#buttons {
-    display: flex;
-    justify-content: center;
-    padding-top: 1rem;
-}
-
-#buttons button:nth-child(2) {
-    margin-left: 2rem;
 }
 </style>
