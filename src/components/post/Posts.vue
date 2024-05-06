@@ -12,7 +12,7 @@
                             title="确认删除该条动态吗？"
                             confirm-button-text="确认"
                             cancel-button-text="取消"
-                            @confirm="deletePost(scope.row.id)"
+                            @confirm="completeDeletePost(scope.row.id)"
                         >
                             <template #reference>
                                 <el-button type="danger" size="small">删除动态</el-button>
@@ -56,7 +56,7 @@ watch(currentPage, () => {
     getPosts();
 });
 
-const deletePost = async (postId: number) => {
+const completeDeletePost = async (postId: number) => {
     await apiCompleteDeletePost(postId);
     getPosts();
 };
