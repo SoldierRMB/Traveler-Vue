@@ -12,6 +12,12 @@ const router = createRouter({
             meta: { title: '【行者】登录' }
         },
         {
+            path: '/register',
+            name: 'Register',
+            component: () => import('@/views/user/Register.vue'),
+            meta: { title: '【行者】注册' }
+        },
+        {
             path: '/',
             name: 'Index',
             component: () => import('@/views/Index.vue'),
