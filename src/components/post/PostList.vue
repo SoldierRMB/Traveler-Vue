@@ -1,6 +1,12 @@
 <template>
     <el-space direction="vertical" alignment="flex-start">
-        <el-card shadow="always" class="postCard" v-for="post in posts" :key="post">
+        <el-card
+            shadow="always"
+            class="postCard"
+            v-for="post in posts"
+            :key="post"
+            @click="openPostDetailsDialog(post.id)"
+        >
             <template #header>
                 <div class="avatar">
                     <el-avatar>
@@ -17,9 +23,9 @@
                     {{ post.title }}
                 </div>
             </template>
-            <div>{{ post.content }}</div>
+            <div class="content" v-html="post.content"></div>
             <template #footer>
-                <el-button type="primary" round>
+                <el-button type="primary" round @click.stop="openCommentFormDialog(post.id)">
                     <template #icon>
                         <i-ep-chat-line-round />
                     </template>
@@ -27,6 +33,12 @@
             </template>
         </el-card>
     </el-space>
+    <el-dialog v-model="postDetailsDialogVisible" title="评论详情" width="60%">
+        <PostDetails :postId="postId" />
+    </el-dialog>
+    <el-dialog title="发布评论" width="60%" v-model="commentFormDialogVisible">
+        <CommentForm :postId="postId" @closeDialog="closeDialog" />
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -38,9 +50,18 @@ const posts = ref();
 const current = ref(1);
 const size = ref(10000000);
 
+const postDetailsDialogVisible = ref(false);
+const commentFormDialogVisible = ref(false);
+const closeDialog = (val: boolean) => {
+    commentFormDialogVisible.value = val;
+};
+
 onMounted(async () => {
     await loadPosts(current.value, size.value).then((res) => {
-        posts.value = res.records;
+        posts.value = res.records.map((post: any) => {
+            post.content = post.content.replace(/\n/g, '<br>');
+            return post;
+        });
     });
 });
 
@@ -56,13 +77,28 @@ onMounted(async () => {
         })
     );
 }; */
+
+const postId = ref();
+
+const openPostDetailsDialog = (id: number) => {
+    postDetailsDialogVisible.value = true;
+    postId.value = Number(id);
+};
+
+const openCommentFormDialog = (id: number) => {
+    commentFormDialogVisible.value = true;
+    postId.value = Number(id);
+};
 </script>
 
 <style scoped lang="scss">
 .postCard {
-    flex: 1;
     width: 50rem;
-    flex-shrink: 0;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--el-color-primary);
+    }
 }
 
 :deep(.el-card__header) {
@@ -94,6 +130,10 @@ onMounted(async () => {
         font-size: 1.8rem;
         font-weight: bold;
         align-items: center;
+    }
+
+    .content {
+        white-space: pre-wrap;
     }
 }
 
