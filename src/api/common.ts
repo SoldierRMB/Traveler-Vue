@@ -16,6 +16,14 @@ export const apiGetStreetsByAreaCode = async (areaCode: number) => {
     return await request.get('/common/getStreetsByAreaCode', { params: { areaCode } });
 };
 
+export const apiGetPositionByStreetCode = async (streetCode: number) => {
+    return await request.get('/common/getPositionByStreetCode', { params: { streetCode } });
+};
+
+export const apiGetAttractions = async (current: number, size: number) => {
+    return await request.get('/common/getAttractions', { params: { current, size } });
+};
+
 export const apiGetAttractionImageByAttractionId = async (attractionId: number) => {
     return await request.get('/common/getAttractionImageByAttractionId', {
         params: { attractionId }
@@ -24,4 +32,33 @@ export const apiGetAttractionImageByAttractionId = async (attractionId: number) 
 
 export const apiGetPosts = async (current: number, size: number) => {
     return await request.get('/common/getPosts', { params: { current, size } });
+};
+
+export const apiGetCommentsByPostId = async (postId: number, current: number, size: number) => {
+    return await request.get('/common/getCommentsByPostId', { params: { postId, current, size } });
+};
+
+export const apiGetAnnouncements = async (current: number, size: number) => {
+    return await request.get('/common/getAnnouncements', { params: { current, size } });
+};
+
+export const apiGetAttractionAnnouncementsByAttractionId = async (
+    attractionId: number,
+    current: number,
+    size: number
+) => {
+    return await request.get('/common/getAttractionAnnouncementsByAttractionId', {
+        params: { attractionId, current, size }
+    });
+};
+
+export const apiGetAttractionsByKeyword = async (
+    attractionName: string,
+    cityCode: number,
+    current: number,
+    size: number
+) => {
+    return await request.get('/common/getAttractionsByKeyword', {
+        params: { attractionName, cityCode, current, size }
+    });
 };
