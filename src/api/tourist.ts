@@ -31,3 +31,17 @@ export const apiCancelOrder = async (orderId: string, username: string) => {
 export const apiPublishPost = async (data: any, username: string) => {
     return await request.post('/tourist/publishPost', data, { params: { username } });
 };
+
+export const apiRateCompleteOrder = async (data: any, username: string) => {
+    return await request.post('/tourist/rateCompleteOrder', data, { params: { username } });
+};
+
+export const apiDeleteOrder = async (orderId: string, username: string) => {
+    return await request.put('/tourist/deleteOrder', null, {
+        params: { orderId, username }
+    });
+};
+
+export const apiPublishComment = async (data: any, username: string) => {
+    return await request.post('/tourist/publishComment', data, { params: { username } });
+};
