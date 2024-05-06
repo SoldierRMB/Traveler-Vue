@@ -3,7 +3,11 @@
         <div class="left">
             <div class="logo">Traveler</div>
             <div class="searchBox">
-                <el-input v-model="search" placeholder="✨搜索点旅游相关的吧" class="search">
+                <el-input
+                    v-model="attractionName"
+                    placeholder="✨搜索点旅游相关的吧"
+                    class="search"
+                >
                     <template #prepend>
                         <el-cascader
                             ref="optionsRef"
@@ -14,7 +18,7 @@
                         />
                     </template>
                     <template #append>
-                        <el-button>
+                        <el-button @click="search">
                             <template #icon>
                                 <el-icon size="2rem" color="#fff"><i-ep-search /> </el-icon>
                             </template>
@@ -25,7 +29,7 @@
         </div>
         <div class="right">
             <div class="avatarBox">
-                <el-dropdown @command="$router.push">
+                <el-dropdown @command="router.push">
                     <el-avatar>
                         <template #default>
                             <i-ep-user-filled />
@@ -46,6 +50,13 @@
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
+            </div>
+            <div
+                class="announcementButton"
+                title="系统公告"
+                @click="announcementDialogVisible = true"
+            >
+                <el-icon><SvgIcon name="bell" /></el-icon>
             </div>
             <div
                 class="postButton"
@@ -95,6 +106,14 @@
         </div>
     </div>
     <el-dialog
+        title="系统公告"
+        width="60%"
+        v-model="announcementDialogVisible"
+        @close="announcementDialogVisible = false"
+    >
+        <IndexAnnouncements />
+    </el-dialog>
+    <el-dialog
         title="发布旅游动态"
         width="60%"
         v-model="postDialogVisible"
@@ -119,6 +138,7 @@ import { apiGetProvinces, apiGetCitiesByProvinceCode } from '@/api/common';
 import { useAuthStore } from '@/stores/auth';
 import type { ProvinceVO, CityVO } from '@/types/interfaces';
 import type { CascaderProps } from 'element-plus';
+import router from '@/router';
 
 const authStore = useAuthStore();
 const isAuthenticated = authStore.isAuthenticated;
@@ -133,12 +153,13 @@ const changeLanguage = (language: string) => {
     i18nStore.language = language;
 };
 
-const search = ref('');
+const attractionName = ref('');
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
 const optionsRef = ref();
+const cityCode = ref();
 
 const props: CascaderProps = {
     lazy: true,
@@ -170,7 +191,8 @@ const props: CascaderProps = {
 };
 
 const handleChange = async () => {
-    const node = optionsRef.value.getCheckedNodes()[0].value;
+    const node = optionsRef.value.getCheckedNodes()[0]?.value;
+    cityCode.value = node;
     console.log(node);
 };
 
@@ -178,8 +200,19 @@ const redirectToGithub = () => {
     window.open('https://github.com/SoldierRMB/Traveler', '_blank');
 };
 
+const announcementDialogVisible = ref(false);
 const postDialogVisible = ref(false);
 const ordersDialogVisible = ref(false);
+
+const search = async () => {
+    router.push({
+        path: '/booking',
+        query: {
+            attractionName: attractionName.value,
+            cityCode: cityCode.value
+        }
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -252,10 +285,18 @@ const ordersDialogVisible = ref(false);
 
         .postButton {
             cursor: pointer;
+
+            &:hover {
+                color: var(--el-color-primary);
+            }
         }
 
-        .postButton:hover {
-            color: var(--el-color-primary);
+        .announcementButton {
+            cursor: pointer;
+
+            &:hover {
+                color: var(--el-color-primary);
+            }
         }
 
         .toggleDark {
