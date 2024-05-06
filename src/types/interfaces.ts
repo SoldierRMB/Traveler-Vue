@@ -30,8 +30,6 @@ export interface UserVO {
     username: string;
     password?: any;
     email: string;
-    userType?: any;
-    code?: any;
 }
 
 export interface CityVO {
@@ -94,8 +92,46 @@ export interface PostVO {
 }
 
 export interface PasswordVO {
+    oldPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+    username: string;
+}
+
+export interface AnnouncementVO {
     id: number;
+    title: string;
+    content: string;
+    attractionId: number;
+    createTime: string;
+    updateTime: string;
+}
+
+export interface RatingVO {
+    id: number;
+    rating: number;
+    content: string;
+    userId: number;
+    orderId: number;
+    createTime: string;
+    updateTime: string;
+}
+
+export interface CommentVO {
+    id: number;
+    content: string;
+    userId: number;
+    postId: number;
+    createTime: string;
+    updateTime: string;
+}
+
+export interface RegisterVO {
     username: string;
     password: string;
     confirmPassword: string;
+    email: string;
+    nickname: string;
+    userType: number;
+    code: number;
 }
