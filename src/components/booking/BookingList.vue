@@ -5,26 +5,35 @@
             class="attractionCard"
             v-for="attraction in attractions"
             :key="attraction.id"
+            @click="openAttractionAnnouncementDialog(attraction.id, attraction.attractionName)"
         >
             <template #header>
-                <el-image :src="attractionImageUrl + attraction.id" fit="contain" />
+                <el-image
+                    lazy
+                    :src="attractionImageUrl + attraction.id"
+                    fit="cover"
+                    class="attractionImage"
+                />
             </template>
             <div class="infos">
-                <div class="title">{{ attraction.attractionName }}</div>
-                <div class="rating">
-                    <el-tag type="primary" v-if="attraction?.rating">
-                        {{ attraction.rating }}分
-                    </el-tag>
-                    <el-tag type="info" v-if="attraction.rating === null"> 暂无评分 </el-tag>
+                <div class="title">
+                    <div class="attractionName">{{ attraction.attractionName }}</div>
+                    <div class="rating">
+                        <el-tag type="primary" v-if="attraction?.rating">
+                            {{ attraction.rating }}分
+                        </el-tag>
+                        <el-tag type="info" v-if="attraction.rating === null">暂无评分</el-tag>
+                    </div>
                 </div>
                 <div class="location">
+                    <el-icon><SvgIcon name="location" /></el-icon>
                     {{ attraction.location }}
                 </div>
             </div>
             <el-button
                 type="primary"
                 class="bookingButton"
-                @click="bookingDialog(attraction.id)"
+                @click.stop="bookingDialog(attraction.id, attraction.attractionName)"
                 round
             >
                 订
@@ -71,25 +80,44 @@
         </template>
     </el-dialog>
     <el-dialog title="订单支付" width="30rem" v-model="paymentDialogVisible">
-        <Payment :orderId="orderId"/>
+        <Payment :orderId="orderId" />
+    </el-dialog>
+    <el-dialog
+        :title="attractionName"
+        width="60%"
+        v-model="attractionAnnouncementDialogVisible"
+        @close="attractionAnnouncementDialogVisible = false"
+    >
+        <IndexAnnouncements :attractionId="attractionId" />
     </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { apiGetAttractions } from '@/api/guest';
+import { apiGetAttractions, apiGetAttractionsByKeyword } from '@/api/common';
 import { apiGetTicketsByAttractionId, apiBooking } from '@/api/tourist';
 import type { AttractionVO, TicketVO } from '@/types/interfaces';
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
+import { useRoute } from 'vue-router';
 
 const attractions = ref([] as AttractionVO[]);
 const attractionImageUrl =
     import.meta.env.VITE_TRAVELER_BASE_URL +
     'common/getAttractionImageByAttractionId?attractionId=';
 
+const current = ref(1);
+const size = ref(10000000);
+
+const route = useRoute();
+let attractionNameKeyword = route.query.attractionName;
+let cityCode = route.query.cityCode;
+
 onMounted(async () => {
-    const attractionsRes = await apiGetAttractions();
-    attractions.value = attractionsRes.data;
+    if (attractionNameKeyword !== undefined || !isNaN(Number(cityCode))) {
+        await getAttractionsByKeyword();
+    } else {
+        await getAttractions();
+    }
 });
 
 const bookingDialogVisible = ref(false);
@@ -99,15 +127,15 @@ const tickets = ref([] as TicketVO[]);
 const authStore = useAuthStore();
 const username = authStore.user.sub;
 const orderId = ref();
+const attractionId = ref();
 
-const bookingDialog = async (attractionId: number) => {
+const bookingDialog = async (id: number, name: string) => {
     if (authStore.isAuthenticated == false) {
         return router.push('/login');
     }
     bookingDialogVisible.value = true;
-    attractionName.value =
-        attractions.value.find((a) => a.id === attractionId)?.attractionName || '';
-    const ticketsRes = await apiGetTicketsByAttractionId(attractionId);
+    attractionName.value = name;
+    const ticketsRes = await apiGetTicketsByAttractionId(id);
     tickets.value = ticketsRes.data;
 };
 
@@ -125,30 +153,87 @@ const booking = async (ticketId: number) => {
         }
     });
 };
+
+const getAttractionsByKeyword = async () => {
+    const attractionsRes = await apiGetAttractionsByKeyword(
+        attractionNameKeyword as any,
+        cityCode as any,
+        current.value,
+        size.value
+    );
+    attractions.value = attractionsRes.data.records;
+};
+
+const getAttractions = async () => {
+    const attractionsRes = await apiGetAttractions(current.value, size.value);
+    attractions.value = attractionsRes.data.records;
+};
+
+watch(
+    () => [route.query.attractionName, route.query.cityCode],
+    async () => {
+        attractionNameKeyword = route.query.attractionName;
+        cityCode = route.query.cityCode;
+        if (attractionNameKeyword !== undefined || !isNaN(Number(cityCode))) {
+            await getAttractionsByKeyword();
+        } else {
+            await getAttractions();
+        }
+    }
+);
+
+const attractionAnnouncementDialogVisible = ref(false);
+
+const openAttractionAnnouncementDialog = (id: number, name: string) => {
+    attractionAnnouncementDialogVisible.value = true;
+    attractionId.value = id;
+    attractionName.value = name;
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .attractionCard {
     display: flex;
-    flex: 1;
     flex-direction: column;
     width: 50rem;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--el-color-primary);
+    }
+
+    .attractionImage {
+        width: 100%;
+        height: 30rem;
+    }
 
     .infos {
         display: flex;
         flex-direction: column;
-        height: 8rem;
         gap: 1rem;
 
         .title {
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            .attractionName {
+                font-weight: bold;
+            }
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+            gap: 0.5rem;
         }
     }
 }
 
 :deep(.el-card__header) {
     display: flex;
-    padding: 1rem 2rem;
+    padding: 0rem;
     border: none;
 }
 
@@ -158,5 +243,6 @@ const booking = async (ticketId: number) => {
     align-items: center;
     padding: 2rem;
     font-size: 1.5rem;
+    height: 6rem;
 }
 </style>
