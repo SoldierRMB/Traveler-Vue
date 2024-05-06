@@ -1,6 +1,6 @@
 <template>
     <div class="menuBox">
-        <el-menu :default-active="$route.path" mode="horizontal" class="menu" router>
+        <el-menu :default-active="route.path" mode="horizontal" class="menu" router>
             <el-menu-item index="/post">旅游动态</el-menu-item>
             <el-menu-item index="/booking">景点订票</el-menu-item>
         </el-menu>
@@ -8,7 +8,11 @@
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+</script>
 
 <style scoped lang="scss">
 .menuBox {
