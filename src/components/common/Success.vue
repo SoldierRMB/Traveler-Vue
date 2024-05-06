@@ -7,12 +7,13 @@
             <span class="subTitle">您的订单编号为 {{ orderId }}</span>
         </template>
         <template #extra>
-            <el-button type="primary" @click="$router.back">返回上一级</el-button>
+            <el-button type="primary" @click="router.back">返回上一级</el-button>
         </template>
     </el-result>
 </template>
 
 <script setup lang="ts">
+import router from '@/router';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
