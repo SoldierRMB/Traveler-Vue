@@ -62,9 +62,9 @@ export const apiGetOrdersByAttractionId = async (
     });
 };
 
-export const apiUseTicket = async (attractionId: number, orderId: number, username: string) => {
+export const apiUseTicket = async (orderId: number, username: string) => {
     return await request.put('/staff/useTicket', null, {
-        params: { attractionId, orderId, username }
+        params: { orderId, username }
     });
 };
 
@@ -74,4 +74,36 @@ export const apiUploadAttractionImage = async (formData: FormData) => {
 
 export const apiUpdateAttractionImage = async (formData: FormData) => {
     return await request.put('/staff/updateAttractionImage', formData);
+};
+
+export const apiPublishAttractionAnnouncement = async (data: any, username: string) => {
+    return await request.post('/staff/publishAttractionAnnouncement', data, {
+        params: { username }
+    });
+};
+
+export const apiUpdateAttractionAnnouncement = async (data: any, username: string) => {
+    return await request.put('/staff/updateAttractionAnnouncement', data, {
+        params: { username }
+    });
+};
+
+export const apiCompleteDeleteAttractionAnnouncement = async (
+    attractionAnnouncementId: number,
+    attractionId: number,
+    username: string
+) => {
+    return await request.delete('/staff/completeDeleteAttractionAnnouncement', {
+        params: { attractionAnnouncementId, attractionId, username }
+    });
+};
+
+export const apiGetAttractionAnnouncementsByUsername = async (
+    current: number,
+    size: number,
+    username: string
+) => {
+    return await request.get('/staff/getAttractionAnnouncementsByUsername', {
+        params: { current, size, username }
+    });
 };
