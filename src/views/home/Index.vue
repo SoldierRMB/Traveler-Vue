@@ -3,7 +3,7 @@
         <el-container>
             <el-aside width="auto" class="aside">
                 <el-scrollbar>
-                    <el-menu :default-active="$route.path" router>
+                    <el-menu :default-active="route.path" router>
                         <el-menu-item index="/home">
                             <i class="el-icon">
                                 <SvgIcon name="home" />
@@ -72,7 +72,7 @@
                             </el-menu-item>
                             <el-menu-item index="/announcements" v-if="userRole === 'ROLE_ADMIN'">
                                 <i class="el-icon">
-                                    <SvgIcon name="alert" />
+                                    <SvgIcon name="bell" />
                                 </i>
                                 <span>系统公告列表</span>
                             </el-menu-item>
@@ -81,7 +81,7 @@
                                 v-if="userRole === 'ROLE_STAFF'"
                             >
                                 <i class="el-icon">
-                                    <SvgIcon name="alert" />
+                                    <SvgIcon name="bell" />
                                 </i>
                                 <span>景点公告列表</span>
                             </el-menu-item>
@@ -155,7 +155,9 @@ import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import { useDark, useToggle } from '@vueuse/core';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
