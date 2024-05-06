@@ -2,7 +2,7 @@
     <div class="postsBox">
         <el-table :data="posts.records" border>
             <el-table-column align="center" label="动态标题" prop="title" min-width="10rem" />
-            <el-table-column align="center" label="动态内容" prop="content" min-width="20rem" />
+            <el-table-column align="center" label="动态内容" prop="content" min-width="20rem" show-overflow-tooltip />
             <el-table-column align="center" label="用户名" prop="user.username" min-width="8rem" />
             <el-table-column align="center" label="发布时间" prop="postTime" min-width="10rem" />
             <el-table-column align="center" label="操作" min-width="8rem">
