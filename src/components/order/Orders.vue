@@ -58,8 +58,11 @@
                                 v-if="scope.row.status === 1"
                                 >支付订单</el-button
                             >
-                            <el-button type="primary" size="small" v-if="scope.row.status === 2"
-                            @click="openQRCodeDialog(scope.row)"
+                            <el-button
+                                type="primary"
+                                size="small"
+                                v-if="scope.row.status === 2"
+                                @click="openQRCodeDialog(scope.row)"
                                 >查看门票</el-button
                             >
                             <el-button
@@ -117,8 +120,13 @@
     >
         <Payment :orderId="orderId" />
     </el-dialog>
-    <el-dialog title="查看门票" width="30rem" v-model="qrCodeDialogVisible" @close="qrCodeDialogVisible = false">
-        <QRCode :value="String(orderId)"/>
+    <el-dialog
+        title="查看门票"
+        width="30rem"
+        v-model="qrCodeDialogVisible"
+        @close="qrCodeDialogVisible = false"
+    >
+        <QRCode :value="String(orderId)" />
     </el-dialog>
     <el-dialog
         title="评价景点"
@@ -133,7 +141,10 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { useAuthStore } from '@/stores/auth';
-import { apiGetAllOrders } from '@/api/admin';
+import {
+    apiGetAllOrders,
+    apiGetOrdersByAttractionId as apiGetOrdersByAttractionIdAdmin
+} from '@/api/admin';
 import { apiGetOrdersByAttractionId, apiUseTicket } from '@/api/staff';
 import { apiGetUserOrders, apiCancelOrder, apiDeleteOrder } from '@/api/tourist';
 import { useRoute } from 'vue-router';
@@ -166,7 +177,17 @@ onMounted(async () => {
 
 const getOrders = async () => {
     if (userRoleRef.value === 'ROLE_ADMIN') {
-        orders.value = (await apiGetAllOrders(currentPage.value, pageSize.value)).data;
+        if (attractionId) {
+            orders.value = (
+                await apiGetOrdersByAttractionIdAdmin(
+                    currentPage.value,
+                    pageSize.value,
+                    attractionId
+                )
+            ).data;
+        } else {
+            orders.value = (await apiGetAllOrders(currentPage.value, pageSize.value)).data;
+        }
     } else if (userRoleRef.value === 'ROLE_STAFF') {
         orders.value = (
             await apiGetOrdersByAttractionId(
@@ -243,7 +264,7 @@ const qrCodeDialogVisible = ref(false);
 const openQRCodeDialog = (row: any) => {
     qrCodeDialogVisible.value = true;
     orderId.value = row.id;
-}
+};
 
 const closeDialog = (val: boolean) => {
     ratingDialogVisible.value = val;

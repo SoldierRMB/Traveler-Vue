@@ -24,6 +24,16 @@ export const apiGetAllOrders = async (current: number, size: number) => {
     });
 };
 
+export const apiGetOrdersByAttractionId = async (
+    current: number,
+    size: number,
+    attractionId: number
+) => {
+    return await request.get('/admin/getOrdersByAttractionId', {
+        params: { current, size, attractionId }
+    });
+};
+
 export const apiGetUserRoles = async (current: number, size: number) => {
     return await request.get('/admin/getUserRoles', {
         params: { current, size }
@@ -60,4 +70,4 @@ export const apiCompleteDeleteAnnouncement = async (announcementId: number) => {
     return await request.delete('/admin/completeDeleteAnnouncement', {
         params: { announcementId }
     });
-}
+};
