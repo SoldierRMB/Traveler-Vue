@@ -204,31 +204,23 @@ const postDialogVisible = ref(false);
 const ordersDialogVisible = ref(false);
 
 const search = async () => {
+    let query = {};
     if (attractionName.value) {
-        router.push({
-            path: '/booking',
-            query: {
-                attractionName: attractionName.value
-            }
-        });
+        query = { attractionName: attractionName.value };
     }
     if (cityCode.value) {
-        router.push({
-            path: '/booking',
-            query: {
-                cityCode: cityCode.value
-            }
-        });
+        query = { cityCode: cityCode.value };
     }
     if (attractionName.value && cityCode.value) {
-        router.push({
-            path: '/booking',
-            query: {
-                attractionName: attractionName.value,
-                cityCode: cityCode.value
-            }
-        });
+        query = {
+            attractionName: attractionName.value,
+            cityCode: cityCode.value
+        };
     }
+    router.push({
+        path: '/booking',
+        query: query
+    });
 };
 </script>
 
