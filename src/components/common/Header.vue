@@ -193,7 +193,6 @@ const props: CascaderProps = {
 const handleChange = async () => {
     const node = optionsRef.value.getCheckedNodes()[0]?.value;
     cityCode.value = node;
-    console.log(node);
 };
 
 const redirectToGithub = () => {
@@ -205,13 +204,31 @@ const postDialogVisible = ref(false);
 const ordersDialogVisible = ref(false);
 
 const search = async () => {
-    router.push({
-        path: '/booking',
-        query: {
-            attractionName: attractionName.value,
-            cityCode: cityCode.value
-        }
-    });
+    if (attractionName.value) {
+        router.push({
+            path: '/booking',
+            query: {
+                attractionName: attractionName.value
+            }
+        });
+    }
+    if (cityCode.value) {
+        router.push({
+            path: '/booking',
+            query: {
+                cityCode: cityCode.value
+            }
+        });
+    }
+    if (attractionName.value && cityCode.value) {
+        router.push({
+            path: '/booking',
+            query: {
+                attractionName: attractionName.value,
+                cityCode: cityCode.value
+            }
+        });
+    }
 };
 </script>
 
