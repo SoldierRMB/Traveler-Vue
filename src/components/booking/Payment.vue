@@ -55,8 +55,8 @@ const paymentQrCode = computed(() => {
     }
 });
 
-const creditId = ref()
-const cvv = ref()
+const creditId = ref();
+const cvv = ref();
 
 const username = useAuthStore().user.sub as string;
 
@@ -89,7 +89,7 @@ const completePayment = async () => {
         align-items: center;
     }
 
-    .creditInputs{
+    .creditInputs {
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -98,6 +98,11 @@ const completePayment = async () => {
     .paymentButton {
         margin-top: 1rem;
         width: 10rem;
+    }
+
+    .el-button + .el-button,
+    .el-checkbox.is-bordered + .el-checkbox.is-bordered {
+        margin-left: 0px;
     }
 }
 </style>
