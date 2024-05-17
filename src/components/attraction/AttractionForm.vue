@@ -204,10 +204,13 @@ const handleClick = async (formEl: FormInstance | undefined) => {
         if (valid) {
             let apiAttractionFunction = props.isUpdate ? apiUpdateAttraction : apiPublishAttraction;
             const attractionRes = await apiAttractionFunction(form.value, username as string);
-            const uploadStatus = await uploadImage.value.handleSubmit();
-            if (attractionRes.status === 200 && uploadStatus) {
-                ElMessage.success('操作成功');
-                location.reload();
+            if (attractionRes.status === 200) {
+                userAttractionStore.attraction.id = await attractionRes.data.id;
+                const uploadStatus = await uploadImage.value.handleSubmit();
+                if (uploadStatus) {
+                    ElMessage.success('操作成功');
+                    location.reload();
+                }
             } else {
                 ElMessage.error('操作失败');
             }

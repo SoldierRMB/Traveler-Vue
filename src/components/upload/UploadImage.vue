@@ -53,7 +53,6 @@ const fileList = ref<UploadUserFile[]>([]);
 const dialogImageUrl = ref('');
 const dialogVisible = ref(false);
 const username = useAuthStore().user.sub;
-const attractionId = useUserAttractionStore().attraction.id;
 
 const props = defineProps({
     imageUrl: String,
@@ -92,6 +91,7 @@ const uploadAttractionImage = async () => {
     let apiFunction = props.isUpdate ? apiUpdateAttractionImage : apiUploadAttractionImage;
     const formData = new FormData();
     const file = fileList.value[0].raw as File;
+    const attractionId = useUserAttractionStore().attraction.id;
     formData.append('file', file);
     formData.append('attractionId', String(attractionId));
     formData.append('username', username as string);
