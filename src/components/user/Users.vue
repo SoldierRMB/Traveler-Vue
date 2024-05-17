@@ -33,8 +33,15 @@
                             type="danger"
                             size="small"
                             @click="disableUser(scope.row.user.id)"
-                            :disabled="scope.row.user.isDisable !== 0"
+                            v-if="scope.row.user.isDisable === 0"
                             >禁用用户</el-button
+                        >
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="enableUser(scope.row.user.id)"
+                            v-if="scope.row.user.isDisable === 1"
+                            >启用用户</el-button
                         >
                     </div>
                 </template>
@@ -53,7 +60,7 @@
 
 <script setup lang="ts">
 import moment from 'moment';
-import { apiGetUserRoles } from '@/api/admin';
+import { apiGetUserRoles, apiDisableUser, apiEnableUser } from '@/api/admin';
 
 const userRoles = ref({
     records: [],
@@ -103,13 +110,23 @@ const handleRowClick = async (row: any, column: any, event: Event) => {
 };
 
 const disableUser = async (userId: number) => {
-/*     const res = await apiDisableUser(userId);
+    const res = await apiDisableUser(userId);
     if (res.status === 200) {
         ElMessage.success('用户禁用成功');
         getUserRoles();
     } else {
         ElMessage.error('用户禁用失败');
-    } */
+    }
+};
+
+const enableUser = async (userId: number) => {
+    const res = await apiEnableUser(userId);
+    if (res.status === 200) {
+        ElMessage.success('用户启用成功');
+        getUserRoles();
+    } else {
+        ElMessage.error('用户启用失败');
+    }
 };
 </script>
 

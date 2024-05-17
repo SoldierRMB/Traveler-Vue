@@ -71,3 +71,15 @@ export const apiCompleteDeleteAnnouncement = async (announcementId: number) => {
         params: { announcementId }
     });
 };
+
+export const apiDisableUser = async (userId: number) => {
+    return await request.put('/admin/disableUser', null, {
+        params: { userId }
+    });
+};
+
+export const apiEnableUser = async (userId: number) => {
+    return await request.put('/admin/enableUser', null, {
+        params: { userId }
+    });
+};
